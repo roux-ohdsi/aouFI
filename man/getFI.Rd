@@ -32,6 +32,9 @@ getFI(
 
 \item{group_var}{chr; whether to summarize by "person" (default) or "category"}
 }
+\value{
+A dataframe of FI indices or raw values
+}
 \description{
 Title
 }

@@ -2,12 +2,19 @@ Package: aouRoux
 Type: Package
 Title: Helper functions for Roux AoU Frailty Project
 Version: 0.1.0
-Author: Rob Cavanaugh
-Maintainer: r.cavanaugh@northeastern.edu
-Description: Contains helper functions for the AoU Frailty Project
+Date: 2023-01-19
+Authors@R: 
+    c(person(given = 'Robert',
+           family = 'Cavanaugh',
+           email = 'rob.cavanaugh@pitt.edu',
+           role = c('cre', 'aut')))
+Description: Contains helper functions for the AoU Frailty Project.
+URL: https://github.com/rbcavanaugh/aouRoux/
+Imports:
+    lubridate,
+    dplyr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
 License: Apache License (>= 2)
-URL: https://github.com/rbcavanaugh/aouRoux
 BugReports: https://github.com/rbcavanaugh/aouRoux/issues
