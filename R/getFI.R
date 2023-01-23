@@ -73,6 +73,7 @@ getFI = function(.data, index,
 
     tmp = pid |>
         dplyr::left_join(tmp_clean, by = "person_id") |>
+        rowwise() |>
         mutate(score = ifelse(date %within% search_interval, score, 0))
 
     # if its a summary dataframe, summarize by person or category
