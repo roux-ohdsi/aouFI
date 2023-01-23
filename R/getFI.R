@@ -73,13 +73,11 @@ getFI = function(.data, index,
 
     tmp = pid |> dplyr::left_join(tmp_clean, by = "person_id")
 
-    `%without%` <- negate(`%within%`)
-
     pid_in <- tmp |>
         dplyr::filter(date %within% search_interval)
 
     pid_notin <- tmp |>
-        dplyr::filter(date %without% search_interval) |>
+        dplyr::filter(!(date %within% search_interval)) |>
         dplyr::mutate(score = 0)
 
     tmp = dplyr::bind_rows(pid_in, pid_notin)
