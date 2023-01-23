@@ -76,9 +76,13 @@ getFI = function(.data, index,
     pid_in <- tmp |>
         dplyr::filter(date %within% search_interval)
 
+    print(head(pid_in))
+
     pid_notin <- tmp |>
         dplyr::filter(!(date %within% search_interval)) |>
         dplyr::mutate(score = 0)
+
+    print(head(pid_notin))
 
     tmp = dplyr::bind_rows(pid_in, pid_notin)
 
