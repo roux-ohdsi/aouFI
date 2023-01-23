@@ -1,4 +1,3 @@
-
 #' Title
 #'
 #' @param .data data.frame; FI dataframe of all data (e.g., efi_dat.csv)
@@ -9,6 +8,7 @@
 #' @param end_date chr; column name of end date column within .data_search. YYYY-MM-DD
 #' @param summary log; whether to return summary data or results broken out by FI concept
 #' @param group_var chr; whether to summarize by "person" (default) or "category"
+#' @param ... ; additional grouping variables for summarizing. Column name in .data_search (E.g., calculate by year.)
 #'
 #' @return A dataframe of FI indices or raw values
 #' @export
@@ -25,7 +25,7 @@
 #' }
 getFI = function(.data, index,
                  .data_search, person_id, start_date, end_date,
-                 summary, group_var){
+                 summary, group_var, ...){
 
     if(group_var != "person_id" & group_var != "category"){
         stop("OOPS! please select an allowable grouping variable")
@@ -44,14 +44,17 @@ getFI = function(.data, index,
         stop("OOPS! data and selected index are mismatched")
     }
 
+    additional_groups = enquos(...)
+
     pid = .data_search  |>
-        dplyr::select(person_id = !!person_id,
-               start_date = !!start_date,
-               end_date = !!start_date) |>
+        dplyr::select(personId = !!person_id,
+                      startDate = !!start_date,
+                      endDate = !!end_date,
+                      !!!additional_groups) |>
         dplyr::mutate(search_interval = lubridate::interval(
-                        lubridate::ymd(start_date), lubridate::ymd(end_date)
-                )
-            )
+            lubridate::ymd(startDate), lubridate::ymd(endDate)
+        )
+        )
 
 
 
@@ -62,35 +65,40 @@ getFI = function(.data, index,
     # rename columns to be generic
     # keep only rows within the interval
     tmp = .data |>
-        dplyr::filter(person_id %in% pid$person_id) |>
+        dplyr::filter(person_id %in% pid$personId) |>
         dplyr::mutate(date = lubridate::ym(paste(start_year, start_month, sep = "-")),
-               obs = 1) |>
-        dplyr::select(person_id,
-               category = paste(!!index_var, "category", sep = "_"),
-               date,
-               score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), "obs")
+                      obs = 1) |>
+        dplyr::select(personId = person_id,
+                      category = paste(!!index_var, "category", sep = "_"),
+                      date,
+                      score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), "obs")
+
         ) |>
-        dplyr::left_join(pid, by = "person_id") |>
-        dplyr::filter(date %within% search_interval)
+        dplyr::left_join(pid, by = "personId") |> print() |>
+        mutate(score = ifelse(date %within% search_interval, score, 0))
 
     # if its a summary dataframe, summarize by person or category
     # HFRS adds up the scores, otherwise we're just counting rows
 
     cat("Generating distinct occurances for person_id/category combo... \n")
     tmp = tmp |>
-        dplyr::distinct(person_id, category, .keep_all = TRUE)
+        dplyr::distinct(personId, category, score, !!!additional_groups, .keep_all = TRUE)
+
+    groupVar = ifelse(group_var == "person_id", "personId", "category")
+
+
 
     if(isTRUE(summary)){
         cat("Summarizing data ... \n")
         tmp = tmp |>
-            dplyr::group_by(.data[[group_var]]) |>
+            dplyr::group_by(.data[[groupVar]], !!!additional_groups) |>
             dplyr::summarize(FI = sum(score)) |>
             dplyr::arrange(desc(FI))
     } else {
         cat("Note: grouping variable ignored when summary = FALSE \n")
         tmp = tmp |>
-            dplyr::select(person_id, category, score) |>
-            dplyr::arrange(person_id)
+            dplyr::select(personId, category, score) |>
+            dplyr::arrange(personId)
     }
 
     cat("Success!")
