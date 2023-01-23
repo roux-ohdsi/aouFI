@@ -70,8 +70,11 @@ getFI = function(.data, index,
                date,
                score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), "obs")
         ) |>
-        full_join(pid, by = "person_id") |>
-        filter(date %within% search_interval)
+        dplyr::left_join(pid, by = "person_id") |>
+        dplyr::filter(date %within% search_interval)
+
+    # if its a summary dataframe, summarize by person or category
+    # HFRS adds up the scores, otherwise we're just counting rows
 
     cat("Generating distinct occurances for person_id/category combo... \n")
     tmp = tmp |>
