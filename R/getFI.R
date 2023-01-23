@@ -61,7 +61,7 @@ getFI = function(.data, index,
     # fix the start and end date columns
     # rename columns to be generic
     # keep only rows within the interval
-    tmp_clean = .data |>
+    tmp = .data |>
         dplyr::filter(person_id %in% pid$person_id) |>
         dplyr::mutate(date = lubridate::ym(paste(start_year, start_month, sep = "-")),
                obs = 1) |>
@@ -69,29 +69,9 @@ getFI = function(.data, index,
                category = paste(!!index_var, "category", sep = "_"),
                date,
                score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), "obs")
-        )
-
-    cat()
-
-    tmp = pid |> dplyr::left_join(tmp_clean, by = "person_id") |>
-        mutate(score = if_else(condition = date %within% search_interval, true = score, false = 0))
-
-    # pid_in <- tmp |>
-    #     dplyr::filter(date %within% search_interval)
-    #
-    # print(head(pid_in))
-    #
-    # pid_notin <- tmp |>
-    #     dplyr::filter(!(date %within% search_interval)) |>
-    #     dplyr::mutate(score = 0)
-    #
-    # print(head(pid_notin))
-
-    # tmp = dplyr::bind_rows(pid_in, pid_notin)
-
-
-    # if its a summary dataframe, summarize by person or category
-    # HFRS adds up the scores, otherwise we're just counting rows
+        ) |>
+        full_join(pid, by = "person_id") |>
+        filter(date %within% search_interval)
 
     cat("Generating distinct occurances for person_id/category combo... \n")
     tmp = tmp |>
