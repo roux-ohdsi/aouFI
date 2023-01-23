@@ -71,20 +71,21 @@ getFI = function(.data, index,
                score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), "obs")
         )
 
-    tmp = pid |> dplyr::left_join(tmp_clean, by = "person_id")
+    tmp = pid |> dplyr::left_join(tmp_clean, by = "person_id") |>
+        mutate(score = if_else(condition = date %within% search_interval, true = score, false = 0, missing = NA))
 
-    pid_in <- tmp |>
-        dplyr::filter(date %within% search_interval)
+    # pid_in <- tmp |>
+    #     dplyr::filter(date %within% search_interval)
+    #
+    # print(head(pid_in))
+    #
+    # pid_notin <- tmp |>
+    #     dplyr::filter(!(date %within% search_interval)) |>
+    #     dplyr::mutate(score = 0)
+    #
+    # print(head(pid_notin))
 
-    print(head(pid_in))
-
-    pid_notin <- tmp |>
-        dplyr::filter(!(date %within% search_interval)) |>
-        dplyr::mutate(score = 0)
-
-    print(head(pid_notin))
-
-    tmp = dplyr::bind_rows(pid_in, pid_notin)
+    # tmp = dplyr::bind_rows(pid_in, pid_notin)
 
 
     # if its a summary dataframe, summarize by person or category
