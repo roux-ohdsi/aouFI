@@ -72,7 +72,7 @@ getFI = function(.data, index,
         )
 
     tmp = pid |> dplyr::left_join(tmp_clean, by = "person_id") |>
-        mutate(score = if_else(condition = date %within% search_interval, true = score, false = 0, missing = NA))
+        mutate(score = if_else(condition = date %within% search_interval, true = score, false = 0, missing = NA_real_))
 
     # pid_in <- tmp |>
     #     dplyr::filter(date %within% search_interval)
