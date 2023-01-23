@@ -61,7 +61,7 @@ getFI = function(.data, index,
     # fix the start and end date columns
     # rename columns to be generic
     # keep only rows within the interval
-    tmp = .data |>
+    tmp_clean = .data |>
         dplyr::filter(person_id %in% pid$person_id) |>
         dplyr::mutate(date = lubridate::ym(paste(start_year, start_month, sep = "-")),
                obs = 1) |>
@@ -69,9 +69,11 @@ getFI = function(.data, index,
                category = paste(!!index_var, "category", sep = "_"),
                date,
                score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), "obs")
-        ) |>
-        dplyr::left_join(pid, by = "person_id") |>
-        dplyr::filter(date %within% search_interval)
+        )
+
+    tmp = pid |>
+        dplyr::left_join(tmp_clean, by = "person_id") |>
+        mutate(score = ifelse(date %within% search_interval, score, 0))
 
     # if its a summary dataframe, summarize by person or category
     # HFRS adds up the scores, otherwise we're just counting rows
