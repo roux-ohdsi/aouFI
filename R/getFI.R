@@ -77,7 +77,7 @@ getFI = function(.data, index,
                       score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), "obs")
 
         ) |>
-        dplyr::left_join(pid, by = "personId") |> print() |>
+        dplyr::left_join(pid, by = "personId") |>
         mutate(score = ifelse(date %within% search_interval, score, 0))
 
     # if its a summary dataframe, summarize by person or category
