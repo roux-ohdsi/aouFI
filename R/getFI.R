@@ -75,10 +75,10 @@ getFI = function(.data, index,
         dplyr::select(personId = person_id,
                       category = paste(!!index_var, "category", sep = "_"),
                       date,
-                      score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), obs)
+                      score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), "obs")
 
         ) |>
-        dplyr::right_join(pid, by = "personId") |>
+        dplyr::left_join(pid, by = "personId") |>
         mutate(score = ifelse(date %within% search_interval, score, 0))
 
     # if its a summary dataframe, summarize by person or category
@@ -91,6 +91,11 @@ getFI = function(.data, index,
     groupVar = ifelse(group_var == "person_id", "personId", "category")
 
 
+    # if people in the search data were not in the efi data (no EHR obs)
+    # then assume FI is zero? This feels risky...
+    people_in_efi_dat = unique(.data$person_id)
+    people_in_search_dat = unique(pid$personId)
+    people_not_in_efi_dat = setdiff(people_in_search_dat, people_in_efi_dat)
 
     if(isTRUE(summary)){
         cat("Summarizing data ... \n")
@@ -98,7 +103,15 @@ getFI = function(.data, index,
             dplyr::group_by(.data[[groupVar]], !!!additional_groups) |>
             dplyr::summarize(FI = sum(score)) |>
             dplyr::arrange(desc(FI)) |>
-            rename(person_id = personId)
+            rename(person_id = personId) |>
+            mutate(found_ehr = 1) |>
+            bind_rows(
+                tibble(
+                    person_id = people_not_in_efi_dat,
+                    FI = 0,
+                    found_ehr = 0
+                )
+            )
     } else {
         cat("Note: grouping variable ignored when summary = FALSE \n")
         tmp = tmp |>
