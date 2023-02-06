@@ -8,6 +8,7 @@
 #' @param interval int; number of days to search from start date. defaults to 365
 #' @param summary log; whether to return summary data or results broken out by FI concept
 #' @param group_var chr; whether to summarize by "person" (default) or "category"
+#' @param rejoin log; if TRUE, will join results back to .data_search. defaults to FALSE
 #' @param ... ; additional grouping variables for summarizing. Column name in .data_search (E.g., calculate by year.)
 #'
 #' @return A dataframe of FI indices or raw values
@@ -27,7 +28,7 @@ getFI = function(.data, index,
                  .data_search, person_id, start_date,
                  interval = 365,
 
-                 summary, group_var, ...){
+                 summary, group_var, rejoin = FALSE, ...){
 
     if(group_var != "person_id" & group_var != "category"){
         stop("OOPS! please select an allowable grouping variable")
