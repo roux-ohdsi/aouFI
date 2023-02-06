@@ -93,12 +93,14 @@ getFI = function(.data, index,
         tmp = tmp |>
             dplyr::group_by(.data[[groupVar]], !!!additional_groups) |>
             dplyr::summarize(FI = sum(score)) |>
-            dplyr::arrange(desc(FI))
+            dplyr::arrange(desc(FI)) |>
+            rename(person_id = personId)
     } else {
         cat("Note: grouping variable ignored when summary = FALSE \n")
         tmp = tmp |>
             dplyr::select(personId, category, score) |>
-            dplyr::arrange(personId)
+            dplyr::arrange(personId) |>
+            rename(person_id = personId)
     }
 
     cat("Success!")
