@@ -54,7 +54,7 @@ getFI = function(.data, index,
                       startDate = !!start_date,
                       !!!additional_groups) |>
         dplyr::mutate(
-            endDate = startDate + interval,
+            endDate = startDate + !!interval,
             search_interval = lubridate::interval(
                 lubridate::ymd(startDate), lubridate::ymd(endDate)
             )
@@ -75,10 +75,10 @@ getFI = function(.data, index,
         dplyr::select(personId = person_id,
                       category = paste(!!index_var, "category", sep = "_"),
                       date,
-                      score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), "obs")
+                      score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), obs)
 
         ) |>
-        dplyr::left_join(pid, by = "personId") |>
+        dplyr::right_join(pid, by = "personId") |>
         mutate(score = ifelse(date %within% search_interval, score, 0))
 
     # if its a summary dataframe, summarize by person or category
@@ -105,6 +105,11 @@ getFI = function(.data, index,
             dplyr::select(personId, category, score) |>
             dplyr::arrange(personId) |>
             rename(person_id = personId)
+    }
+
+    if(isTRUE(rejoin)){
+        cat("Joining results back to original data \n")
+
     }
 
     cat("Success!")
