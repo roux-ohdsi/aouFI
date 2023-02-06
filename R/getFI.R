@@ -5,7 +5,7 @@
 #' @param .data_search data.frame; dataframe of participant IDs, start, and end dates to be searched
 #' @param person_id chr; column name of person_id within .data_search dataframe
 #' @param start_date chr; column name of start date column within .data_search. YYYY-MM-DD
-#' @param end_date chr; column name of end date column within .data_search. YYYY-MM-DD
+#' @param interval int; number of days to search from start date. defaults to 365
 #' @param summary log; whether to return summary data or results broken out by FI concept
 #' @param group_var chr; whether to summarize by "person" (default) or "category"
 #' @param ... ; additional grouping variables for summarizing. Column name in .data_search (E.g., calculate by year.)
@@ -24,7 +24,9 @@
 #' summary = TRUE)
 #' }
 getFI = function(.data, index,
-                 .data_search, person_id, start_date, end_date,
+                 .data_search, person_id, start_date,
+                 interval = 365,
+
                  summary, group_var, ...){
 
     if(group_var != "person_id" & group_var != "category"){
@@ -49,11 +51,12 @@ getFI = function(.data, index,
     pid = .data_search  |>
         dplyr::select(personId = !!person_id,
                       startDate = !!start_date,
-                      endDate = !!end_date,
                       !!!additional_groups) |>
-        dplyr::mutate(search_interval = lubridate::interval(
-            lubridate::ymd(startDate), lubridate::ymd(endDate)
-        )
+        dplyr::mutate(
+            endDate = startDate + interval,
+            search_interval = lubridate::interval(
+                lubridate::ymd(startDate), lubridate::ymd(endDate)
+            )
         )
 
 
