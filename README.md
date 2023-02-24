@@ -13,7 +13,7 @@ R package of helper functions for the Roux OHDSI Frailty project
 You can install the development version of aouFI like so:
 
 ``` r
-remotes::install_github("rbcavanaugh/aouFI)
+remotes::install_github("roux-ohdsi/aouFI)
 ```
 
 ## Current list of functions
