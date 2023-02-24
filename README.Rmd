@@ -22,10 +22,10 @@ R package of helper functions for the Roux OHDSI Frailty project
 
 ## Installation
 
-You can install the development version of aouRoux like so:
+You can install the development version of aouFI like so:
 
 ``` r
-remotes::install_github("rbcavanaugh/aouRoux)
+remotes::install_github("rbcavanaugh/aouFI)
 ```
 
 ## Current list of functions

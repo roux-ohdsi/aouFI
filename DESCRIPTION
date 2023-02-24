@@ -1,6 +1,6 @@
-Package: aouRoux
+Package: aouFI
 Type: Package
-Title: Helper functions for Roux AoU Frailty Project
+Title: Helper functions for Roux All of Us Frailty Project
 Version: 0.1.0
 Date: 2023-01-19
 Authors@R: 
@@ -8,13 +8,16 @@ Authors@R:
            family = 'Cavanaugh',
            email = 'rob.cavanaugh@pitt.edu',
            role = c('cre', 'aut')))
-Description: Contains helper functions for the AoU Frailty Project.
+Description: Contains helper functions for the All of Us Frailty Project.
 URL: https://github.com/rbcavanaugh/aouRoux/
 Imports:
     lubridate,
-    dplyr
+    dplyr,
+    tibble
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
 License: Apache License (>= 2)
 BugReports: https://github.com/rbcavanaugh/aouRoux/issues
+Depends: 
+    R (>= 2.10)
