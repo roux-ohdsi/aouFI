@@ -47,7 +47,7 @@ omop2efi <- function(con, eligible){
         filter(ancestor_concept_id %in% !!categories_concepts$concept_id) %>%
         select(ancestor_concept_id, concept_id = descendant_concept_id) %>%
         collect() %>%
-        left_join(categories_codes, by = c("ancestor_concept_id" = "concept_id")) %>%
+        left_join(categories_concepts, by = c("ancestor_concept_id" = "concept_id")) %>%
         select(efi_category, efi_concept_id = concept_id) %>%
         distinct()
 
