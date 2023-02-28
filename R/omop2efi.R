@@ -44,10 +44,10 @@ omop2efi <- function(con, eligible){
 
     # search and add all ancestors
     categories_codes_and_ancestors <- tbl(con, "concept_ancestor") %>%
-        filter(ancestor_concept_id %in% !!categories_codes$code) %>%
+        filter(ancestor_concept_id %in% !!categories_codes$concept_id) %>%
         select(ancestor_concept_id, concept_id = descendant_concept_id) %>%
         collect() %>%
-        left_join(categories_codes, by = c("ancestor_concept_id" = "code")) %>%
+        left_join(categories_codes, by = c("ancestor_concept_id" = "concept_id")) %>%
         select(efi_category, efi_concept_id = concept_id) %>%
         distinct()
 
