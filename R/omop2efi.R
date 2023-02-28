@@ -134,7 +134,7 @@ omop2efi <- function(con, eligible){
     # put them all together, add the efi data back
     dat <-
         bind_rows(obs, cond, dev, proc) %>%
-        left_join(distinct(categories_codes_and_ancestors, efi_category, efi_concept_id),
+        left_join(categories_codes_and_ancestors,
                   by = c("concept_id" = "efi_concept_id"))
 
     return(dat)
