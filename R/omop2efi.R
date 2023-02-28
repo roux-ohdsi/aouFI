@@ -56,7 +56,7 @@ omop2efi <- function(con, eligible){
 
     # basic table of EFI concept numbers and labels
     categories_concepts <- getConcepts(index = "efi")
-    message("Retrieved concepts \n")
+    message("Retrieved concepts")
 
     # search and add all ancestors
      categories_concepts_and_ancestors <- tbl(con, "concept_ancestor") %>%
@@ -72,7 +72,7 @@ omop2efi <- function(con, eligible){
         filter(ancestor_concept_id %in% !!categories_concepts$concept_id) %>%
         select(concept_id = descendant_concept_id)
 
-    message("found ancestors \n")
+    message("found ancestors")
 
     # dataframe of eligible person_ids
     eligible <- getEligible(con)
@@ -85,7 +85,7 @@ omop2efi <- function(con, eligible){
         filter(concept_id %in% !!unique(categories_concepts_and_ancestors$efi_concept_id)) %>%
         distinct()
 
-    message("joined full concept id list \n")
+    message("joined full concept id list")
 
 
     # go find instances of our concepts in the condition occurrence table
@@ -107,7 +107,7 @@ omop2efi <- function(con, eligible){
         distinct() %>%
         collect()
 
-    message("found condition occurrences \n")
+    message("found condition occurrences")
 
 
     # do the same for the observation table
@@ -125,7 +125,7 @@ omop2efi <- function(con, eligible){
         distinct() %>%
         collect()
 
-    message("found observations \n")
+    message("found observations")
 
 
     # procedure table
@@ -143,7 +143,7 @@ omop2efi <- function(con, eligible){
         distinct() %>%
         collect()
 
-    message("found procedures \n")
+    message("found procedures")
 
 
     # device exposure
@@ -161,7 +161,7 @@ omop2efi <- function(con, eligible){
         distinct() %>%
         collect()
 
-    message("found device exposures \n")
+    message("found device exposures")
 
 
     # put them all together, add the efi data back
@@ -170,7 +170,7 @@ omop2efi <- function(con, eligible){
         left_join(categories_concepts_and_ancestors,
                   by = c("concept_id" = "efi_concept_id"))
 
-    message("Success!! \n")
+    message("Success!!")
     return(dat)
 
 }
