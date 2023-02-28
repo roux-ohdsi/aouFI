@@ -53,8 +53,10 @@ getEligible <- function(con){
 #'
 omop2efi <- function(con, eligible){
 
+
     # basic table of EFI concept numbers and labels
     categories_concepts <- getConcepts(index = "efi")
+    cat("Retrieved concepts \n")
 
     # search and add all ancestors
      categories_concepts_and_ancestors <- tbl(con, "concept_ancestor") %>%
@@ -70,6 +72,8 @@ omop2efi <- function(con, eligible){
         filter(ancestor_concept_id %in% !!categories_concepts$concept_id) %>%
         select(concept_id = descendant_concept_id)
 
+    cat("found ancestors \n")
+
     # dataframe of eligible person_ids
     eligible <- getEligible(con)
 
@@ -80,6 +84,9 @@ omop2efi <- function(con, eligible){
         inner_join(ancestors, by = "concept_id") %>%
         filter(concept_id %in% !!unique(categories_concepts_and_ancestors$efi_concept_id)) %>%
         distinct()
+
+    cat("joined full concept id list \n")
+
 
     # go find instances of our concepts in the condition occurrence table
     cond_occurances <- tbl(con, "condition_occurrence") %>%
@@ -100,6 +107,9 @@ omop2efi <- function(con, eligible){
         distinct() %>%
         collect()
 
+    cat("found condition occurrences \n")
+
+
     # do the same for the observation table
     obs <- tbl(con, "observation") %>%
         inner_join(eligible, by = "person_id") %>%
@@ -114,6 +124,9 @@ omop2efi <- function(con, eligible){
         select(-observation_datetime) %>%
         distinct() %>%
         collect()
+
+    cat("found observations \n")
+
 
     # procedure table
     proc <- tbl(con, "procedure_occurrence") %>%
@@ -130,6 +143,9 @@ omop2efi <- function(con, eligible){
         distinct() %>%
         collect()
 
+    cat("found procedures \n")
+
+
     # device exposure
     dev <- tbl(con, "device_exposure") %>%
         inner_join(eligible, by = "person_id") %>%
@@ -145,12 +161,16 @@ omop2efi <- function(con, eligible){
         distinct() %>%
         collect()
 
+    cat("found device exposures \n")
+
+
     # put them all together, add the efi data back
     dat <-
         bind_rows(cond_occurances, obs, dev, proc) %>%
         left_join(categories_concepts_and_ancestors,
                   by = c("concept_id" = "efi_concept_id"))
 
+    cat("Success!! \n")
     return(dat)
 
 }
