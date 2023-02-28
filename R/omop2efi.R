@@ -132,4 +132,6 @@ omop2efi <- function(con, eligible){
         left_join(distinct(efi_scoring, efi_category, efi_concept_id),
                   by = c("concept_id" = "efi_concept_id"))
 
+    return(dat)
+
 }
