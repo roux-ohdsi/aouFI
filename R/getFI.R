@@ -13,19 +13,16 @@
 #'
 #' @return A dataframe of FI indices or raw values
 #' @export
-#'
-#' @examples \dontrun{
-#' getFI(.data = efi_dat,
-#' index = "efi",
-#' .data_search = test_dat,
-#' person_id = "person_id",
-#' start_date = "start_date",
-#' end_date = "end_date",
-#' group_var = "person_id",
-#' summary = TRUE)
-#' }
-getFI = function(.data, index,
-                 .data_search, person_id, start_date,
+getFI = function(
+                .data, weighted_fi = NA,
+                person_id = "person_id",
+                concept_id = "concept_id",
+                concept_name = "concept_name",
+                concept_start_date,
+
+                 .data_search,
+                 search_person_id,
+                 search_start_date,
                  interval = 365,
 
                  summary, group_var, rejoin = FALSE, ...){
@@ -34,24 +31,24 @@ getFI = function(.data, index,
         stop("OOPS! please select an allowable grouping variable")
     }
 
-    index_var = dplyr::case_when(
-        index == "efi" | index == "efragicap" ~ "efi",
-        index == "vafi" ~ "vafi",
-        index == "hfrs" ~ "hfrs",
-        TRUE ~ NA_character_
-    )
+    # index_var = dplyr::case_when(
+    #     index == "efi" | index == "efragicap" ~ "efi",
+    #     index == "vafi" ~ "vafi",
+    #     index == "hfrs" ~ "hfrs",
+    #     TRUE ~ NA_character_
+    # )
 
-    if(paste(index_var, "category", sep = "_")  %in% colnames(.data)){
-        cat("Data and selected index are compatible \n")
-    } else {
-        stop("OOPS! data and selected index are mismatched")
-    }
+    # if(paste(index_var, "category", sep = "_")  %in% colnames(.data)){
+    #     cat("Data and selected index are compatible \n")
+    # } else {
+    #     stop("OOPS! data and selected index are mismatched")
+    # }
 
     additional_groups = enquos(...)
 
     pid = .data_search  |>
-        dplyr::select(personId = !!person_id,
-                      startDate = !!start_date,
+        dplyr::select(personId = !!search_person_id,
+                      startDate = !!search_start_date,
                       !!!additional_groups) |>
         dplyr::mutate(
             endDate = startDate + !!interval,
@@ -69,15 +66,14 @@ getFI = function(.data, index,
     # rename columns to be generic
     # keep only rows within the interval
     tmp = .data |>
-        dplyr::filter(person_id %in% pid$personId) |>
-        dplyr::mutate(date = lubridate::ym(paste(start_year, start_month, sep = "-")),
-                      obs = 1) |>
-        dplyr::select(personId = person_id,
-                      category = paste(!!index_var, "category", sep = "_"),
-                      date,
-                      score = ifelse(!!index_var == "hfrs", paste(!!index_var, "score", sep = "_"), "obs")
-
+        select(
+            personId = !!person_id,
+            conceptId = !!concept_id,
+            conceptName = !!concept_name,
+            date = !!concept_start_date
         ) |>
+        dplyr::filter(personId %in% pid$personId) |>
+        dplyr::mutate(score = ifelse(is.na(!!weighted_fi), 1, weighted_fi)) |>
         dplyr::left_join(pid, by = "personId") |>
         mutate(score = ifelse(date %within% search_interval, score, 0))
 
@@ -86,9 +82,9 @@ getFI = function(.data, index,
 
     cat("Generating distinct occurances for person_id/category combo... \n")
     tmp = tmp |>
-        dplyr::distinct(personId, category, score, !!!additional_groups, .keep_all = TRUE)
+        dplyr::distinct(personId, conceptName, score, !!!additional_groups, .keep_all = TRUE)
 
-    groupVar = ifelse(group_var == "person_id", "personId", "category")
+    groupVar = ifelse(group_var == "person_id", "personId", "conceptName")
 
 
     # if people in the search data were not in the efi data (no EHR obs)

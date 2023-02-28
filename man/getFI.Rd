@@ -6,47 +6,45 @@
 \usage{
 getFI(
   .data,
-  index,
+  weighted_fi = NA,
+  person_id = "person_id",
+  concept_id = "concept_id",
+  concept_name = "concept_name",
+  concept_start_date,
   .data_search,
-  person_id,
-  start_date,
-  end_date,
+  search_person_id,
+  search_start_date,
+  interval = 365,
   summary,
-  group_var
+  group_var,
+  rejoin = FALSE,
+  ...
 )
 }
 \arguments{
 \item{.data}{data.frame; FI dataframe of all data (e.g., efi_dat.csv)}
 
-\item{index}{chr; name of FI index (efi, vafi, hfrs)}
+\item{person_id}{chr; column name of person_id within .data_search dataframe}
 
 \item{.data_search}{data.frame; dataframe of participant IDs, start, and end dates to be searched}
 
-\item{person_id}{chr; column name of person_id within .data_search dataframe}
-
-\item{start_date}{chr; column name of start date column within .data_search. YYYY-MM-DD}
-
-\item{end_date}{chr; column name of end date column within .data_search. YYYY-MM-DD}
+\item{interval}{int; number of days to search from start date. defaults to 365}
 
 \item{summary}{log; whether to return summary data or results broken out by FI concept}
 
 \item{group_var}{chr; whether to summarize by "person" (default) or "category"}
+
+\item{rejoin}{log; if TRUE, will join results back to .data_search. defaults to FALSE}
+
+\item{...}{; additional grouping variables for summarizing. Column name in .data_search (E.g., calculate by year.)}
+
+\item{index}{chr; name of FI index (efi, vafi, hfrs)}
+
+\item{start_date}{chr; column name of start date column within .data_search. YYYY-MM-DD}
 }
 \value{
 A dataframe of FI indices or raw values
 }
 \description{
 Title
-}
-\examples{
-\dontrun{
-getFI(.data = efi_dat,
-index = "efi",
-.data_search = test_dat,
-person_id = "person_id",
-start_date = "start_date",
-end_date = "end_date",
-group_var = "person_id",
-summary = TRUE)
-}
 }
