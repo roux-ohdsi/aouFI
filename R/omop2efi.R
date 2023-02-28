@@ -40,11 +40,11 @@ getEligible <- function(con){
 omop2efi <- function(con, eligible){
 
     # basic table of EFI concept numbers and labels
-    categories_codes <- getConcepts(index = "efi")
+    categories_concepts <- getConcepts(index = "efi")
 
     # search and add all ancestors
-    categories_codes_and_ancestors <- tbl(con, "concept_ancestor") %>%
-        filter(ancestor_concept_id %in% !!categories_codes$concept_id) %>%
+     categories_concepts_and_ancestors <- tbl(con, "concept_ancestor") %>%
+        filter(ancestor_concept_id %in% !!categories_concepts$concept_id) %>%
         select(ancestor_concept_id, concept_id = descendant_concept_id) %>%
         collect() %>%
         left_join(categories_codes, by = c("ancestor_concept_id" = "concept_id")) %>%
@@ -53,7 +53,7 @@ omop2efi <- function(con, eligible){
 
     # these are all the ancestors
     ancestors = tbl(con, "concept_ancestor") %>%
-        filter(ancestor_concept_id %in% !!categories_codes$code) %>%
+        filter(ancestor_concept_id %in% !!categories_concepts$concept_id) %>%
         select(concept_id = descendant_concept_id)
 
     # dataframe of eligible person_ids
