@@ -51,6 +51,11 @@ omop2efi <- function(con, eligible){
         select(efi_category, efi_concept_id = concept_id) %>%
         distinct()
 
+    # these are all the ancestors
+    ancestors = tbl(con, "concept_ancestor") %>%
+        filter(ancestor_concept_id %in% !!categories_codes$code) %>%
+        select(concept_id = descendant_concept_id)
+
     # dataframe of eligible person_ids
     eligible <- getEligible(con)
 
@@ -59,7 +64,7 @@ omop2efi <- function(con, eligible){
         filter(standard_concept == "S") %>%
         distinct(concept_id, name = concept_name, vocabulary_id) %>%
         inner_join(ancestors, by = "concept_id") %>%
-        filter(concept_id %in% !!unique(efi_scoring$efi_concept_id)) %>%
+        filter(concept_id %in% !!unique(categories_codes_and_ancestors$efi_concept_id)) %>%
         distinct()
 
     # go find instances of our concepts in the condition occurrence table
@@ -129,7 +134,7 @@ omop2efi <- function(con, eligible){
     # put them all together, add the efi data back
     dat <-
         bind_rows(obs, cond, dev, proc) %>%
-        left_join(distinct(efi_scoring, efi_category, efi_concept_id),
+        left_join(distinct(categories_codes_and_ancestors, efi_category, efi_concept_id),
                   by = c("concept_id" = "efi_concept_id"))
 
     return(dat)
