@@ -64,7 +64,7 @@ omop2efi <- function(con, eligible){
         filter(standard_concept == "S") %>%
         distinct(concept_id, name = concept_name, vocabulary_id) %>%
         inner_join(ancestors, by = "concept_id") %>%
-        filter(concept_id %in% !!unique(categories_codes_and_ancestors$efi_concept_id)) %>%
+        filter(concept_id %in% !!unique(categories_concepts_and_ancestors$efi_concept_id)) %>%
         distinct()
 
     # go find instances of our concepts in the condition occurrence table
