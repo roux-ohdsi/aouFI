@@ -53,10 +53,10 @@ getEligible <- function(con){
 #'
 omop2efi <- function(con, eligible){
 
+    message("retrieving concepts...")
 
     # basic table of EFI concept numbers and labels
     categories_concepts <- getConcepts(index = "efi")
-    message("Retrieved concepts")
 
     # search and add all ancestors
      categories_concepts_and_ancestors <- tbl(con, "concept_ancestor") %>%
@@ -67,15 +67,15 @@ omop2efi <- function(con, eligible){
         select(efi_category = category, efi_concept_id = concept_id) %>%
         distinct()
 
+     message("finding ancestors...")
+
     # these are all the ancestors
     ancestors = tbl(con, "concept_ancestor") %>%
         filter(ancestor_concept_id %in% !!categories_concepts$concept_id) %>%
         select(concept_id = descendant_concept_id)
 
-    message("found ancestors")
 
-    # dataframe of eligible person_ids
-    eligible <- getEligible(con)
+    message("joining full concept id list...")
 
     # get full list of concepts
     condition_concept_ids <- tbl(con, "concept") %>%
@@ -85,8 +85,8 @@ omop2efi <- function(con, eligible){
         filter(concept_id %in% !!unique(categories_concepts_and_ancestors$efi_concept_id)) %>%
         distinct()
 
-    message("joined full concept id list")
 
+    message("searching for condition occurrences...")
 
     # go find instances of our concepts in the condition occurrence table
     cond_occurances <- tbl(con, "condition_occurrence") %>%
@@ -107,8 +107,8 @@ omop2efi <- function(con, eligible){
         distinct() %>%
         collect()
 
-    message("found condition occurrences")
 
+    message("searching for observations...")
 
     # do the same for the observation table
     obs <- tbl(con, "observation") %>%
@@ -125,8 +125,8 @@ omop2efi <- function(con, eligible){
         distinct() %>%
         collect()
 
-    message("found observations")
 
+    message("searching for procedures...")
 
     # procedure table
     proc <- tbl(con, "procedure_occurrence") %>%
@@ -143,8 +143,8 @@ omop2efi <- function(con, eligible){
         distinct() %>%
         collect()
 
-    message("found procedures")
 
+    message("searching for device exposures...")
 
     # device exposure
     dev <- tbl(con, "device_exposure") %>%
@@ -161,8 +161,8 @@ omop2efi <- function(con, eligible){
         distinct() %>%
         collect()
 
-    message("found device exposures")
 
+    message("putting it all together...")
 
     # put them all together, add the efi data back
     dat <-
