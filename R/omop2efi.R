@@ -6,7 +6,8 @@
 # pull everyone from the cohort builder table that is at least 50 at consent
 # this is how we're defining people in all of us > 50
 # but other datasets may want to
-#' Get single column data frame of eligible IDs
+
+#' Get single column data frame of eligible IDs named person_id
 #'
 #' @param con
 #'
@@ -22,10 +23,23 @@ getEligible <- function(con){
 #' OMOP to EFI
 #'
 #' @description Generates table of EFI-related condition occurances from an OMOP database.
+#' This requires a database connection using dbConnect() or similar R package
+#' The connection should be able to access the following OMOP CDM tables
 #'
-#' @param con
+#' * concept_ancestor
+#' * concept
+#' * condition_occurrence
+#' * observation
+#' * procedure_occurrence
+#' * device_exposure
+#' @md
 #'
-#' @return dataframe with EFI occurences
+#' @param con a database connectino using dbConnect() or similar
+#' @param eligible a dataframe or tibble with a single column of unique person_id values. Obtained
+#' in the all of us databse using getEligible() which returns a single column dataframe with
+#' participatns older than 50 and younger than 120.
+#'
+#' @return dataframe with EFI occurences that can be summarized into an EFI using aouFI::getFI()
 #' @export
 #'
 #' @examples
@@ -35,7 +49,7 @@ getEligible <- function(con){
 #'     project = prefix,
 #'     dataset = release
 #'     )
-#' omop2efi(con = con, eligible = getEligible())
+#' omop2efi(con = con, eligible = aouFI::getEligible())
 #'
 omop2efi <- function(con, eligible){
 

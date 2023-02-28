@@ -2,7 +2,7 @@
 % Please edit documentation in R/omop2efi.R
 \name{getEligible}
 \alias{getEligible}
-\title{Get single column data frame of eligible IDs}
+\title{Get single column data frame of eligible IDs named person_id}
 \usage{
 getEligible(con)
 }
@@ -13,5 +13,5 @@ getEligible(con)
 dataframe of elgible IDs
 }
 \description{
-Get single column data frame of eligible IDs
+Get single column data frame of eligible IDs named person_id
 }

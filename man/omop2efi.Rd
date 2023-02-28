@@ -7,13 +7,27 @@
 omop2efi(con, eligible)
 }
 \arguments{
-\item{con}{}
+\item{con}{a database connectino using dbConnect() or similar}
+
+\item{eligible}{a dataframe or tibble with a single column of unique person_id values. Obtained
+in the all of us databse using getEligible() which returns a single column dataframe with
+participatns older than 50 and younger than 120.}
 }
 \value{
-dataframe with EFI occurences
+dataframe with EFI occurences that can be summarized into an EFI using aouFI::getFI()
 }
 \description{
 Generates table of EFI-related condition occurances from an OMOP database.
+This requires a database connection using dbConnect() or similar R package
+The connection should be able to access the following OMOP CDM tables
+\itemize{
+\item concept_ancestor
+\item concept
+\item condition_occurrence
+\item observation
+\item procedure_occurrence
+\item device_exposure
+}
 }
 \examples{
 con <- dbConnect(
@@ -22,6 +36,6 @@ bigrquery::bigquery(),
     project = prefix,
     dataset = release
     )
-omop2efi(con = con, eligible = getEligible())
+omop2efi(con = con, eligible = aouFI::getEligible())
 
 }
