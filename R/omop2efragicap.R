@@ -44,7 +44,6 @@ omop2efragicap <- function(con, eligible){
     condition_concept_ids <- tbl(con, "concept") %>%
         filter(standard_concept == "S") %>%
         distinct(concept_id, name = concept_name, vocabulary_id) %>%
-        inner_join(ancestors, by = "concept_id") %>%
         filter(concept_id %in% !!unique(categories_concepts$efi_concept_id)) %>%
         distinct()
 
@@ -130,7 +129,7 @@ omop2efragicap <- function(con, eligible){
     # put them all together, add the efi data back
     dat <-
         bind_rows(cond_occurances, obs, dev, proc) %>%
-        left_join(categories_concepts_and_ancestors,
+        left_join(categories_concepts,
                   by = c("concept_id" = "efi_concept_id"))
 
     message("Success!!")
