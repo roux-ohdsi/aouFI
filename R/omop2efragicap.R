@@ -130,8 +130,8 @@ omop2efragicap <- function(con, eligible){
 
 
     categories_concepts <- categories_concepts %>%
-        mutate(efi_concept_id = as.integer(categories_concepts$efi_concept_id))
-    distinct(efi_concept_id, efi_category = category)
+        mutate(efi_concept_id = as.integer(efi_concept_id)) %>%
+        distinct(efi_concept_id, efi_category = category)
     # put them all together, add the efi data back
     dat <-
         bind_rows(cond_occurances, obs, dev, proc) %>%
