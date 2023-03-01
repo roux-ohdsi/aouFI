@@ -20,13 +20,20 @@ remotes::install_github("roux-ohdsi/aouFI)
 
 - `getFI()` returns fralty scores for a several FIs given a dataframe of
   person_id’s, start, and end dates. It requires a specific data input
-  and is not ready for sharing yet.
-- `getEligible()` gets a dataframe of person_ids from the AoU database
-  (when provided with a database connection) that are \> 50 years old
-  and \< 120 years old
+  format and isn’t terribly flexible yet.
+
+- `getEligible()` retrieves a single column dataframe of person_ids from
+  the AoU database (when provided with a database connection) that are
+  \> 50 years old and \< 120 years old.
+
 - `omop2efi()` returns a dataframe of EFI (electronic frailty index)
   occurrences when given a database connection to any (in theory) OMOP
   CDM database and a table of person_id values (e.g., from
+  `getEligible()`).
+
+- `omop2efragicap()` returns a dataframe of efragucap (electronic
+  frailty index) occurrences when given a database connection to any (in
+  theory) OMOP CDM database and a table of person_id values (e.g., from
   `getEligible()`).
 
 ## Current list of useful tables
