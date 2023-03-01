@@ -38,6 +38,8 @@ omop2efragicap <- function(con, eligible){
     # runs in case the mapping changes...
     categories_concepts <- getConcepts(index = "efragicap")
 
+
+
     message("joining full concept id list...")
 
     # get full list of concepts
@@ -126,6 +128,7 @@ omop2efragicap <- function(con, eligible){
 
     message("putting it all together...")
 
+    categories_concepts$efi_concept_id = as.integer(categories_concepts$efi_concept_id)
     # put them all together, add the efi data back
     dat <-
         bind_rows(cond_occurances, obs, dev, proc) %>%
