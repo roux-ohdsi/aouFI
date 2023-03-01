@@ -1,34 +1,10 @@
 
-
-
-
-
-# pull everyone from the cohort builder table that is at least 50 at consent
-# this is how we're defining people in all of us > 50
-# but other datasets may want to
-
-#' @title Get Eligible FI cohort
-#'
-#' @description Get single column data frame of eligible IDs named person_id
-#'
-#' @param con
-#'
-#' @return dataframe of elgible IDs
-#' @export
-getEligible <- function(con){
-    tbl(con, "cb_search_person") %>%
-    filter(age_at_consent >= 50 & age_at_consent <= 120) %>%
-    # just hold on to all the unique ids for an innerjoin later
-    distinct(person_id)
-}
-
-#' @title OMOP to EFI
+#' @title OMOP to EFRAGICAP
 #'
 #' @description Generates table of EFI-related condition occurances from an OMOP database.
 #' This requires a database connection using dbConnect() or similar R package
 #' The connection should be able to access the following OMOP CDM tables
 #'
-#' * concept_ancestor
 #' * concept
 #' * condition_occurrence
 #' * observation
@@ -53,29 +29,14 @@ getEligible <- function(con){
 #'     )
 #' omop2efi(con = con, eligible = aouFI::getEligible())
 #'
-omop2efi <- function(con, eligible){
+omop2efragicap <- function(con, eligible){
 
     message("retrieving concepts...")
 
-    # basic table of EFI concept numbers and labels
-    categories_concepts <- getConcepts(index = "efi")
-
-    # search and add all ancestors
-     categories_concepts_and_ancestors <- tbl(con, "concept_ancestor") %>%
-        filter(ancestor_concept_id %in% !!categories_concepts$concept_id) %>%
-        select(ancestor_concept_id, concept_id = descendant_concept_id) %>%
-        collect() %>%
-        left_join(categories_concepts, by = c("ancestor_concept_id" = "concept_id")) %>%
-        select(efi_category = category, efi_concept_id = concept_id) %>%
-        distinct()
-
-     message("finding ancestors...")
-
-    # these are all the ancestors
-    ancestors = tbl(con, "concept_ancestor") %>%
-        filter(ancestor_concept_id %in% !!categories_concepts$concept_id) %>%
-        select(concept_id = descendant_concept_id)
-
+    # saved dataset of all efragicap codes and concepts
+    # we may want to change this to go build this table everytime the function
+    # runs in case the mapping changes...
+    categories_concepts <- getConcepts(index = "efragicap")
 
     message("joining full concept id list...")
 
@@ -84,7 +45,7 @@ omop2efi <- function(con, eligible){
         filter(standard_concept == "S") %>%
         distinct(concept_id, name = concept_name, vocabulary_id) %>%
         inner_join(ancestors, by = "concept_id") %>%
-        filter(concept_id %in% !!unique(categories_concepts_and_ancestors$efi_concept_id)) %>%
+        filter(concept_id %in% !!unique(categories_concepts$efi_concept_id)) %>%
         distinct()
 
 

@@ -5,8 +5,9 @@
 #' @return a dataframe of FI categories and related concepts OR ICD codes
 #' @export
 getConcepts <- function(index) {
-
-    if(!(index %in% c("efi"))){stop("oops! frailty index not found.")}
+  if (!(index %in% c("efi", "efragicap"))) {
+    stop("oops! frailty index not found.")
+  }
 
   if (index == "efi") {
     tribble(
@@ -75,5 +76,9 @@ getConcepts <- function(index) {
       "Weight loss & anorexia", 4275273,
       "Weight loss & anorexia", 40491502
     )
+  } else if (index == "efragicap") {
+
+   return(get("efragicap_concepts"))
   }
 }
+

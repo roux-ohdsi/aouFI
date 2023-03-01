@@ -2,7 +2,7 @@
 % Please edit documentation in R/omop2efi.R
 \name{getEligible}
 \alias{getEligible}
-\title{Get single column data frame of eligible IDs named person_id}
+\title{Get Eligible FI cohort}
 \usage{
 getEligible(con)
 }
