@@ -5,7 +5,7 @@
 #' @return a dataframe of FI categories and related concepts OR ICD codes
 #' @export
 getConcepts <- function(index) {
-  if (!(index %in% c("efi", "efragicap", "vafi"))) {
+  if (!(index %in% c("efi", "efragicap", "vafi", "hfrs"))) {
     stop("oops! frailty index not found.")
   }
 
@@ -82,7 +82,12 @@ getConcepts <- function(index) {
 
   } else if (index == "vafi") {
 
-      return(get("vafi_concepts"))
+   return(get("vafi_concepts"))
+
+  } else if (index == "hfrs") {
+
+   return(get("hfrs_concepts"))
+
   }
 }
 
