@@ -131,7 +131,7 @@ omop2vafi <- function(con, eligible){
 
     categories_concepts <- categories_concepts %>%
         mutate(vafi_concept_id = as.integer(vafi_concept_id)) %>%
-        distinct(vafi_concept_id, efi_category = category)
+        distinct(vafi_concept_id, vafi_category = category)
     # put them all together, add the efi data back
     dat <-
         bind_rows(cond_occurances, obs, dev, proc) %>%
