@@ -29,7 +29,7 @@
 #'     )
 #' omop2efi(con = con, eligible = aouFI::getEligible())
 #'
-omop2efragicap <- function(con, eligible){
+omop2vafi <- function(con, eligible){
 
     message("retrieving concepts...")
 
