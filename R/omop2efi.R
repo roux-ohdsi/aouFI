@@ -120,12 +120,12 @@ omop2efi <- function(con, eligible){
                concept_id = observation_concept_id,
                concept_name = name,
                observation_datetime
-        ) %>%
+        )  %>%
+        distinct() %>%
+        collect() %>%
         mutate(start_year = year(observation_datetime),
                start_month = month(observation_datetime)) %>%
-        select(-observation_datetime) %>%
-        distinct() %>%
-        collect()
+        select(-observation_datetime)
 
 
     message("searching for procedures...")

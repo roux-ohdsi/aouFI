@@ -85,11 +85,11 @@ omop2hfrs <- function(con, eligible){
                concept_name = name,
                observation_datetime
         ) %>%
-        # mutate(start_year = year(observation_datetime),
-        #        start_month = month(observation_datetime)) %>%
-        # select(-observation_datetime) %>%
         distinct() %>%
-        collect()
+        collect() %>%
+        mutate(start_year = year(observation_datetime),
+                        start_month = month(observation_datetime)) %>%
+        select(-observation_datetime)
 
 
     message("searching for procedures...")
@@ -142,6 +142,6 @@ omop2hfrs <- function(con, eligible){
                   by = c("concept_id" = "hfrs_concept_id"))
 
     message("Success!!")
-    return(condition_concept_ids)
+    return(dat)
 
 }
