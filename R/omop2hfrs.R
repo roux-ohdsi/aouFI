@@ -87,7 +87,7 @@ omop2hfrs <- function(con, eligible){
         ) %>%
         # mutate(start_year = year(observation_datetime),
         #        start_month = month(observation_datetime)) %>%
-        select(-observation_datetime) %>%
+        # select(-observation_datetime) %>%
         distinct() %>%
         collect()
 
