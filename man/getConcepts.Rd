@@ -10,8 +10,8 @@ getConcepts(index)
 \item{index}{character vector, one of "efi", "vafi", "efragicap", "hfrs"}
 }
 \value{
-a dataframe of FI categories and related concepts OR ICD codes
+A tibble with columns labelled "category" and "concept_id"
 }
 \description{
-Get concepts from different fraily Indices
+Funtion to retrieve table of OMOP concept_ids and their labels
 }

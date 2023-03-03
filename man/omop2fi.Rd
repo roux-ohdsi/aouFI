@@ -2,7 +2,7 @@
 % Please edit documentation in R/omop2fi.R
 \name{omop2fi}
 \alias{omop2fi}
-\title{OMOP to HFRS}
+\title{OMOP to FI}
 \usage{
 omop2fi(con, eligible, index)
 }
@@ -11,13 +11,16 @@ omop2fi(con, eligible, index)
 
 \item{eligible}{a dataframe or tibble with a single column of unique person_id values. Obtained
 in the all of us databse using getEligible() which returns a single column dataframe with
-participatns older than 50 and younger than 120.}
+participatns older than 50 and younger than 120. For other datasources, will need to be custom made.}
+
+\item{index}{chr vector; a frailty index. One of "efi", "efragicap", "vafi", or "hfrs"}
 }
 \value{
 dataframe with EFI occurences that can be summarized into an EFI using aouFI::getFI()
 }
 \description{
-Generates table of HFRS-related condition occurances from an OMOP database.
+Generates table of condition occurances from an OMOP database for
+the EFI, EGRAGICAP, VAFI, and HFRS frailty indices.
 This requires a database connection using dbConnect() or similar R package
 The connection should be able to access the following OMOP CDM tables
 \itemize{
@@ -35,6 +38,6 @@ bigrquery::bigquery(),
     project = prefix,
     dataset = release
     )
-omop2efi(con = con, eligible = aouFI::getEligible())
+omop2fi(con = con, eligible = aouFI::getEligible(), index = "efi")
 
 }

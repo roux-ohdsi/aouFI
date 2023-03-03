@@ -21,20 +21,14 @@ remotes::install_github("roux-ohdsi/aouFI)
 - `getFI()` returns fralty scores for a several FIs given a dataframe of
   person_id’s, start, and end dates. It requires a specific data input
   format and isn’t terribly flexible yet.
-
 - `getEligible()` retrieves a single column dataframe of person_ids from
   the AoU database (when provided with a database connection) that are
   \> 50 years old and \< 120 years old.
-
-- `omop2efi()` returns a dataframe of EFI (electronic frailty index)
-  occurrences when given a database connection to any (in theory) OMOP
-  CDM database and a table of person_id values (e.g., from
-  `getEligible()`).
-
-- `omop2efragicap()` returns a dataframe of efragucap (electronic
-  frailty index) occurrences when given a database connection to any (in
-  theory) OMOP CDM database and a table of person_id values (e.g., from
-  `getEligible()`).
+- `omop2fi()` returns a dataframe of frailty category occurrences when
+  given a database connection to any (in theory) OMOP CDM database and a
+  table of person_id values (e.g., from `getEligible()`), and a frailty
+  index (one of efi, efragicap, vafi, or hfrs). In theory, this data can
+  be used with `getFI()` though this is not yet tested…
 
 ## Current list of useful tables
 
@@ -42,7 +36,7 @@ remotes::install_github("roux-ohdsi/aouFI)
 - `FI_labels` Paper-ready names for AouFI variables with a linking
   column for derived data
 - `simulated_ehr` Simulated ehr data to search - similar to what would
-  be returned by `omop2efi()`. This will be used for testing and demo
+  be returned by `omop2fi()`. This will be used for testing and demo
   purposes. It can be used with getFI(). The values in this data are
   entirely fabricated based on code in /data-raw
 - `simulated_cohort` Simulated cohort with a starting search date. Can

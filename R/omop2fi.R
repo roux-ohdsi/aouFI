@@ -1,7 +1,8 @@
 
-#' @title OMOP to HFRS
+#' @title OMOP to FI
 #'
-#' @description Generates table of HFRS-related condition occurances from an OMOP database.
+#' @description Generates table of condition occurances from an OMOP database for
+#' the EFI, EGRAGICAP, VAFI, and HFRS frailty indices.
 #' This requires a database connection using dbConnect() or similar R package
 #' The connection should be able to access the following OMOP CDM tables
 #'
@@ -15,7 +16,8 @@
 #' @param con a database connectino using dbConnect() or similar
 #' @param eligible a dataframe or tibble with a single column of unique person_id values. Obtained
 #' in the all of us databse using getEligible() which returns a single column dataframe with
-#' participatns older than 50 and younger than 120.
+#' participatns older than 50 and younger than 120. For other datasources, will need to be custom made.
+#' @param index chr vector; a frailty index. One of "efi", "efragicap", "vafi", or "hfrs"
 #'
 #' @return dataframe with EFI occurences that can be summarized into an EFI using aouFI::getFI()
 #' @export
@@ -27,32 +29,48 @@
 #'     project = prefix,
 #'     dataset = release
 #'     )
-#' omop2efi(con = con, eligible = aouFI::getEligible())
+#' omop2fi(con = con, eligible = aouFI::getEligible(), index = "efi")
 #'
 omop2fi <- function(con, eligible, index){
 
-    if(!(index %in% c("efi", "efragicap", "hfrs", "vafi"))){
+    index_ = tolower(index)
+
+    if(!(index_ %in% c("efi", "efragicap", "hfrs", "vafi"))){
         stop("oops! frailty index not found; index must be one of: efi, efragicap, hfrs, or vafi.")
     }
 
     message(glue::glue("retrieving {index} concepts..."))
 
-    # saved dataset of all efragicap codes and concepts
-    # we may want to change this to go build this table everytime the function
-    # runs in case the mapping changes...
-    categories_concepts <- getConcepts(index = index)
+    # gets a dataframe with columns of category (general description of the FI category)
+    # and concept_id which is an OMOP concept ID for the FI category. FI categories can
+    # be repeated with different concept IDs, but there should be no concept_id duplicates.
+    # If the index is hfrs, there is an additional column called 'hfrs_score' which
+    # holds the point value for the hfrs concept.
+    # This function is documented in the package and pulls from data sources we generated
+    # using the AoU tables. Code for generating these tables can be made available.
+    categories_concepts <- getConcepts(index = index_)
 
     message("joining full concept id list...")
 
-    # get full list of concepts
+    # get full list of concepts from the concept table
+    # originally, this pulled from the All of Us cb_cohort and other
+    # tables specific to all of us. Switching to the general concept table
+    # made very little, except for hfrs. There were 51 additional concepts in the
+    # concept table that were not in the AoU table. We're still not sure what the
+    # difference is, but perhaps related to the is_selectable aspect of AoU...
     condition_concept_ids <- tbl(con, "concept") %>%
         filter(standard_concept == "S") %>%
         distinct(concept_id, name = concept_name, vocabulary_id) %>%
         filter(concept_id %in% !!unique(categories_concepts$concept_id)) %>%
         distinct()
 
-
     message("searching for condition occurrences...")
+
+    # The following four calls go find the presence of the concept IDs in the
+    # condition occurrence, procedure, observation, and device tabes, limiting
+    # the search to the person_ids and concepts in teh above condition_concept_ids
+    # table. They also calculate a start year and month which are important for
+    # later analyses that are dependent on when the FI event occurs.
 
     # go find instances of our concepts in the condition occurrence table
     cond_occurrences <- tbl(con, "condition_occurrence") %>%
@@ -131,9 +149,11 @@ omop2fi <- function(con, eligible, index){
 
     message("putting it all together...")
 
+    # we will need to join the concept IDs and labels back to the events
+    # after the four tables above are combined.
 
     # if the index is hfrs we also need to return the point value "score"
-    if(index == "hfrs"){
+    if(index_ == "hfrs"){
         categories_concepts <- categories_concepts %>%
             mutate(concept_id = as.integer(concept_id)) %>%
             distinct(concept_id, category, hfrs_score)
@@ -143,12 +163,12 @@ omop2fi <- function(con, eligible, index){
             distinct(concept_id, category)
     }
 
-    # put them all together, add the efi data back
+    # put them all together, add the fi labels back
     dat <-
         bind_rows(cond_occurrences, obs, dev, proc) %>%
         left_join(categories_concepts, by = c("concept_id"))
 
-    message(glue::glue("Success!!Retrieved {nrow(dat)} records."))
+    message(glue::glue("success! retrieved {nrow(dat)} records."))
 
     return(dat)
 
