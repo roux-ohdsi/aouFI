@@ -36,7 +36,9 @@ omop2hfrs <- function(con, eligible){
     # saved dataset of all efragicap codes and concepts
     # we may want to change this to go build this table everytime the function
     # runs in case the mapping changes...
-    categories_concepts <- getConcepts(index = "hfrs")
+    categories_concepts <- getConcepts(index = "hfrs") %>%
+        distinct(hfrs_category, hfrs_concept_id, hfrs_score)
+
 
 
 
