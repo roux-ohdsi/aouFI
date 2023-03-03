@@ -78,15 +78,28 @@ getConcepts <- function(index) {
     )
   } else if (index == "efragicap") {
 
-   return(get("efragicap_concepts"))
+   return(get("efragicap_concepts") |>
+              distinct(
+                  category,
+                  concept_id = efi_concept_id)
+                )
 
   } else if (index == "vafi") {
 
-   return(get("vafi_concepts"))
+   return(get("vafi_concepts") |>
+              distinct(
+                category = vafi_category,
+                concept_id = vafi_concept_id)
+                )
 
   } else if (index == "hfrs") {
 
-   return(get("hfrs_concepts"))
+   return(get("hfrs_concepts") |>
+              distinct(
+                  category = hfrs_category,
+                  concept_id = hfrs_concept_id,
+                  hfrs_score
+              ))
 
   }
 }
