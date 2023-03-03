@@ -65,10 +65,10 @@ omop2hfrs <- function(con, eligible){
                condition_end_datetime,
                stop_reason
         ) %>%
-        mutate(start_year = year(condition_start_datetime),
-               start_month = month(condition_start_datetime),
-               end_year = year(condition_end_datetime),
-               end_month = month(condition_end_datetime)) %>%
+        mutate(start_year = lubridate::year(condition_start_datetime),
+               start_month = lubridate::month(condition_start_datetime),
+               end_year = lubridate::year(condition_end_datetime),
+               end_month = lubridate::month(condition_end_datetime)) %>%
         select(-condition_start_datetime, -condition_end_datetime) %>%
         distinct() %>%
         collect()
@@ -87,8 +87,8 @@ omop2hfrs <- function(con, eligible){
         ) %>%
         distinct() %>%
         collect() %>%
-        mutate(start_year = year(observation_datetime),
-                        start_month = month(observation_datetime)) %>%
+        mutate(start_year = lubridate::year(observation_datetime),
+                        start_month = lubridate::month(observation_datetime)) %>%
         select(-observation_datetime)
 
 
@@ -103,8 +103,8 @@ omop2hfrs <- function(con, eligible){
                concept_name = name,
                procedure_datetime
         ) %>%
-        mutate(start_year = year(procedure_datetime),
-               start_month = month(procedure_datetime)) %>%
+        mutate(start_year = lubridate::year(procedure_datetime),
+               start_month = lubridate::month(procedure_datetime)) %>%
         select(-procedure_datetime) %>%
         distinct() %>%
         collect()
@@ -121,8 +121,8 @@ omop2hfrs <- function(con, eligible){
                concept_name = name,
                device_exposure_start_datetime
         ) %>%
-        mutate(start_year = year(device_exposure_start_datetime),
-               start_month = month(device_exposure_start_datetime)) %>%
+        mutate(start_year = lubridate::year(device_exposure_start_datetime),
+               start_month = lubridate::month(device_exposure_start_datetime)) %>%
         select(-device_exposure_start_datetime) %>%
         distinct() %>%
         collect()
