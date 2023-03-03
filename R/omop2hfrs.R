@@ -55,7 +55,7 @@ omop2hfrs <- function(con, eligible){
     message("searching for condition occurrences...")
 
     # go find instances of our concepts in the condition occurrence table
-    cond_occurances <- tbl(con, "condition_occurrence") %>%
+    cond_occurrences <- tbl(con, "condition_occurrence") %>%
         inner_join(eligible, by = "person_id") %>%
         inner_join(condition_concept_ids, by = c("condition_concept_id" = "concept_id")) %>%
         select(person_id,
@@ -137,11 +137,11 @@ omop2hfrs <- function(con, eligible){
 
     # put them all together, add the efi data back
     dat <-
-        bind_rows(cond_occurances, obs, dev, proc) %>%
+        bind_rows(cond_occurrences, obs, dev, proc) %>%
         left_join(categories_concepts,
                   by = c("concept_id" = "hfrs_concept_id"))
 
     message("Success!!")
-    return(dat)
+    return(obs)
 
 }
