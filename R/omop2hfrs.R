@@ -142,6 +142,6 @@ omop2hfrs <- function(con, eligible){
                   by = c("concept_id" = "hfrs_concept_id"))
 
     message("Success!!")
-    return(obs)
+    return(condition_concept_ids)
 
 }
