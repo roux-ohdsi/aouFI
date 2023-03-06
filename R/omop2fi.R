@@ -55,6 +55,8 @@ omop2fi <- function(con,
         device_exposure         = "device_exposure"
     }
 
+    if(!("person_id" %in% colnames(eligible))){stop("eligible must contain person_id column")}
+
     index_ = tolower(index)
 
     if(!(index_ %in% c("efi", "efragicap", "hfrs", "vafi"))){
