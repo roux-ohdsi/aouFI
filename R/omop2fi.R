@@ -112,9 +112,8 @@ omop2fi <- function(con,
                end_year = lubridate::year(condition_end_datetime),
                end_month = lubridate::month(condition_end_datetime)) %>%
         select(-condition_start_datetime, -condition_end_datetime) %>%
-        distinct() %>%
-        collect()
-
+        distinct() # %>%
+        # collect()
 
     message("searching for observations...")
 
@@ -128,7 +127,7 @@ omop2fi <- function(con,
                observation_datetime
         ) %>%
         distinct() %>%
-        collect() %>%
+        #collect() %>%
         # this had to get moved to after the collect because hfrs returns some odd
         # rows from the observation table which bigquery doesn't like...¯\_(ツ)_/¯
         mutate(start_year = as.integer(lubridate::year(observation_datetime)),
@@ -149,8 +148,8 @@ omop2fi <- function(con,
         mutate(start_year = lubridate::year(procedure_datetime),
                start_month = lubridate::month(procedure_datetime)) %>%
         select(-procedure_datetime) %>%
-        distinct() %>%
-        collect()
+        distinct()# %>%
+        #collect()
 
 
     message("searching for device exposures...")
@@ -167,8 +166,8 @@ omop2fi <- function(con,
         mutate(start_year = lubridate::year(device_exposure_start_datetime),
                start_month = lubridate::month(device_exposure_start_datetime)) %>%
         select(-device_exposure_start_datetime) %>%
-        distinct() %>%
-        collect()
+        distinct() #%>%
+        #collect()
 
 
     message("putting it all together...")
@@ -189,7 +188,7 @@ omop2fi <- function(con,
 
     # put them all together, add the fi labels back
     dat <-
-        bind_rows(cond_occurrences, obs, dev, proc) %>%
+        union_all(cond_occurrences, obs, dev, proc) %>%
         left_join(categories_concepts, by = c("concept_id"))
 
     message(glue::glue("success! retrieved {nrow(dat)} records."))
