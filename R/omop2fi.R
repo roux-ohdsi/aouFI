@@ -18,6 +18,7 @@
 #' in the all of us databse using getEligible() which returns a single column dataframe with
 #' participatns older than 50 and younger than 120. For other datasources, will need to be custom made.
 #' @param index chr vector; a frailty index. One of "efi", "efragicap", "vafi", or "hfrs"
+#' @param condition_occurrence_table chr vector: allows you to app
 #'
 #' @return dataframe with EFI occurences that can be summarized into an EFI using aouFI::getFI()
 #' @export
@@ -31,7 +32,28 @@
 #'     )
 #' omop2fi(con = con, eligible = aouFI::getEligible(), index = "efi")
 #'
-omop2fi <- function(con, eligible, index){
+omop2fi <- function(con,
+                    eligible,
+                    index,
+                    schema = NULL){
+
+    if(!is.null(schema)){
+
+        if(!is.character(schema)){stop("schema must be a character vector")}
+
+        concept                 = paste(schema, "concept", sep = ".")
+        condition_occurrence    = paste(schema, "condition_occurrence", sep = ".")
+        observation             = paste(schema, "observation", sep = ".")
+        procedure_occurrence    = paste(schema, "procedure_occurrence", sep = ".")
+        device_exposure         = paste(schema, "device_exposure", sep = ".")
+
+    } else {
+        concept                 = "concept"
+        condition_occurrence    = "condition_occurrence"
+        observation             = "observation"
+        procedure_occurrence    = "procedure_occurrence"
+        device_exposure         = "device_exposure"
+    }
 
     index_ = tolower(index)
 
@@ -58,7 +80,7 @@ omop2fi <- function(con, eligible, index){
     # made very little, except for hfrs. There were 51 additional concepts in the
     # concept table that were not in the AoU table. We're still not sure what the
     # difference is, but perhaps related to the is_selectable aspect of AoU...
-    condition_concept_ids <- tbl(con, "concept") %>%
+    condition_concept_ids <- tbl(con, concept) %>%
         filter(standard_concept == "S") %>%
         distinct(concept_id, name = concept_name, vocabulary_id) %>%
         filter(concept_id %in% !!unique(categories_concepts$concept_id)) %>%
@@ -73,7 +95,7 @@ omop2fi <- function(con, eligible, index){
     # later analyses that are dependent on when the FI event occurs.
 
     # go find instances of our concepts in the condition occurrence table
-    cond_occurrences <- tbl(con, "condition_occurrence") %>%
+    cond_occurrences <- tbl(con, condition_occurrence) %>%
         inner_join(eligible, by = "person_id") %>%
         inner_join(condition_concept_ids, by = c("condition_concept_id" = "concept_id")) %>%
         select(person_id,
@@ -95,7 +117,7 @@ omop2fi <- function(con, eligible, index){
     message("searching for observations...")
 
     # do the same for the observation table
-    obs <- tbl(con, "observation") %>%
+    obs <- tbl(con, observation) %>%
         inner_join(eligible, by = "person_id") %>%
         inner_join(condition_concept_ids, by = c("observation_concept_id" = "concept_id")) %>%
         select(person_id,
@@ -114,7 +136,7 @@ omop2fi <- function(con, eligible, index){
     message("searching for procedures...")
 
     # procedure table
-    proc <- tbl(con, "procedure_occurrence") %>%
+    proc <- tbl(con, procedure_occurrence) %>%
         inner_join(eligible, by = "person_id") %>%
         inner_join(condition_concept_ids, by = c("procedure_concept_id" = "concept_id")) %>%
         select(person_id,
@@ -132,7 +154,7 @@ omop2fi <- function(con, eligible, index){
     message("searching for device exposures...")
 
     # device exposure
-    dev <- tbl(con, "device_exposure") %>%
+    dev <- tbl(con, device_exposure) %>%
         inner_join(eligible, by = "person_id") %>%
         inner_join(condition_concept_ids, by = c("device_concept_id" = "concept_id")) %>%
         select(person_id,
