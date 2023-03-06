@@ -189,7 +189,7 @@ omop2fi <- function(con,
     # put them all together, add the fi labels back
     dat <-
         union_all(cond_occurrences, obs, dev, proc) %>%
-        left_join(categories_concepts, by = c("concept_id"))
+        left_join(categories_concepts, by = c("concept_id"), copy = TRUE)
 
     message(glue::glue("success! retrieved {nrow(dat)} records."))
 
