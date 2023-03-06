@@ -39,7 +39,7 @@ omop2fi <- function(con,
 
     if(!is.null(schema)){
 
-        if(!is.character(schema)){stop("schema must be a character vector")}
+        #if(!is.character(schema)){stop("schema must be a character vector")}
 
         concept                 = paste(schema, "concept", sep = ".")
         condition_occurrence    = paste(schema, "condition_occurrence", sep = ".")
@@ -55,13 +55,13 @@ omop2fi <- function(con,
         device_exposure         = "device_exposure"
     }
 
-    if(!("person_id" %in% colnames(eligible))){stop("eligible must contain person_id column")}
+    #if(!("person_id" %in% colnames(eligible))){stop("eligible must contain person_id column")}
 
     index_ = tolower(index)
 
-    if(!(index_ %in% c("efi", "efragicap", "hfrs", "vafi"))){
-        stop("oops! frailty index not found; index must be one of: efi, efragicap, hfrs, or vafi.")
-    }
+    # if(!(index_ %in% c("efi", "efragicap", "hfrs", "vafi"))){
+    #     stop("oops! frailty index not found; index must be one of: efi, efragicap, hfrs, or vafi.")
+    # }
 
     #message(glue::glue("retrieving {index} concepts..."))
 
