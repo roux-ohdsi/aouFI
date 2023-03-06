@@ -63,7 +63,7 @@ omop2fi <- function(con,
         stop("oops! frailty index not found; index must be one of: efi, efragicap, hfrs, or vafi.")
     }
 
-    message(glue::glue("retrieving {index} concepts..."))
+    #message(glue::glue("retrieving {index} concepts..."))
 
     # gets a dataframe with columns of category (general description of the FI category)
     # and concept_id which is an OMOP concept ID for the FI category. FI categories can
@@ -74,7 +74,7 @@ omop2fi <- function(con,
     # using the AoU tables. Code for generating these tables can be made available.
     categories_concepts <- getConcepts(index = index_)
 
-    message("joining full concept id list...")
+    #message("joining full concept id list...")
 
     # get full list of concepts from the concept table
     # originally, this pulled from the All of Us cb_cohort and other
@@ -88,7 +88,7 @@ omop2fi <- function(con,
         filter(concept_id %in% !!unique(categories_concepts$concept_id)) %>%
         distinct()
 
-    message("searching for condition occurrences...")
+    #message("searching for condition occurrences...")
 
     # The following four calls go find the presence of the concept IDs in the
     # condition occurrence, procedure, observation, and device tabes, limiting
@@ -115,7 +115,7 @@ omop2fi <- function(con,
         distinct() # %>%
         # collect()
 
-    message("searching for observations...")
+    #message("searching for observations...")
 
     # do the same for the observation table
     obs <- tbl(con, observation) %>%
@@ -134,7 +134,7 @@ omop2fi <- function(con,
                         start_month = as.integer(lubridate::month(observation_datetime))) %>%
         select(-observation_datetime)
 
-    message("searching for procedures...")
+    #message("searching for procedures...")
 
     # procedure table
     proc <- tbl(con, procedure_occurrence) %>%
@@ -152,7 +152,7 @@ omop2fi <- function(con,
         #collect()
 
 
-    message("searching for device exposures...")
+    #message("searching for device exposures...")
 
     # device exposure
     dev <- tbl(con, device_exposure) %>%
@@ -170,7 +170,7 @@ omop2fi <- function(con,
         #collect()
 
 
-    message("putting it all together...")
+    #message("putting it all together...")
 
     # we will need to join the concept IDs and labels back to the events
     # after the four tables above are combined.
@@ -191,7 +191,7 @@ omop2fi <- function(con,
         union_all(cond_occurrences, obs, dev, proc) %>%
         left_join(categories_concepts, by = c("concept_id"), copy = TRUE)
 
-    message(glue::glue("success! retrieved {nrow(dat)} records."))
+    #message(glue::glue("success! retrieved {nrow(dat)} records."))
 
     return(dat)
 
