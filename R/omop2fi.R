@@ -19,7 +19,8 @@
 #' participatns older than 50 and younger than 120. For other datasources, will need to be custom made.
 #' @param index chr vector; a frailty index. One of "efi", "efragicap", "vafi", or "hfrs"
 #' @param schema chr vector: a character vector of the schema holding the table. defaults to NULL (no schema)
-#' @param collect log; should the query be collected at the end or kept as an SQL query?
+#' @param collect log; should the query be collected at the end or kept as an SQL query? This must be TRUE for bigquery
+#' because bigquery does not permit temporary tables.
 #'
 #' @return dataframe with EFI occurences that can be summarized into an EFI using aouFI::getFI()
 #' @export
