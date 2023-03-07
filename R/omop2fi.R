@@ -18,7 +18,8 @@
 #' in the all of us databse using getEligible() which returns a single column dataframe with
 #' participatns older than 50 and younger than 120. For other datasources, will need to be custom made.
 #' @param index chr vector; a frailty index. One of "efi", "efragicap", "vafi", or "hfrs"
-#' @param condition_occurrence_table chr vector: allows you to app
+#' @param schema chr vector: a character vector of the schema holding the table. defaults to NULL (no schema)
+#' @param collect log; should the query be collected at the end or kept as an SQL query?
 #'
 #' @return dataframe with EFI occurences that can be summarized into an EFI using aouFI::getFI()
 #' @export
@@ -35,7 +36,9 @@
 omop2fi <- function(con,
                     eligible,
                     index,
-                    schema = NULL){
+                    schema = NULL,
+                    collect = FALSE
+                    ){
 
     if(!is.null(schema)){
 
@@ -84,9 +87,8 @@ omop2fi <- function(con,
     # difference is, but perhaps related to the is_selectable aspect of AoU...
     condition_concept_ids <- tbl(con, concept) %>%
         filter(standard_concept == "S") %>%
-        distinct(concept_id, name = concept_name, vocabulary_id) %>%
-        filter(concept_id %in% !!unique(categories_concepts$concept_id)) %>%
-        distinct()
+        distinct(concept_id, name = concept_name) %>% # vocabulary_id
+        filter(concept_id %in% !!unique(categories_concepts$concept_id))
 
     message("searching for condition occurrences...")
 
@@ -107,8 +109,7 @@ omop2fi <- function(con,
                #end_date = condition_end_date,
                #stop_reason
         ) %>%
-        distinct()  %>%
-         collect()
+        distinct()
 
     message("searching for observations...")
 
@@ -121,8 +122,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = observation_date,
         ) %>%
-        distinct() %>%
-        collect()
+        distinct()
 
     message("searching for procedures...")
 
@@ -135,8 +135,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = procedure_date
         ) %>%
-        distinct() %>%
-        collect()
+        distinct()
 
 
     message("searching for device exposures...")
@@ -150,11 +149,10 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = device_exposure_start_date
         ) %>%
-        distinct() %>%
-        collect()
+        distinct()
 
 
-    message("putting it all together and collecting...")
+    message("putting it all together...")
 
     # we will need to join the concept IDs and labels back to the events
     # after the four tables above are combined.
@@ -172,11 +170,24 @@ omop2fi <- function(con,
 
     # put them all together, add the fi labels back
     dat <-
-        bind_rows(cond_occurrences, obs, dev, proc) %>%
-       # collect() %>%
-        left_join(categories_concepts, by = c("concept_id"))
+        union_all(cond_occurrences, obs, dev, proc)
 
-    message(glue::glue("success! retrieved {nrow(dat)} records."))
+    # Logic to determine whether a collected df or just a query should be returned.
+    # note that copying if false can still take some time...
+    if(isTRUE(collect)){
+        message("collecting...")
+        dat <- dat %>%
+            collect() %>%
+            left_join(categories_concepts, by = c("concept_id"))
+        message(glue::glue("success! retrieved {nrow(dat)} records."))
+    } else {
+        message("copying...")
+        dat <- dat %>%
+            left_join(categories_concepts, by = c("concept_id"), copy = TRUE)
+        message(glue::glue("success! SQL query from dbplyr returned"))
+    }
+
+
 
     return(dat)
 
