@@ -121,7 +121,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = observation_date,
         ) %>%
-        mutate(end_date = NA, stop_reason = NA) %>%
+        #mutate(end_date = NA, stop_reason = NA) %>%
         distinct()# %>%
         #collect()
 
@@ -136,7 +136,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = procedure_date
         ) %>%
-        mutate(end_date = NA, stop_reason = NA) %>%
+        #mutate(end_date = NA, stop_reason = NA) %>%
         distinct()# %>%
         #collect()
 
@@ -152,7 +152,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = device_exposure_start_date
         ) %>%
-        mutate(end_date = NA, stop_reason = NA) %>%
+        #mutate(end_date = NA, stop_reason = NA) %>%
         distinct() #%>%
         #collect()
 
