@@ -103,15 +103,15 @@ omop2fi <- function(con,
         select(person_id,
                concept_id = condition_concept_id,
                concept_name = name,
-               condition_start_datetime,
-               condition_end_datetime,
+               condition_start_date,
+               condition_end_date,
                stop_reason
         ) %>%
-        mutate(start_year = lubridate::year(condition_start_datetime),
-               start_month = lubridate::month(condition_start_datetime),
-               end_year = lubridate::year(condition_end_datetime),
-               end_month = lubridate::month(condition_end_datetime)) %>%
-        select(-condition_start_datetime, -condition_end_datetime) %>%
+        mutate(start_year = lubridate::year(condition_start_date),
+               start_month = lubridate::month(condition_start_date),
+               end_year = lubridate::year(condition_end_date),
+               end_month = lubridate::month(condition_end_date)) %>%
+        select(-condition_start_date, -condition_end_date) %>%
         distinct() # %>%
         # collect()
 
@@ -124,15 +124,15 @@ omop2fi <- function(con,
         select(person_id,
                concept_id = observation_concept_id,
                concept_name = name,
-               observation_datetime
+               observation_date
         ) %>%
         distinct() %>%
         #collect() %>%
         # this had to get moved to after the collect because hfrs returns some odd
         # rows from the observation table which bigquery doesn't like...¯\_(ツ)_/¯
-        mutate(start_year = as.integer(lubridate::year(observation_datetime)),
-                        start_month = as.integer(lubridate::month(observation_datetime))) %>%
-        select(-observation_datetime)
+        mutate(start_year = as.integer(lubridate::year(observation_date)),
+                        start_month = as.integer(lubridate::month(observation_date))) %>%
+        select(-observation_date)
 
     message("searching for procedures...")
 
@@ -143,11 +143,11 @@ omop2fi <- function(con,
         select(person_id,
                concept_id = procedure_concept_id,
                concept_name = name,
-               procedure_datetime
+               procedure_date
         ) %>%
-        mutate(start_year = lubridate::year(procedure_datetime),
-               start_month = lubridate::month(procedure_datetime)) %>%
-        select(-procedure_datetime) %>%
+        mutate(start_year = lubridate::year(procedure_date),
+               start_month = lubridate::month(procedure_date)) %>%
+        select(-procedure_date) %>%
         distinct()# %>%
         #collect()
 
@@ -161,11 +161,11 @@ omop2fi <- function(con,
         select(person_id,
                concept_id = device_concept_id,
                concept_name = name,
-               device_exposure_start_datetime
+               device_exposure_start_date
         ) %>%
-        mutate(start_year = lubridate::year(device_exposure_start_datetime),
-               start_month = lubridate::month(device_exposure_start_datetime)) %>%
-        select(-device_exposure_start_datetime) %>%
+        mutate(start_year = lubridate::year(device_exposure_start_date),
+               start_month = lubridate::month(device_exposure_start_date)) %>%
+        select(-device_exposure_start_date) %>%
         distinct() #%>%
         #collect()
 
