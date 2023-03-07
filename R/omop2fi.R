@@ -103,9 +103,9 @@ omop2fi <- function(con,
         select(person_id,
                concept_id = condition_concept_id,
                concept_name = name,
-               start_date = condition_start_date,
-               end_date = condition_end_date,
-               stop_reason
+               start_date = condition_start_date#,
+               #end_date = condition_end_date,
+               #stop_reason
         ) %>%
         distinct()  %>%
          collect()
