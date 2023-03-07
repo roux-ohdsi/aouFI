@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# aouRoux
+# aouFI
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -10,27 +10,41 @@ R package of helper functions for the Roux OHDSI Frailty project
 
 ## Installation
 
-You can install the development version of aouFI like so:
-
 ``` r
-remotes::install_github("roux-ohdsi/aouFI)
+remotes::install_github("roux-ohdsi/aouFI")
 ```
 
-## Current list of functions
+## Functions
 
-- `getFI()` returns fralty scores for a several FIs given a dataframe of
-  person_id’s, start, and end dates. It requires a specific data input
-  format and isn’t terribly flexible yet.
 - `getEligible()` retrieves a single column dataframe of person_ids from
   the AoU database (when provided with a database connection) that are
-  \> 50 years old and \< 120 years old.
+  \> 50 years old and \< 120 years old (defaults).
+- `getConcepts()` retrieves index concept_ids and names
 - `omop2fi()` returns a dataframe of frailty category occurrences when
   given a database connection to any (in theory) OMOP CDM database and a
   table of person_id values (e.g., from `getEligible()`), and a frailty
   index (one of efi, efragicap, vafi, or hfrs). In theory, this data can
   be used with `getFI()` though this is not yet tested…
+- `getFI()` returns frailty scores for a several FIs given a dataframe
+  of person_id’s, start, and end dates. It requires a specific data
+  input format and isn’t terribly flexible yet.
 
-## Current list of useful tables
+## Data
+
+### FI Tables
+
+These tables hold concept_ids and concept names for each of the frailty
+indices. They can be queried using `getConcepts()`. Used by the
+`omop2fi()` function.
+
+- efi_concepts.rda
+- efragicap_concepts.rda
+- hfrs_concepts.rda
+- vafi_concepts.rda
+
+Data generating scripts are either in data-raw on on the AoU workbench…
+
+### Other useful tables
 
 - `survey_names` List of surveys given in All of US
 - `FI_labels` Paper-ready names for AouFI variables with a linking
@@ -38,7 +52,9 @@ remotes::install_github("roux-ohdsi/aouFI)
 - `simulated_ehr` Simulated ehr data to search - similar to what would
   be returned by `omop2fi()`. This will be used for testing and demo
   purposes. It can be used with getFI(). The values in this data are
-  entirely fabricated based on code in /data-raw
+  entirely fabricated based on code in /data-raw. Next step is to add a
+  third dataset with occurrences that don’t fall within any of the FIs
+  as well to be able to test the omop2fi function.
 - `simulated_cohort` Simulated cohort with a starting search date. Can
   be used with `simulated_ehr` to use the `getFI()` function. It
   contains a sample of fake participants in simulated_ehr with randomly
