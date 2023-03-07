@@ -170,7 +170,7 @@ omop2fi <- function(con,
         #collect()
 
 
-    message("putting it all together...")
+    message("putting it all together and collecting...")
 
     # we will need to join the concept IDs and labels back to the events
     # after the four tables above are combined.
@@ -189,7 +189,8 @@ omop2fi <- function(con,
     # put them all together, add the fi labels back
     dat <-
         union_all(cond_occurrences, obs, dev, proc) %>%
-        left_join(categories_concepts, by = c("concept_id"), copy = TRUE)
+        collect() %>%
+        left_join(categories_concepts, by = c("concept_id"))
 
     message(glue::glue("success! retrieved {nrow(dat)} records."))
 
