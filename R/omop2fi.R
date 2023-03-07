@@ -172,7 +172,7 @@ omop2fi <- function(con,
 
     # put them all together, add the fi labels back
     dat <-
-        union_all(cond_occurrences, obs, dev, proc) %>%
+        bind_rows(cond_occurrences, obs, dev, proc) %>%
        # collect() %>%
         left_join(categories_concepts, by = c("concept_id"))
 
