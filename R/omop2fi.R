@@ -107,8 +107,8 @@ omop2fi <- function(con,
                end_date = condition_end_date,
                stop_reason
         ) %>%
-        distinct() # %>%
-        # collect()
+        distinct()  %>%
+         collect()
 
     message("searching for observations...")
 
@@ -121,9 +121,8 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = observation_date,
         ) %>%
-        #mutate(end_date = NA, stop_reason = NA) %>%
-        distinct()# %>%
-        #collect()
+        distinct() %>%
+        collect()
 
     message("searching for procedures...")
 
@@ -136,9 +135,8 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = procedure_date
         ) %>%
-        #mutate(end_date = NA, stop_reason = NA) %>%
-        distinct()# %>%
-        #collect()
+        distinct() %>%
+        collect()
 
 
     message("searching for device exposures...")
@@ -152,9 +150,8 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = device_exposure_start_date
         ) %>%
-        #mutate(end_date = NA, stop_reason = NA) %>%
-        distinct() #%>%
-        #collect()
+        distinct() %>%
+        collect()
 
 
     message("putting it all together and collecting...")
@@ -176,7 +173,7 @@ omop2fi <- function(con,
     # put them all together, add the fi labels back
     dat <-
         union_all(cond_occurrences, obs, dev, proc) %>%
-        collect() %>%
+       # collect() %>%
         left_join(categories_concepts, by = c("concept_id"))
 
     message(glue::glue("success! retrieved {nrow(dat)} records."))

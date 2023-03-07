@@ -18,7 +18,7 @@ getFI = function(
                 person_id = "person_id",
                 concept_id = "concept_id",
                 concept_name = "concept_name",
-                concept_start_date,
+                concept_start_date = "start_date",
 
                  .data_search,
                  search_person_id,
