@@ -45,7 +45,7 @@ getFI = function(
 
     pid = .data_search  |>
         dplyr::select(personId = !!search_person_id,
-                      startDate = !!search_start_dat) |>
+                      startDate = !!search_start_date) |>
         dplyr::mutate(
             endDate = startDate + !!interval,
             search_interval = lubridate::interval(
