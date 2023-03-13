@@ -80,8 +80,6 @@ getFI = function(
     tmp = tmp |>
         dplyr::distinct(personId, categoryName, score)
 
-    print(length(unique()))
-
     groupVar = ifelse(group_var == "person_id", "personId", "categoryName")
 
 
