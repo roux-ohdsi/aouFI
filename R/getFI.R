@@ -9,7 +9,6 @@
 #' @param summary log; whether to return summary data or results broken out by FI concept
 #' @param group_var chr; whether to summarize by "person" (default) or "category"
 #' @param rejoin log; if TRUE, will join results back to .data_search. defaults to FALSE
-#' @param ... ; additional grouping variables for summarizing. Column name in .data_search (E.g., calculate by year.)
 #'
 #' @return A dataframe of FI indices or raw values
 #' @export
@@ -25,7 +24,7 @@ getFI = function(
                  search_start_date,
                  interval = 365,
 
-                 summary, group_var, rejoin = FALSE, ...){
+                 summary, group_var, rejoin = FALSE){
 
     if(group_var != "person_id" & group_var != "category"){
         stop("OOPS! please select an allowable grouping variable")
@@ -44,12 +43,9 @@ getFI = function(
     #     stop("OOPS! data and selected index are mismatched")
     # }
 
-    additional_groups = enquos(...)
-
     pid = .data_search  |>
         dplyr::select(personId = !!search_person_id,
-                      startDate = !!search_start_date,
-                      !!!additional_groups) |>
+                      startDate = !!search_start_dat) |>
         dplyr::mutate(
             endDate = startDate + !!interval,
             search_interval = lubridate::interval(
@@ -82,7 +78,7 @@ getFI = function(
 
     cat("Generating distinct occurances for person_id/category combo... \n")
     tmp = tmp |>
-        dplyr::distinct(personId, conceptName, score, !!!additional_groups, .keep_all = TRUE)
+        dplyr::distinct(personId, conceptName, score)
 
     groupVar = ifelse(group_var == "person_id", "personId", "conceptName")
 
@@ -96,7 +92,7 @@ getFI = function(
     if(isTRUE(summary)){
         cat("Summarizing data ... \n")
         tmp = tmp |>
-            dplyr::group_by(.data[[groupVar]], !!!additional_groups) |>
+            dplyr::group_by(.data[[groupVar]]) |>
             dplyr::summarize(FI = sum(score)) |>
             dplyr::arrange(desc(FI)) |>
             rename(person_id = personId) |>
