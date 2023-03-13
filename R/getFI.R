@@ -16,7 +16,7 @@ getFI = function(
                 .data, weighted_fi = NA,
                 person_id = "person_id",
                 concept_id = "concept_id",
-                concept_name = "concept_name",
+                category = "category",
                 concept_start_date = "start_date",
 
                  .data_search,
@@ -65,7 +65,7 @@ getFI = function(
         select(
             personId = !!person_id,
             conceptId = !!concept_id,
-            conceptName = !!concept_name,
+            categoryName = !!category,
             date = !!concept_start_date
         ) |>
         dplyr::filter(personId %in% pid$personId) |>
@@ -78,13 +78,11 @@ getFI = function(
 
     cat("Generating distinct occurances for person_id/category combo... \n")
     tmp = tmp |>
-        dplyr::distinct(personId, conceptName, score)
+        dplyr::distinct(personId, categoryName, score)
 
-    print(head(tmp))
+    print(length(unique()))
 
-    print(glimpse(tmp))
-
-    groupVar = ifelse(group_var == "person_id", "personId", "conceptName")
+    groupVar = ifelse(group_var == "person_id", "personId", "categoryName")
 
 
     # if people in the search data were not in the efi data (no EHR obs)
