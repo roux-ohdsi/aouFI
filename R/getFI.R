@@ -80,6 +80,10 @@ getFI = function(
     tmp = tmp |>
         dplyr::distinct(personId, conceptName, score)
 
+    print(head(tmp))
+
+    print(glimpse(tmp))
+
     groupVar = ifelse(group_var == "person_id", "personId", "conceptName")
 
 
