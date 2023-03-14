@@ -79,7 +79,7 @@ getFI = function(
                score,
                startDate,
                endDate,
-               searchInterval)
+               search_interval)
 
     # if its a summary dataframe, summarize by person or category
     # HFRS adds up the scores, otherwise we're just counting rows
