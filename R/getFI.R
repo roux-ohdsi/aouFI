@@ -62,16 +62,24 @@ getFI = function(
     # rename columns to be generic
     # keep only rows within the interval
     tmp = .data |>
-        select(
+        rename(
             personId = !!person_id,
             conceptId = !!concept_id,
             categoryName = !!category,
             date = !!concept_start_date
         ) |>
         dplyr::filter(personId %in% pid$personId) |>
-        dplyr::mutate(score = ifelse(is.na(!!weighted_fi), 1, .data[[weighted_fi]])) |>
+        dplyr::mutate(score = ifelse(is.na(!!weighted_fi), 1, weighted_fi)) |>
         dplyr::left_join(pid, by = "personId") |>
-        mutate(score = ifelse(date %within% search_interval, score, 0))
+        dplyr::mutate(score = ifelse(date %within% search_interval, score, 0)) |>
+        dplyr::select(personId,
+               conceptId,
+               categoryName,
+               date,
+               score,
+               startDate,
+               endDate,
+               searchInterval)
 
     # if its a summary dataframe, summarize by person or category
     # HFRS adds up the scores, otherwise we're just counting rows
