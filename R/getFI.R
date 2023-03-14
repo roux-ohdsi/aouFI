@@ -69,7 +69,7 @@ getFI = function(
             date = !!concept_start_date
         ) |>
         dplyr::filter(personId %in% pid$personId) |>
-        dplyr::mutate(score = ifelse(is.na(!!weighted_fi), 1, weighted_fi)) |>
+        dplyr::mutate(score = ifelse(is.na(!!weighted_fi), 1, .data[[weighted_fi]])) |>
         dplyr::left_join(pid, by = "personId") |>
         dplyr::mutate(score = ifelse(date %within% search_interval, score, 0)) |>
         dplyr::select(personId,
