@@ -76,44 +76,10 @@ omop2fi <- function(con,
     }
 
 
-    if(isTRUE(bigquery)){
-
-        tmp_con <- DBI::dbConnect(RSQLite::SQLite(), dbname = ":memory:")
-
-        cohort = .data_search |>
-            dplyr::select(person_id = !!search_person_id,
-                          person_start_date = !!search_start_date,
-                          person_end_date = !!search_end_date) |>
-            dplyr::mutate(
-                search_interval = lubridate::interval(
-                    lubridate::ymd(person_start_date), lubridate::ymd(person_end_date)
-                )
-            )
-
-        copy_to(tmp_con, cohort, "cohort",
-                temporary = FALSE,
-                indexes = list(
-                    "person_id"
-                )
-        )
-
-        pid = tbl(tmp_con, "cohort")
-
-
-    } else {
-            cohort = .data_search |>
+     cohort = .data_search |>
                 dplyr::select(person_id = !!search_person_id,
                               person_start_date = !!search_start_date,
-                              person_end_date = !!search_end_date) |>
-                dplyr::mutate(
-                    search_interval = lubridate::interval(
-                        lubridate::ymd(person_start_date), lubridate::ymd(person_end_date)
-                    )
-                )
-
-            pid = condition_concept_ids <- tbl(con, person) |>
-                inner_join(cohort, by = "person_id", copy = TRUE)
-    }
+                              person_end_date = !!search_end_date)
 
 
     message(glue::glue("retrieving {index} concepts..."))
@@ -159,7 +125,7 @@ omop2fi <- function(con,
                #end_date = condition_end_date,
                #stop_reason
         ) |>
-        filter(start_date %within% search_interval) |>
+        filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
     message("searching for observations...")
@@ -173,7 +139,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = observation_date,
         ) |>
-        filter(start_date %within% search_interval) |>
+        filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
     message("searching for procedures...")
@@ -187,7 +153,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = procedure_date
         ) |>
-        filter(start_date %within% search_interval) |>
+        filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
 
@@ -202,7 +168,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = device_exposure_start_date
         ) |>
-        filter(start_date %within% search_interval) |>
+        filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
 
