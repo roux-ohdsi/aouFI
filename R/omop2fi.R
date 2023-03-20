@@ -74,8 +74,7 @@ omop2fi <- function(con,
     }
 
 
-    pid = condition_concept_ids <- tbl(con, person) |>
-        inner_join(.data_search, by = c("person_id" == search_person_id), copy = TRUE) |>
+    cohort = .data_search |>
         dplyr::select(person_id = !!search_person_id,
                       person_start_date = !!search_start_date,
                       person_end_date = !!search_end_date) |>
@@ -84,6 +83,9 @@ omop2fi <- function(con,
                 lubridate::ymd(person_start_date), lubridate::ymd(person_end_date)
             )
         )
+
+    pid = condition_concept_ids <- tbl(con, person) |>
+        inner_join(cohort, by = "person_id", copy = TRUE) |>
 
 
     message(glue::glue("retrieving {index} concepts..."))
