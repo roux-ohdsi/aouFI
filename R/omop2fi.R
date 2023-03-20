@@ -54,6 +54,7 @@ omop2fi <- function(con,
         observation             = paste(schema, "observation", sep = ".")
         procedure_occurrence    = paste(schema, "procedure_occurrence", sep = ".")
         device_exposure         = paste(schema, "device_exposure", sep = ".")
+        person                  = paste(schema, "person")
 
     } else {
         concept                 = "concept"
@@ -61,6 +62,7 @@ omop2fi <- function(con,
         observation             = "observation"
         procedure_occurrence    = "procedure_occurrence"
         device_exposure         = "device_exposure"
+        person                  = "person"
     }
 
     if(!("person_id" %in% colnames(eligible))){stop("eligible must contain person_id column")}
@@ -72,7 +74,8 @@ omop2fi <- function(con,
     }
 
 
-    pid = .data_search  |>
+    pid = condition_concept_ids <- tbl(con, person) |>
+        inner_join(.data_search, by = c("person_id" == !!search_person_id), copy = TRUE) |>
         dplyr::select(person_id = !!search_person_id,
                       person_start_date = !!search_start_date,
                       person_end_date = !!search_end_date) |>
