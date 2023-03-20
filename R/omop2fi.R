@@ -42,7 +42,9 @@ omop2fi <- function(con,
                     .data_search,
                     search_person_id,
                     search_start_date,
-                    search_end_date
+                    search_end_date,
+
+                    bigquery = FALSE
                     ){
 
     if(!is.null(schema)){
@@ -74,18 +76,44 @@ omop2fi <- function(con,
     }
 
 
-    cohort = .data_search |>
-        dplyr::select(person_id = !!search_person_id,
-                      person_start_date = !!search_start_date,
-                      person_end_date = !!search_end_date) |>
-        dplyr::mutate(
-            search_interval = lubridate::interval(
-                lubridate::ymd(person_start_date), lubridate::ymd(person_end_date)
+    if(isTRUE(bigquery)){
+
+        tmp_con <- DBI::dbConnect(RSQLite::SQLite(), dbname = ":memory:")
+
+        cohort = .data_search |>
+            dplyr::select(person_id = !!search_person_id,
+                          person_start_date = !!search_start_date,
+                          person_end_date = !!search_end_date) |>
+            dplyr::mutate(
+                search_interval = lubridate::interval(
+                    lubridate::ymd(person_start_date), lubridate::ymd(person_end_date)
+                )
             )
+
+        copy_to(tmp_con, cohort, "cohort",
+                temporary = FALSE,
+                indexes = list(
+                    "person_id"
+                )
         )
 
-    pid = condition_concept_ids <- tbl(con, person) |>
-        inner_join(cohort, by = "person_id", copy = TRUE) |>
+        pid = tbl(tmp_con, "cohort")
+
+
+    } else {
+            cohort = .data_search |>
+                dplyr::select(person_id = !!search_person_id,
+                              person_start_date = !!search_start_date,
+                              person_end_date = !!search_end_date) |>
+                dplyr::mutate(
+                    search_interval = lubridate::interval(
+                        lubridate::ymd(person_start_date), lubridate::ymd(person_end_date)
+                    )
+                )
+
+            pid = condition_concept_ids <- tbl(con, person) |>
+                inner_join(cohort, by = "person_id", copy = TRUE)
+    }
 
 
     message(glue::glue("retrieving {index} concepts..."))
