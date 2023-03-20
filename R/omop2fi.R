@@ -35,10 +35,14 @@
 #' omop2fi(con = con, eligible = aouFI::getEligible(), index = "efi")
 #'
 omop2fi <- function(con,
-                    eligible,
                     index,
                     schema = NULL,
-                    collect = FALSE
+                    collect = FALSE,
+
+                    .data_search,
+                    search_person_id,
+                    search_start_date,
+                    search_end_date
                     ){
 
     if(!is.null(schema)){
@@ -67,6 +71,18 @@ omop2fi <- function(con,
         stop("oops! frailty index not found; index must be one of: efi, efragicap, hfrs, or vafi.")
     }
 
+
+    pid = .data_search  |>
+        dplyr::select(person_id = !!search_person_id,
+                      person_start_date = !!search_start_date,
+                      person_end_date = !!search_end_date) |>
+        dplyr::mutate(
+            search_interval = lubridate::interval(
+                lubridate::ymd(person_start_date), lubridate::ymd(person_end_date)
+            )
+        )
+
+
     message(glue::glue("retrieving {index} concepts..."))
 
     # gets a dataframe with columns of category (general description of the FI category)
@@ -86,9 +102,9 @@ omop2fi <- function(con,
     # made very little, except for hfrs. There were 51 additional concepts in the
     # concept table that were not in the AoU table. We're still not sure what the
     # difference is, but perhaps related to the is_selectable aspect of AoU...
-    condition_concept_ids <- tbl(con, concept) %>%
-        filter(standard_concept == "S") %>%
-        distinct(concept_id, name = concept_name) %>% # vocabulary_id
+    condition_concept_ids <- tbl(con, concept) |>
+        filter(standard_concept == "S") |>
+        distinct(concept_id, name = concept_name) |> # vocabulary_id
         filter(concept_id %in% !!unique(categories_concepts$concept_id))
 
     message("searching for condition occurrences...")
@@ -100,56 +116,60 @@ omop2fi <- function(con,
     # later analyses that are dependent on when the FI event occurs.
 
     # go find instances of our concepts in the condition occurrence table
-    cond_occurrences <- tbl(con, condition_occurrence) %>%
-        inner_join(eligible, by = "person_id") %>%
-        inner_join(condition_concept_ids, by = c("condition_concept_id" = "concept_id")) %>%
+    cond_occurrences <- tbl(con, condition_occurrence) |>
+        inner_join(pid, by = "person_id") |>
+        inner_join(condition_concept_ids, by = c("condition_concept_id" = "concept_id")) |>
         select(person_id,
                concept_id = condition_concept_id,
                concept_name = name,
                start_date = condition_start_date#,
                #end_date = condition_end_date,
                #stop_reason
-        ) %>%
+        ) |>
+        filter(start_date %within% search_interval) |>
         distinct()
 
     message("searching for observations...")
 
     # do the same for the observation table
-    obs <- tbl(con, observation) %>%
-        inner_join(eligible, by = "person_id") %>%
-        inner_join(condition_concept_ids, by = c("observation_concept_id" = "concept_id")) %>%
+    obs <- tbl(con, observation)  |>
+        inner_join(pid, by = "person_id") |>
+        inner_join(condition_concept_ids, by = c("observation_concept_id" = "concept_id")) |>
         select(person_id,
                concept_id = observation_concept_id,
                concept_name = name,
                start_date = observation_date,
-        ) %>%
+        ) |>
+        filter(start_date %within% search_interval) |>
         distinct()
 
     message("searching for procedures...")
 
     # procedure table
-    proc <- tbl(con, procedure_occurrence) %>%
-        inner_join(eligible, by = "person_id") %>%
-        inner_join(condition_concept_ids, by = c("procedure_concept_id" = "concept_id")) %>%
+    proc <- tbl(con, procedure_occurrence) |>
+        inner_join(pid, by = "person_id") |>
+        inner_join(condition_concept_ids, by = c("procedure_concept_id" = "concept_id")) |>
         select(person_id,
                concept_id = procedure_concept_id,
                concept_name = name,
                start_date = procedure_date
-        ) %>%
+        ) |>
+        filter(start_date %within% search_interval) |>
         distinct()
 
 
     message("searching for device exposures...")
 
     # device exposure
-    dev <- tbl(con, device_exposure) %>%
-        inner_join(eligible, by = "person_id") %>%
-        inner_join(condition_concept_ids, by = c("device_concept_id" = "concept_id")) %>%
+    dev <- tbl(con, device_exposure) |>
+        inner_join(pid, by = "person_id") |>
+        inner_join(condition_concept_ids, by = c("device_concept_id" = "concept_id")) |>
         select(person_id,
                concept_id = device_concept_id,
                concept_name = name,
                start_date = device_exposure_start_date
-        ) %>%
+        ) |>
+        filter(start_date %within% search_interval) |>
         distinct()
 
 
@@ -160,12 +180,12 @@ omop2fi <- function(con,
 
     # if the index is hfrs we also need to return the point value "score"
     if(index_ == "hfrs"){
-        categories_concepts <- categories_concepts %>%
-            mutate(concept_id = as.integer(concept_id)) %>%
+        categories_concepts <- categories_concepts |>
+            mutate(concept_id = as.integer(concept_id)) |>
             distinct(concept_id, category, hfrs_score)
     } else { # but not for the other three indices
-        categories_concepts <- categories_concepts %>%
-            mutate(concept_id = as.integer(concept_id)) %>%
+        categories_concepts <- categories_concepts |>
+            mutate(concept_id = as.integer(concept_id)) |>
             distinct(concept_id, category)
     }
 
@@ -177,13 +197,13 @@ omop2fi <- function(con,
     # note that copying if false can still take some time...
     if(isTRUE(collect)){
         message("collecting...")
-        dat <- dat %>%
-            collect() %>%
+        dat <- dat |>
+            collect() |>
             left_join(categories_concepts, by = c("concept_id"))
         message(glue::glue("success! retrieved {nrow(dat)} records."))
     } else {
         message("copying...")
-        dat <- dat %>%
+        dat <- dat |>
             left_join(categories_concepts, by = c("concept_id"), copy = TRUE)
         message(glue::glue("success! SQL query from dbplyr returned"))
     }
