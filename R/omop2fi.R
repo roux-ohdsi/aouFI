@@ -75,7 +75,7 @@ omop2fi <- function(con,
 
 
     pid = condition_concept_ids <- tbl(con, person) |>
-        inner_join(.data_search, by = c("person_id" == !!search_person_id), copy = TRUE) |>
+        inner_join(.data_search, by = c("person_id" == search_person_id), copy = TRUE) |>
         dplyr::select(person_id = !!search_person_id,
                       person_start_date = !!search_start_date,
                       person_end_date = !!search_end_date) |>
