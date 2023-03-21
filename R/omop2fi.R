@@ -76,7 +76,7 @@ omop2fi <- function(con,
     }
 
 
-     cohort = .data_search |>
+     pid = .data_search |>
                 dplyr::select(person_id = !!search_person_id,
                               person_start_date = !!search_start_date,
                               person_end_date = !!search_end_date)
