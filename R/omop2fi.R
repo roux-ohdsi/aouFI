@@ -87,8 +87,10 @@ omop2fi <- function(con,
 
      pid = .data_search |>
                 dplyr::select(person_id = !!search_person_id,
-                              person_start_date = as.Date(!!search_start_date),
-                              person_end_date = as.Date(!!search_end_date), !!!keep_cols)
+                              person_start_date = !!search_start_date,
+                              person_end_date = !!search_end_date, !!!keep_cols) |>
+                mutate(person_start_date = as.Date(person_start_date),
+                       person_end_date = as.Date(person_end_date))
 
 
     message(glue::glue("retrieving {index} concepts..."))
