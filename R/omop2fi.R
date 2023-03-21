@@ -46,6 +46,8 @@ omop2fi <- function(con,
                     ...
                     ){
 
+    keep_cols <- rlang::enquos(...)
+
     if(!is.null(schema)){
 
         if(!is.character(schema)){stop("schema must be a character vector")}
@@ -78,7 +80,7 @@ omop2fi <- function(con,
      pid = .data_search |>
                 dplyr::select(person_id = !!search_person_id,
                               person_start_date = !!search_start_date,
-                              person_end_date = !!search_end_date, ...)
+                              person_end_date = !!search_end_date, !!!keep_cols)
 
 
     message(glue::glue("retrieving {index} concepts..."))
@@ -122,7 +124,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = condition_start_date,
                person_start_date,
-               person_end_date, ...
+               person_end_date, !!!keep_cols
         ) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
@@ -138,7 +140,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = observation_date,
                person_start_date,
-               person_end_date, ...
+               person_end_date, !!!keep_cols
         ) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
@@ -154,7 +156,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = procedure_date,
                person_start_date,
-               person_end_date, ...
+               person_end_date, !!!keep_cols
         ) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
@@ -171,7 +173,7 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = device_exposure_start_date,
                person_start_date,
-               person_end_date, ...
+               person_end_date, !!!keep_cols
         ) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
