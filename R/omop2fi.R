@@ -121,9 +121,9 @@ omop2fi <- function(con,
         select(person_id,
                concept_id = condition_concept_id,
                concept_name = name,
-               start_date = condition_start_date#,
-               #end_date = condition_end_date,
-               #stop_reason
+               start_date = condition_start_date,
+               person_start_date,
+               person_end_date
         ) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
@@ -138,6 +138,8 @@ omop2fi <- function(con,
                concept_id = observation_concept_id,
                concept_name = name,
                start_date = observation_date,
+               person_start_date,
+               person_end_date
         ) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
@@ -151,7 +153,9 @@ omop2fi <- function(con,
         select(person_id,
                concept_id = procedure_concept_id,
                concept_name = name,
-               start_date = procedure_date
+               start_date = procedure_date,
+               person_start_date,
+               person_end_date
         ) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
@@ -166,7 +170,9 @@ omop2fi <- function(con,
         select(person_id,
                concept_id = device_concept_id,
                concept_name = name,
-               start_date = device_exposure_start_date
+               start_date = device_exposure_start_date,
+               person_start_date,
+               person_end_date
         ) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
