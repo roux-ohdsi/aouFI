@@ -200,6 +200,19 @@ omop2fi <- function(con,
     dat <-
         union_all(cond_occurrences, obs, dev, proc)
 
+
+
+    if(isTRUE(unique_categories)){
+        dat <- dat %>%
+            distinct(
+                person_id, !!!keep_columns,
+                person_start_date,
+                person_end_date,
+                category
+            )
+
+    }
+
     # Logic to determine whether a collected df or just a query should be returned.
     # note that copying if false can still take some time...
     if(isTRUE(collect)){
@@ -215,17 +228,6 @@ omop2fi <- function(con,
         message(glue::glue("success! SQL query from dbplyr returned"))
     }
 
-
-    if(isTRUE(unique_categories)){
-        dat <- dat %>%
-            distinct(
-                person_id, !!!keep_columns,
-                person_start_date,
-                person_end_date,
-                category
-            )
-
-    }
 
     return(dat)
 
