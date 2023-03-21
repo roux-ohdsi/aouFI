@@ -43,8 +43,7 @@ omop2fi <- function(con,
                     search_person_id,
                     search_start_date,
                     search_end_date,
-
-                    bigquery = FALSE
+                    ...
                     ){
 
     if(!is.null(schema)){
