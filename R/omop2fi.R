@@ -14,25 +14,32 @@
 #' @md
 #'
 #' @param con a database connectino using dbConnect() or similar
-#' @param eligible a dataframe or tibble with a single column of unique person_id values. Obtained
-#' in the all of us databse using getEligible() which returns a single column dataframe with
-#' participatns older than 50 and younger than 120. For other datasources, will need to be custom made.
 #' @param index chr vector; a frailty index. One of "efi", "efragicap", "vafi", or "hfrs"
 #' @param schema chr vector: a character vector of the schema holding the table. defaults to NULL (no schema)
 #' @param collect log; should the query be collected at the end or kept as an SQL query? This must be TRUE for bigquery
 #' because bigquery does not permit temporary tables.
+#' @param .data_search sql; An SQL query from the same connection source with a column for person_id, start_date, and end_date.
+#' @param search_person_id chr; The name of the person_id column
+#' @param search_start_date chr/date; the name of the start_date column
+#' @param search_end_date chr/date; the name of the end_date column
+#' @param keep_columns chr vector: any additional columns to keep in the final dataframe
+#' @param unique_categories log; Should the result return just the distinct FI category occurances in the interval
+#' all concept_ids and concepts taht occcur in the interval for each person (much larger result)
 #'
-#' @return dataframe with EFI occurences that can be summarized into an EFI using aouFI::getFI()
+#' @return dataframe with EFI occurences that can be summarized
 #' @export
 #'
 #' @examples
-#' con <- dbConnect(
-#' bigrquery::bigquery(),
-#'     billing = Sys.getenv('GOOGLE_PROJECT'),
-#'     project = prefix,
-#'     dataset = release
-#'     )
-#' omop2fi(con = con, eligible = aouFI::getEligible(), index = "efi")
+#' omop2fi(con = con,
+#'         index = "efi",
+#'         collect = TRUE,
+#'         .data_search = demo2,
+#'         search_person_id = "person_id",
+#'         search_start_date = "survey_date",
+#'         search_end_date = "end_date",
+#'         keep_columns = c("dob", "sex_at_birth"),
+#'         unique_categories = TRUE
+#' )
 #'
 omop2fi <- function(con,
                     index,
@@ -80,8 +87,8 @@ omop2fi <- function(con,
 
      pid = .data_search |>
                 dplyr::select(person_id = !!search_person_id,
-                              person_start_date = !!search_start_date,
-                              person_end_date = !!search_end_date, !!!keep_cols)
+                              person_start_date = as.Date(!!search_start_date),
+                              person_end_date = as.Date(!!search_end_date), !!!keep_cols)
 
 
     message(glue::glue("retrieving {index} concepts..."))
