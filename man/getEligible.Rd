@@ -4,13 +4,17 @@
 \alias{getEligible}
 \title{Get single column data frame of eligible IDs}
 \usage{
-getEligible(con)
+getEligible(con, lower = 50, upper = 120)
 }
 \arguments{
-\item{con}{}
+\item{con}{connection to AoU database}
+
+\item{lower}{lower bound age limit, inclusive. default 50}
+
+\item{upper}{upper bound age limit, inclusive. default 120}
 }
 \value{
-dataframe of elgible IDs
+sql query for elgible IDs
 }
 \description{
 Get single column data frame of eligible IDs
