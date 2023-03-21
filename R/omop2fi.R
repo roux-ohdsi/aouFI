@@ -43,7 +43,7 @@ omop2fi <- function(con,
                     search_person_id,
                     search_start_date,
                     search_end_date,
-                    keep_columns
+                    keep_columns = NULL
                     ){
 
     keep_cols <- {{keep_columns}}
