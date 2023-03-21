@@ -88,7 +88,8 @@ omop2fi <- function(con,
      pid = .data_search |>
                 dplyr::select(person_id = !!search_person_id,
                               person_start_date = !!search_start_date,
-                              person_end_date = !!search_end_date, !!!keep_cols) |>
+                              person_end_date = !!search_end_date,
+                              !!!keep_cols) |>
                 mutate(person_start_date = as.Date(person_start_date),
                        person_end_date = as.Date(person_end_date))
 
@@ -129,7 +130,7 @@ omop2fi <- function(con,
     cond_occurrences <- tbl(con, condition_occurrence) |>
         inner_join(pid, by = "person_id") |>
         inner_join(condition_concept_ids, by = c("condition_concept_id" = "concept_id")) |>
-        select(person_id,!!!keep_cols,
+        select(person_id, !!!keep_cols,
                concept_id = condition_concept_id,
                concept_name = name,
                start_date = condition_start_date,
@@ -145,7 +146,7 @@ omop2fi <- function(con,
     obs <- tbl(con, observation)  |>
         inner_join(pid, by = "person_id") |>
         inner_join(condition_concept_ids, by = c("observation_concept_id" = "concept_id")) |>
-        select(person_id,!!!keep_cols,
+        select(person_id, !!!keep_cols,
                concept_id = observation_concept_id,
                concept_name = name,
                start_date = observation_date,
@@ -161,7 +162,7 @@ omop2fi <- function(con,
     proc <- tbl(con, procedure_occurrence) |>
         inner_join(pid, by = "person_id") |>
         inner_join(condition_concept_ids, by = c("procedure_concept_id" = "concept_id")) |>
-        select(person_id,!!!keep_cols,
+        select(person_id, !!!keep_cols,
                concept_id = procedure_concept_id,
                concept_name = name,
                start_date = procedure_date,
@@ -178,7 +179,7 @@ omop2fi <- function(con,
     dev <- tbl(con, device_exposure) |>
         inner_join(pid, by = "person_id") |>
         inner_join(condition_concept_ids, by = c("device_concept_id" = "concept_id")) |>
-        select(person_id,!!!keep_cols,
+        select(person_id, !!!keep_cols,
                concept_id = device_concept_id,
                concept_name = name,
                start_date = device_exposure_start_date,
@@ -219,8 +220,11 @@ omop2fi <- function(con,
 
         if(isTRUE(unique_categories)){
             dat <- dat %>%
-                distinct(person_id, !!!keep_columns,
-                         person_start_date,person_end_date, category)
+                select(person_id,
+                         !!!keep_columns,
+                         person_start_date,
+                         person_end_date,
+                         category) %>% distinct()
         }
 
         message(glue::glue("success! retrieved {nrow(dat)} records."))
@@ -231,8 +235,11 @@ omop2fi <- function(con,
 
         if(isTRUE(unique_categories)){
             dat <- dat %>%
-                distinct(person_id, !!!keep_columns,
-                         person_start_date,person_end_date, category)
+                select(person_id,
+                         !!!keep_columns,
+                         person_start_date,
+                         person_end_date,
+                         category) %>% distinct()
         }
 
         message(glue::glue("success! SQL query from dbplyr returned"))
