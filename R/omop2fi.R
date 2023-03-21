@@ -43,7 +43,8 @@ omop2fi <- function(con,
                     search_person_id,
                     search_start_date,
                     search_end_date,
-                    keep_columns = NULL
+                    keep_columns = NULL,
+                    unique_categories = FALSE
                     ){
 
     keep_cols <- {{keep_columns}}
@@ -215,6 +216,16 @@ omop2fi <- function(con,
     }
 
 
+    if(isTRUE(unique_categories)){
+        dat <- dat %>%
+            distinct(
+                person_id, !!!keep_columns,
+                person_start_date,
+                person_end_date,
+                category
+            )
+
+    }
 
     return(dat)
 
