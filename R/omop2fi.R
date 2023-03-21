@@ -43,10 +43,10 @@ omop2fi <- function(con,
                     search_person_id,
                     search_start_date,
                     search_end_date,
-                    ...
+                    keep_columns
                     ){
 
-    keep_cols <- rlang::enquos(...)
+    keep_cols <- {{keep_columns}}
 
     if(!is.null(schema)){
 
