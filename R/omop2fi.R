@@ -219,12 +219,23 @@ omop2fi <- function(con,
             left_join(categories_concepts, by = c("concept_id"))
 
         if(isTRUE(unique_categories)){
-            dat <- dat %>%
-                select(person_id,
-                         !!!keep_columns,
-                         person_start_date,
-                         person_end_date,
-                         category) %>% distinct()
+
+            if(index_ == "hfrs"){
+                dat <- dat %>%
+                    select(person_id,
+                           !!!keep_columns,
+                           person_start_date,
+                           person_end_date,
+                           category, hfrs_score) %>% distinct()
+            } else {
+                dat <- dat %>%
+                    select(person_id,
+                           !!!keep_columns,
+                           person_start_date,
+                           person_end_date,
+                           category) %>% distinct()
+            }
+
         }
 
         message(glue::glue("success! retrieved {nrow(dat)} records."))
