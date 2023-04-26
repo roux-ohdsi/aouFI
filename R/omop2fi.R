@@ -76,7 +76,7 @@ omop2fi <- function(con,
         person                  = "person"
     }
 
-    if(!("person_id" %in% colnames(eligible))){stop("eligible must contain person_id column")}
+   # if(!("person_id" %in% colnames(eligible))){stop("eligible must contain person_id column")}
 
     index_ = tolower(index)
 
