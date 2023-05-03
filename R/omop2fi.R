@@ -41,18 +41,20 @@
 #'         unique_categories = TRUE
 #' )
 #'
-omop2fi <- function(con,
-                    index,
-                    schema = NULL,
-                    collect = FALSE,
+omop2fi2 <- function(con,
+                     index,
+                     schema = NULL,
+                     collect = FALSE,
 
-                    .data_search,
-                    search_person_id,
-                    search_start_date,
-                    search_end_date,
-                    keep_columns = NULL,
-                    unique_categories = FALSE
-                    ){
+                     .data_search,
+                     search_person_id,
+                     search_start_date,
+                     search_end_date,
+                     keep_columns = NULL,
+                     unique_categories = FALSE,
+
+                     category_table
+){
 
     keep_cols <- {{keep_columns}}
 
@@ -76,7 +78,7 @@ omop2fi <- function(con,
         person                  = "person"
     }
 
-   # if(!("person_id" %in% colnames(eligible))){stop("eligible must contain person_id column")}
+    # if(!("person_id" %in% colnames(eligible))){stop("eligible must contain person_id column")}
 
     index_ = tolower(index)
 
@@ -85,13 +87,13 @@ omop2fi <- function(con,
     }
 
 
-     pid = .data_search |>
-                dplyr::select(person_id = !!search_person_id,
-                              person_start_date = !!search_start_date,
-                              person_end_date = !!search_end_date,
-                              !!!keep_cols) |>
-                mutate(person_start_date = as.Date(person_start_date),
-                       person_end_date = as.Date(person_end_date))
+    pid = .data_search |>
+        dplyr::select(person_id = !!search_person_id,
+                      person_start_date = !!search_start_date,
+                      person_end_date = !!search_end_date,
+                      !!!keep_cols) |>
+        mutate(person_start_date = as.Date(person_start_date),
+               person_end_date = as.Date(person_end_date))
 
 
     message(glue::glue("retrieving {index} concepts..."))
@@ -115,8 +117,11 @@ omop2fi <- function(con,
     # difference is, but perhaps related to the is_selectable aspect of AoU...
     condition_concept_ids <- tbl(con, concept) |>
         filter(standard_concept == "S") |>
-        distinct(concept_id, name = concept_name) |> # vocabulary_id
-        filter(concept_id %in% !!unique(categories_concepts$concept_id))
+        distinct(concept_id, name = concept_name) |>
+        inner_join(category_table |>
+                       distinct(concept_id = vafi_concept_id),
+                   by = c("concept_id"), x_as = "first", y_as = "second" ) #|> # vocabulary_id
+    # filter(concept_id %in% !!unique(categories_concepts$concept_id))
 
     message("searching for condition occurrences...")
 
@@ -128,8 +133,8 @@ omop2fi <- function(con,
 
     # go find instances of our concepts in the condition occurrence table
     cond_occurrences <- tbl(con, condition_occurrence) |>
-        inner_join(pid, by = "person_id") |>
-        inner_join(condition_concept_ids, by = c("condition_concept_id" = "concept_id")) |>
+        inner_join(pid, by = "person_id", x_as = "x1", y_as = "y1") |>
+        inner_join(condition_concept_ids, by = c("condition_concept_id" = "concept_id"), x_as = "x2", y_as = "y2") |>
         select(person_id, !!!keep_cols,
                concept_id = condition_concept_id,
                concept_name = name,
@@ -144,8 +149,8 @@ omop2fi <- function(con,
 
     # do the same for the observation table
     obs <- tbl(con, observation)  |>
-        inner_join(pid, by = "person_id") |>
-        inner_join(condition_concept_ids, by = c("observation_concept_id" = "concept_id")) |>
+        inner_join(pid, by = "person_id", x_as = "x3", y_as = "y3") |>
+        inner_join(condition_concept_ids, by = c("observation_concept_id" = "concept_id"), x_as = "x4", y_as = "y4") |>
         select(person_id, !!!keep_cols,
                concept_id = observation_concept_id,
                concept_name = name,
@@ -160,8 +165,8 @@ omop2fi <- function(con,
 
     # procedure table
     proc <- tbl(con, procedure_occurrence) |>
-        inner_join(pid, by = "person_id") |>
-        inner_join(condition_concept_ids, by = c("procedure_concept_id" = "concept_id")) |>
+        inner_join(pid, by = "person_id", x_as = "x5", y_as = "y5") |>
+        inner_join(condition_concept_ids, by = c("procedure_concept_id" = "concept_id"), x_as = "x6", y_as = "y6") |>
         select(person_id, !!!keep_cols,
                concept_id = procedure_concept_id,
                concept_name = name,
@@ -177,8 +182,8 @@ omop2fi <- function(con,
 
     # device exposure
     dev <- tbl(con, device_exposure) |>
-        inner_join(pid, by = "person_id") |>
-        inner_join(condition_concept_ids, by = c("device_concept_id" = "concept_id")) |>
+        inner_join(pid, by = "person_id", x_as = "x7", y_as = "y7") |>
+        inner_join(condition_concept_ids, by = c("device_concept_id" = "concept_id"), x_as = "x8", y_as = "y8") |>
         select(person_id, !!!keep_cols,
                concept_id = device_concept_id,
                concept_name = name,
@@ -216,7 +221,7 @@ omop2fi <- function(con,
         message("collecting...")
         dat <- dat |>
             collect() |>
-            left_join(categories_concepts, by = c("concept_id"))
+            left_join(categories_concepts, by = c("concept_id"), x_as = "x9", y_as = "y9")
 
         if(isTRUE(unique_categories)){
 
@@ -242,15 +247,19 @@ omop2fi <- function(con,
     } else {
         message("copying...")
         dat <- dat |>
-            left_join(categories_concepts, by = c("concept_id"), copy = TRUE)
+            left_join(category_table |>
+                          distinct(
+                              category = vafi_category,
+                              concept_id = vafi_concept_id),
+                      by = c("concept_id"), x_as = "x10", y_as = "y10" )
 
         if(isTRUE(unique_categories)){
             dat <- dat %>%
                 select(person_id,
-                         !!!keep_columns,
-                         person_start_date,
-                         person_end_date,
-                         category) %>% distinct()
+                       !!!keep_columns,
+                       person_start_date,
+                       person_end_date,
+                       category) %>% distinct()
         }
 
         message(glue::glue("success! SQL query from dbplyr returned"))
