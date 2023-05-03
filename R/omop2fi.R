@@ -41,7 +41,7 @@
 #'         unique_categories = TRUE
 #' )
 #'
-omop2fi2 <- function(con,
+omop2fi <- function(con,
                      index,
                      schema = NULL,
                      collect = FALSE,
