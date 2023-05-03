@@ -4,19 +4,44 @@
 \alias{omop2fi}
 \title{OMOP to FI}
 \usage{
-omop2fi(con, eligible, index)
+omop2fi(
+  con,
+  index,
+  schema = NULL,
+  collect = FALSE,
+  .data_search,
+  search_person_id,
+  search_start_date,
+  search_end_date,
+  keep_columns = NULL,
+  unique_categories = FALSE
+)
 }
 \arguments{
 \item{con}{a database connectino using dbConnect() or similar}
 
-\item{eligible}{a dataframe or tibble with a single column of unique person_id values. Obtained
-in the all of us databse using getEligible() which returns a single column dataframe with
-participatns older than 50 and younger than 120. For other datasources, will need to be custom made.}
-
 \item{index}{chr vector; a frailty index. One of "efi", "efragicap", "vafi", or "hfrs"}
+
+\item{schema}{chr vector: a character vector of the schema holding the table. defaults to NULL (no schema)}
+
+\item{collect}{log; should the query be collected at the end or kept as an SQL query? This must be TRUE for bigquery
+because bigquery does not permit temporary tables.}
+
+\item{.data_search}{sql; An SQL query from the same connection source with a column for person_id, start_date, and end_date.}
+
+\item{search_person_id}{chr; The name of the person_id column}
+
+\item{search_start_date}{chr/date; the name of the start_date column}
+
+\item{search_end_date}{chr/date; the name of the end_date column}
+
+\item{keep_columns}{chr vector: any additional columns to keep in the final dataframe}
+
+\item{unique_categories}{log; Should the result return just the distinct FI category occurances in the interval
+all concept_ids and concepts taht occcur in the interval for each person (much larger result)}
 }
 \value{
-dataframe with EFI occurences that can be summarized into an EFI using aouFI::getFI()
+dataframe with EFI occurences that can be summarized
 }
 \description{
 Generates table of condition occurances from an OMOP database for
@@ -32,12 +57,15 @@ The connection should be able to access the following OMOP CDM tables
 }
 }
 \examples{
-con <- dbConnect(
-bigrquery::bigquery(),
-    billing = Sys.getenv('GOOGLE_PROJECT'),
-    project = prefix,
-    dataset = release
-    )
-omop2fi(con = con, eligible = aouFI::getEligible(), index = "efi")
+omop2fi(con = con,
+        index = "efi",
+        collect = TRUE,
+        .data_search = demo2,
+        search_person_id = "person_id",
+        search_start_date = "survey_date",
+        search_end_date = "end_date",
+        keep_columns = c("dob", "sex_at_birth"),
+        unique_categories = TRUE
+)
 
 }
