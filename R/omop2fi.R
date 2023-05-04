@@ -25,11 +25,13 @@
 #' @param keep_columns chr vector: any additional columns to keep in the final dataframe
 #' @param unique_categories log; Should the result return just the distinct FI category occurances in the interval
 #' all concept_ids and concepts taht occcur in the interval for each person (much larger result)
+#' @param category_table pointer to a table that holds the concepts for the FI.
 #'
 #' @return dataframe with EFI occurences that can be summarized
 #' @export
 #'
 #' @examples
+#' # For All of Us, set collect = TRUE because no temp tables
 #' omop2fi(con = con,
 #'         index = "efi",
 #'         collect = TRUE,
@@ -39,6 +41,19 @@
 #'         search_end_date = "end_date",
 #'         keep_columns = c("dob", "sex_at_birth"),
 #'         unique_categories = TRUE
+#' )
+#'
+#' # Otherwise, we can tell the function where to look for the concepts
+#' omop2fi(con = con,
+#'         index = "efi",
+#'         collect = FALASE,
+#'         .data_search = demo2,
+#'         search_person_id = "person_id",
+#'         search_start_date = "survey_date",
+#'         search_end_date = "end_date",
+#'         keep_columns = c("dob", "sex_at_birth"),
+#'         unique_categories = TRUE,
+#'         category_table = tbl(con, inDatabaseSchema(my_schema, "vafi")
 #' )
 #'
 omop2fi <- function(con,
@@ -53,7 +68,7 @@ omop2fi <- function(con,
                      keep_columns = NULL,
                      unique_categories = FALSE,
 
-                     category_table
+                     category_table = NA
 ){
 
     keep_cols <- {{keep_columns}}
@@ -245,13 +260,24 @@ omop2fi <- function(con,
 
         message(glue::glue("success! retrieved {nrow(dat)} records."))
     } else {
+
+        if(is.na(category_table)){stop("Please provide a temporary table with the FI concepts")}
+
+        if(is.data.frame(category_table)){
+            copy_table = TRUE
+        } else {
+            copy_table = FALSE
+        }
+
         message("copying...")
         dat <- dat |>
             left_join(category_table |>
                           distinct(
                               category = vafi_category,
                               concept_id = vafi_concept_id),
-                      by = c("concept_id"), x_as = "x10", y_as = "y10" )
+                      by = c("concept_id"), x_as = "x10", y_as = "y10",
+                      copy = copy_table
+                      )
 
         if(isTRUE(unique_categories)){
             dat <- dat %>%
