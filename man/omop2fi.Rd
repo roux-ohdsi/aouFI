@@ -14,7 +14,8 @@ omop2fi(
   search_start_date,
   search_end_date,
   keep_columns = NULL,
-  unique_categories = FALSE
+  unique_categories = FALSE,
+  category_table = NA
 )
 }
 \arguments{
@@ -39,6 +40,8 @@ because bigquery does not permit temporary tables.}
 
 \item{unique_categories}{log; Should the result return just the distinct FI category occurances in the interval
 all concept_ids and concepts taht occcur in the interval for each person (much larger result)}
+
+\item{category_table}{pointer to a table that holds the concepts for the FI.}
 }
 \value{
 dataframe with EFI occurences that can be summarized
@@ -57,6 +60,7 @@ The connection should be able to access the following OMOP CDM tables
 }
 }
 \examples{
+# For All of Us, set collect = TRUE because no temp tables
 omop2fi(con = con,
         index = "efi",
         collect = TRUE,
@@ -66,6 +70,19 @@ omop2fi(con = con,
         search_end_date = "end_date",
         keep_columns = c("dob", "sex_at_birth"),
         unique_categories = TRUE
+)
+
+# Otherwise, we can tell the function where to look for the concepts
+omop2fi(con = con,
+        index = "efi",
+        collect = FALASE,
+        .data_search = demo2,
+        search_person_id = "person_id",
+        search_start_date = "survey_date",
+        search_end_date = "end_date",
+        keep_columns = c("dob", "sex_at_birth"),
+        unique_categories = TRUE,
+        category_table = tbl(con, inDatabaseSchema(my_schema, "vafi")
 )
 
 }

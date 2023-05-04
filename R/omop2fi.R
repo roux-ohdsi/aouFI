@@ -25,7 +25,9 @@
 #' @param keep_columns chr vector: any additional columns to keep in the final dataframe
 #' @param unique_categories log; Should the result return just the distinct FI category occurances in the interval
 #' all concept_ids and concepts taht occcur in the interval for each person (much larger result)
-#' @param category_table pointer to a table that holds the concepts for the FI.
+#' @param category_table pointer to a table that holds the concepts for the FI. Defaults to temporary_table, but this is the
+#' slowest option and not recommended. Instead, I recommend pre-uploading the aouFI::fi_indices table to your schema in the database. If the database
+#' is small enough, set collect to TRUE and category_table to NA.
 #'
 #' @return dataframe with EFI occurences that can be summarized
 #' @export
@@ -68,7 +70,7 @@ omop2fi <- function(con,
                      keep_columns = NULL,
                      unique_categories = FALSE,
 
-                     category_table = NA
+                     concept_location = "temporary_table"
 ){
 
     keep_cols <- {{keep_columns}}
@@ -110,20 +112,26 @@ omop2fi <- function(con,
         mutate(person_start_date = as.Date(person_start_date),
                person_end_date = as.Date(person_end_date))
 
-    if(is.data.frame(category_table)){
 
-        temp_table_name = deparse(substitute(category_table))
+    if(isTRUE(collect)){
+        concept_table == aouFI::fi_indices |> filter(fi == index)
+    } else if(concept_location == "temporary_table"){
+
+        temp_table_name = paste0(index, "_temp")
+        temp_table = aouFI::fi_indices |> filter(fi == index)
 
         # S3 method for src_sql
         copy_to(
             dest = con,
-            df = category_table,
+            df = temp_table,
             name = temp_table_name,
             overwrite = FALSE,
             temporary = TRUE
         )
 
-        category_sql = tbl(con, temp_table_name)
+        concept_table = tbl(con, temp_table_name)
+    } else {
+        concept_table = concept_location
     }
 
 
@@ -136,7 +144,7 @@ omop2fi <- function(con,
     # holds the point value for the hfrs concept.
     # This function is documented in the package and pulls from data sources we generated
     # using the AoU tables. Code for generating these tables can be made available.
-    categories_concepts <- getConcepts(index = index_)
+    categories_concepts <- aouFI::fi_indices |> filter(fi == index)
 
     message("joining full concept id list...")
 
@@ -149,10 +157,10 @@ omop2fi <- function(con,
     condition_concept_ids <- tbl(con, concept) |>
         filter(standard_concept == "S") |>
         distinct(concept_id, name = concept_name) |>
-        inner_join(category_sql |>
-                       distinct(concept_id = vafi_concept_id),
-                   by = c("concept_id"), x_as = "first", y_as = "second" ) #|> # vocabulary_id
-    # filter(concept_id %in% !!unique(categories_concepts$concept_id))
+        # inner_join(concept_table |>
+        #                distinct(concept_id = vafi_concept_id),
+        #            by = c("concept_id"), x_as = "first", y_as = "second" ) #|> # vocabulary_id
+        filter(concept_id %in% !!unique(categories_concepts$concept_id))
 
     message("searching for condition occurrences...")
 
@@ -232,15 +240,15 @@ omop2fi <- function(con,
     # after the four tables above are combined.
 
     # if the index is hfrs we also need to return the point value "score"
-    if(index_ == "hfrs"){
-        categories_concepts <- categories_concepts |>
-            mutate(concept_id = as.integer(concept_id)) |>
-            distinct(concept_id, category, hfrs_score)
-    } else { # but not for the other three indices
-        categories_concepts <- categories_concepts |>
-            mutate(concept_id = as.integer(concept_id)) |>
-            distinct(concept_id, category)
-    }
+    # if(index_ == "hfrs"){
+    #     categories_concepts <- categories_concepts |>
+    #         mutate(concept_id = as.integer(concept_id)) |>
+    #         distinct(concept_id, category, hfrs_score)
+    # } else { # but not for the other three indices
+    #     categories_concepts <- categories_concepts |>
+    #         mutate(concept_id = as.integer(concept_id)) |>
+    #         distinct(concept_id, category)
+    # }
 
     # put them all together, add the fi labels back
     dat <-
@@ -250,54 +258,47 @@ omop2fi <- function(con,
     # note that copying if false can still take some time...
     if(isTRUE(collect)){
         message("collecting...")
-        dat <- dat |>
-            collect() |>
-            left_join(categories_concepts, by = c("concept_id"), x_as = "x9", y_as = "y9")
-
         if(isTRUE(unique_categories)){
 
-            if(index_ == "hfrs"){
-                dat <- dat %>%
+                dat <- dat  |>
                     select(person_id,
                            !!!keep_columns,
                            person_start_date,
                            person_end_date,
-                           category, hfrs_score) %>% distinct()
-            } else {
-                dat <- dat %>%
-                    select(person_id,
-                           !!!keep_columns,
-                           person_start_date,
-                           person_end_date,
-                           category) %>% distinct()
-            }
+                           category, score) |>
+                    distinct()  |>
+                    collect() |>
+                    left_join(categories_concepts, by = c("concept_id"), x_as = "x9", y_as = "y9")
 
-        }
+        } else {
 
-        message(glue::glue("success! retrieved {nrow(dat)} records."))
-    } else {
-
-        if(is.na(category_table)){stop("Please provide a table with the FI concepts")}
-
-
-        message("copying...")
-        dat <- dat |>
-            left_join(category_sql |>
-                          distinct(
-                              category = vafi_category,
-                              concept_id = vafi_concept_id),
-                      by = c("concept_id"), x_as = "x10", y_as = "y10",
-                      copy = copy_table
-                      )
-
-        if(isTRUE(unique_categories)){
             dat <- dat %>%
                 select(person_id,
                        !!!keep_columns,
                        person_start_date,
                        person_end_date,
-                       category) %>% distinct()
+                       category, score)  |>
+                collect() |>
+                left_join(categories_concepts, by = c("concept_id"), x_as = "x9", y_as = "y9")
         }
+
+        message(glue::glue("success! retrieved {nrow(dat)} records."))
+    } else {
+
+        if(!dbExistsTable(con, concept_table)){stop("Please provide a database table with the FI concepts")}
+
+        message("copying...")
+        dat <- dat |>
+            left_join(concept_table,
+                      by = c("concept_id"),
+                      x_as = "x10", y_as = "y10") |>
+            select(person_id,
+                   !!!keep_columns,
+                   person_start_date,
+                   person_end_date,
+                   category)
+
+        if(isTRUE(unique_categories)){dat <- dat |>  distinct()}
 
         message(glue::glue("success! SQL query from dbplyr returned"))
     }
