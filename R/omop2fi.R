@@ -110,6 +110,22 @@ omop2fi <- function(con,
         mutate(person_start_date = as.Date(person_start_date),
                person_end_date = as.Date(person_end_date))
 
+    if(is.data.frame(category_table)){
+
+        temp_table_name = deparse(substitute(category_table))
+
+        # S3 method for src_sql
+        copy_to(
+            dest = con,
+            df = category_table,
+            name = temp_table_name,
+            overwrite = FALSE,
+            temporary = TRUE
+        )
+
+        category_sql = tbl(con, temp_table_name)
+    }
+
 
     message(glue::glue("retrieving {index} concepts..."))
 
@@ -133,7 +149,7 @@ omop2fi <- function(con,
     condition_concept_ids <- tbl(con, concept) |>
         filter(standard_concept == "S") |>
         distinct(concept_id, name = concept_name) |>
-        inner_join(category_table |>
+        inner_join(category_sql |>
                        distinct(concept_id = vafi_concept_id),
                    by = c("concept_id"), x_as = "first", y_as = "second" ) #|> # vocabulary_id
     # filter(concept_id %in% !!unique(categories_concepts$concept_id))
@@ -261,17 +277,12 @@ omop2fi <- function(con,
         message(glue::glue("success! retrieved {nrow(dat)} records."))
     } else {
 
-        if(is.na(category_table)){stop("Please provide a temporary table with the FI concepts")}
+        if(is.na(category_table)){stop("Please provide a table with the FI concepts")}
 
-        if(is.data.frame(category_table)){
-            copy_table = TRUE
-        } else {
-            copy_table = FALSE
-        }
 
         message("copying...")
         dat <- dat |>
-            left_join(category_table |>
+            left_join(category_sql |>
                           distinct(
                               category = vafi_category,
                               concept_id = vafi_concept_id),
