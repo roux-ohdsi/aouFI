@@ -25,9 +25,9 @@
 #' @param keep_columns chr vector: any additional columns to keep in the final dataframe
 #' @param unique_categories log; Should the result return just the distinct FI category occurances in the interval
 #' all concept_ids and concepts taht occcur in the interval for each person (much larger result)
-#' @param category_table pointer to a table that holds the concepts for the FI. Defaults to temporary_table, but this is the
-#' slowest option and not recommended. Instead, I recommend pre-uploading the aouFI::fi_indices table to your schema in the database. If the database
-#' is small enough, set collect to TRUE and category_table to NA.
+#' @param concept_location pointer to a table that holds the concepts for the FI. Used when collect = FALSE.
+#' I recommend pre-uploading the aouFI::fi_indices table to your schema in the database. If the database
+#' is small enough, you can instead set collect to TRUE and concept_location to NA to use a local table from aouFI.
 #'
 #' @return dataframe with EFI occurences that can be summarized
 #' @export
@@ -42,7 +42,8 @@
 #'         search_start_date = "survey_date",
 #'         search_end_date = "end_date",
 #'         keep_columns = c("dob", "sex_at_birth"),
-#'         unique_categories = TRUE
+#'         unique_categories = TRUE,
+#'         concept_location = NA
 #' )
 #'
 #' # Otherwise, we can tell the function where to look for the concepts
@@ -55,7 +56,7 @@
 #'         search_end_date = "end_date",
 #'         keep_columns = c("dob", "sex_at_birth"),
 #'         unique_categories = TRUE,
-#'         category_table = tbl(con, inDatabaseSchema(my_schema, "vafi")
+#'         concept_location = tbl(con, inDatabaseSchema(my_schema, "efi")
 #' )
 #'
 omop2fi <- function(con,
@@ -70,7 +71,7 @@ omop2fi <- function(con,
                      keep_columns = NULL,
                      unique_categories = FALSE,
 
-                     concept_location = "temporary_table"
+                    concept_location
 ){
 
     keep_cols <- {{keep_columns}}
@@ -114,23 +115,9 @@ omop2fi <- function(con,
 
 
     if(isTRUE(collect)){
-        concept_table == aouFI::fi_indices |> filter(fi == index)
-    } else if(concept_location == "temporary_table"){
-
-        temp_table_name = paste0(index, "_temp")
-        temp_table = aouFI::fi_indices |> filter(fi == index)
-
-        # S3 method for src_sql
-        copy_to(
-            dest = con,
-            df = temp_table,
-            name = temp_table_name,
-            overwrite = FALSE,
-            temporary = TRUE
-        )
-
-        concept_table = tbl(con, temp_table_name)
+        concept_table = aouFI::fi_indices |> filter(fi == index)
     } else {
+        if(!DBI::isdb)
         concept_table = concept_location
     }
 
