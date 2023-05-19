@@ -254,7 +254,7 @@ omop2fi <- function(con,
                            person_end_date) |>
                     distinct()  |>
                     collect() |>
-                    left_join(categories_concepts, by = c("concept_id"), x_as = "x9", y_as = "y9")
+                    left_join(categories_concepts, by = c("concept_id"))
 
         } else {
 
@@ -264,7 +264,7 @@ omop2fi <- function(con,
                        person_start_date,
                        person_end_date)  |>
                 collect() |>
-                left_join(categories_concepts, by = c("concept_id"), x_as = "x9", y_as = "y9")
+                left_join(categories_concepts, by = c("concept_id"))
         }
 
         message(glue::glue("success! retrieved {nrow(dat)} records."))
