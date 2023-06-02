@@ -272,7 +272,7 @@ omop2fi <- function(con,
         message(glue::glue("success! retrieved {nrow(dat)} records."))
     } else {
 
-        if(!dbExistsTable(con, concept_table)){stop("Please provide a database table with the FI concepts")}
+        #if(!dbExistsTable(con, concept_table)){stop("Please provide a database table with the FI concepts")}
 
         message("copying...")
         dat <- dat |>
