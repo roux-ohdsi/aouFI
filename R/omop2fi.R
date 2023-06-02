@@ -274,7 +274,7 @@ omop2fi <- function(con,
 
         #if(!dbExistsTable(con, concept_table)){stop("Please provide a database table with the FI concepts")}
 
-        message("copying...")
+        message("Joining to FI table")
         dat <- dat |>
             left_join(concept_table,
                       by = c("concept_id"),
@@ -283,7 +283,8 @@ omop2fi <- function(con,
                    !!!keep_columns,
                    person_start_date,
                    person_end_date,
-                   category)
+                   category,
+                   score)
 
         if(isTRUE(unique_categories)){dat <- dat |>  distinct()}
 
