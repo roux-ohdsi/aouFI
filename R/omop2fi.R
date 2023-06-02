@@ -117,7 +117,7 @@ omop2fi <- function(con,
     if(isTRUE(collect)){
         concept_table = aouFI::fi_indices |> filter(fi == index)
     } else {
-        if(!DBI::isdb)
+       # if(!DBI::isdb)
         concept_table = concept_location
     }
 
