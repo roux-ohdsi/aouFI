@@ -9,6 +9,7 @@ library(CDMConnector)
 library(tidyverse)
 library(ohdsilab)
 library(aouFI)
+library(here)
 # ============================================================================
 # Credentials
 
@@ -24,11 +25,6 @@ base_url = "https://atlas.roux-ohdsi-prod.aws.northeastern.edu/WebAPI"
 cdm_schema = "omop_cdm_53_pmtx_202203"
 my_schema = paste0("work_", keyring::key_get("lab_user"))
 
-# defaults to help with querying
-options(con.default.value = con)
-options(schema.default.value = cdm_schema)
-options(write_schema.default.value = my_schema)
-
 # Create the connection
 con =  DatabaseConnector::connect(dbms = "redshift",
                                   server = "ohdsi-lab-redshift-cluster-prod.clsyktjhufn7.us-east-1.redshift.amazonaws.com/ohdsi_lab",
@@ -37,6 +33,11 @@ con =  DatabaseConnector::connect(dbms = "redshift",
                                   password = keyring::key_get("lab_password"))
 # check connection
 class(con)
+
+# defaults to help with querying
+options(con.default.value = con)
+options(schema.default.value = cdm_schema)
+options(write_schema.default.value = my_schema)
 
 # ============================================================================
 # Frailty Index lookup tables
@@ -56,6 +57,9 @@ temporary_intermediate_steps = FALSE
 
 # ============================================================================
 # Cohort Generation
+
+# Note - this only needs to be run once, if the intermediate steps are saved to
+# persistent tables in the user schema
 
 # Join person table to visit occurrence table
 # Pick a random visit. I think this SqlRender::translate() should make this a bit
@@ -132,8 +136,7 @@ fi_with_robust <- function(fi_query, denominator, lb, ub){
     # add them back to the FI query while calculating the person-level FI
     fi_query |>
         select(person_id, is_female, age_group, score) |>
-        group_by(person_id, is_female, age_group) |>
-        summarize(fi = sum(score)/denominator) |>
+        summarize(fi = sum(score)/denominator, .by = c(person_id, age_group, is_female)) |>
         mutate(prefrail = ifelse(fi>= lb & fi < ub, 1, 0),
                frail = ifelse(fi>= ub, 1, 0)) |> ungroup() |>
         union_all(tmp)
@@ -144,9 +147,8 @@ fi_with_robust <- function(fi_query, denominator, lb, ub){
 summarize_fi <- function(fi_query){
 
     fi_query |>
-        group_by(age_group, is_female) |>
         summarize(prefrail = sum(prefrail)/n(),
-                  frail = sum(frail)/n())
+                  frail = sum(frail)/n(), .by = c(age_group, is_female))
 
 }
 
@@ -175,10 +177,9 @@ CDMConnector::computeQuery(vafi, "vafi_fi",
 # add robust individuals back
 vafi_all <- fi_with_robust(fi_query = tbl(con, inDatabaseSchema(my_schema, "vafi_fi")),
                            denominator = 30, lb = 0.11, ub = 0.21)
-
 # get stratified summaries, collected and saved
 vafi_summary <- summarize_fi(vafi_all) |> dbi_collect()
-write.csv(vafi_summary, "vafi_summary.csv")
+write.csv(vafi_summary, here("analysis", "vafi_summary.csv"))
 
 # ============================================================================
 # EFI
@@ -199,12 +200,13 @@ efi <- aouFI::omop2fi(con = con,
 CDMConnector::computeQuery(efi, "efi_fi",
                            temporary = temporary_intermediate_steps,
                            schema = my_schema, overwrite = TRUE)
+
 # add robust individuals back
 efi_all <- fi_with_robust(fi_query = tbl(con, inDatabaseSchema(my_schema, "efi_fi")),
                           denominator = 35, lb = 0.12, ub = 0.24)
 # get stratified summaries, collected and saved
 efi_summary <- summarize_fi(efi_all) |> dbi_collect()
-write.csv(efi_summary, "efi_summary.csv")
+write.csv(efi_summary, here("analysis", "efi_summary.csv"))
 
 # ============================================================================
 # EFRAGICAP
@@ -225,12 +227,20 @@ efragicap <- aouFI::omop2fi(con = con,
 CDMConnector::computeQuery(efragicap, "egragicap_fi",
                            temporary = temporary_intermediate_steps,
                            schema = my_schema, overwrite = TRUE)
+
 # add robust individuals back
 efragicap_all <- fi_with_robust(fi_query = tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
                                 denominator = 35, lb = 0.12, ub = 0.24)
 # get stratified summaries, collected and saved
 efragicap_summary <- summarize_fi(efragicap_all) |> dbi_collect()
-write.csv(efragicap_summary, "efragicap_summary.csv")
+
+# Getting this warning...need to track down source:
+    # Warning message:
+    #     Missing values are always removed in SQL aggregation functions.
+    # Use `na.rm = TRUE` to silence this warning
+    # This warning is displayed once every 8 hours.
+
+write.csv(efragicap_summary, here("analysis", "efragicap_summary.csv"))
 
 # ============================================================================
 # HFRS
@@ -252,9 +262,10 @@ hfrs <- aouFI::omop2fi(con = con,
 CDMConnector::computeQuery(hfrs, "hfrs_fi",
                            temporary = temporary_intermediate_steps,
                            schema = my_schema, overwrite = TRUE)
+
 # add robust individuals back
 hfrs_all <- fi_with_robust(fi_query = tbl(con, inDatabaseSchema(my_schema, "hfrs_fi")),
-                           denominator = 30, lb = 5, ub = 15)
+                           denominator = 1, lb = 5, ub = 15)
 # get stratified summaries, collected and saved
 hfrs_summary <- summarize_fi(hfrs_all) |> dbi_collect()
-write.csv(hfrs_summary, "hfrs_summary.csv")
+write.csv(hfrs_summary, here("analysis", "hfrs_summary.csv"))
