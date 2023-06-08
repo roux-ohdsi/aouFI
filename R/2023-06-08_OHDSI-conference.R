@@ -125,7 +125,7 @@ cohort_summary <- cohort |>
 # lb is the cutoff between robust and prefrail and
 # ub is the cutoff between prefrail and frail
 # denominator is how many FI categories there are for the index
-fi_with_robust <- function(fi_query, denominator, lb, ub){
+fi_with_robust <- function(fi_query, cohort, denominator, lb, ub){
 
     # find all the people in the cohort query that are not in the fi_query
     tmp = cohort |>
@@ -176,6 +176,7 @@ CDMConnector::computeQuery(vafi, "vafi_fi",
 
 # add robust individuals back
 vafi_all <- fi_with_robust(fi_query = tbl(con, inDatabaseSchema(my_schema, "vafi_fi")),
+                           cohort = cohort,
                            denominator = 30, lb = 0.11, ub = 0.21)
 # get stratified summaries, collected and saved
 vafi_summary <- summarize_fi(vafi_all) |> dbi_collect()
@@ -203,6 +204,7 @@ CDMConnector::computeQuery(efi, "efi_fi",
 
 # add robust individuals back
 efi_all <- fi_with_robust(fi_query = tbl(con, inDatabaseSchema(my_schema, "efi_fi")),
+                          cohort = cohort,
                           denominator = 35, lb = 0.12, ub = 0.24)
 # get stratified summaries, collected and saved
 efi_summary <- summarize_fi(efi_all) |> dbi_collect()
@@ -230,6 +232,7 @@ CDMConnector::computeQuery(efragicap, "egragicap_fi",
 
 # add robust individuals back
 efragicap_all <- fi_with_robust(fi_query = tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
+                                cohort = cohort,
                                 denominator = 35, lb = 0.12, ub = 0.24)
 # get stratified summaries, collected and saved
 efragicap_summary <- summarize_fi(efragicap_all) |> dbi_collect()
@@ -265,6 +268,7 @@ CDMConnector::computeQuery(hfrs, "hfrs_fi",
 
 # add robust individuals back
 hfrs_all <- fi_with_robust(fi_query = tbl(con, inDatabaseSchema(my_schema, "hfrs_fi")),
+                           cohort = cohort,
                            denominator = 1, lb = 5, ub = 15)
 # get stratified summaries, collected and saved
 hfrs_summary <- summarize_fi(hfrs_all) |> dbi_collect()
