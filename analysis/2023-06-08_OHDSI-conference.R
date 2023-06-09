@@ -29,8 +29,29 @@ my_schema = paste0("work_", keyring::key_get("lab_user"))
 con =  DatabaseConnector::connect(dbms = "redshift",
                                   server = "ohdsi-lab-redshift-cluster-prod.clsyktjhufn7.us-east-1.redshift.amazonaws.com/ohdsi_lab",
                                   port = 5439,
-                                  user = keyring::key_get("lab_user"),
-                                  password = keyring::key_get("lab_password"))
+                                  user = ,
+                                  password = )
+
+con <-  DBI::dbConnect(RPostgres::Redshift(),
+                              dbname   = "ohdsi_lab",
+                              host     = 'ohdsi-lab-redshift-cluster-prod.clsyktjhufn7.us-east-1.redshift.amazonaws.com',
+                              port     = 5439,
+                              user     = keyring::key_get("lab_user"),
+                              password = keyring::key_get("lab_password"))
+
+date_tbl <- dplyr::copy_to(con, data.frame(date1 = as.Date("1999-01-01")), name = "tmpdate", overwrite = TRUE, temporary = TRUE)
+
+df <- date_tbl %>%
+    dplyr::mutate(date2 = !!dateadd("date1", 1, interval = "year")) %>%
+    dplyr::mutate(dif_years = !!datediff("date1", "date2", interval = "year")) %>%
+    dplyr::mutate(dif_days = !!datediff("date1", "date2", interval = "day")) %>%
+    # dbplyr::sql_render()
+    dplyr::collect()
+
+tbl(con, "tmpdate") |>
+    dplyr::mutate(date2 = !!dateadd("date1", 1, interval = "year")) %>%
+    dplyr::mutate(dif_years = !!datediff("date1", "date2", interval = "year")) %>%
+    dplyr::mutate(dif_days = !!datediff("date1", "date2", interval = "day"))
 # check connection
 class(con)
 
@@ -38,6 +59,8 @@ class(con)
 options(con.default.value = con)
 options(schema.default.value = cdm_schema)
 options(write_schema.default.value = my_schema)
+
+cdm <- cdm_from_con(con, cdm_schema = cdm_schema)
 
 # ============================================================================
 # Frailty Index lookup tables
@@ -89,13 +112,14 @@ CDMConnector::computeQuery(cohort, "frailty_cohort", temporary = temporary_inter
 # ============================================================================
 # Pull and summarize the cohort from the new table
 
-cohort <- tbl(con, inDatabaseSchema(my_schema, "frailty_cohort")) |>
+# note magrittr pipe for dateadd!!
+cohort <- tbl(con, inDatabaseSchema(my_schema, "frailty_cohort")) %>%
     mutate(
         is_female = ifelse(gender_source_value == "M", 0, 1),
         age_group = cut(age,
                         breaks = c(40,  45,  50,  55, 60,  65,  70,  75,  80,  85,  90,  95, 100, 105, 110, 115),
                         right = FALSE),
-        visit_lookback_date = as.Date(dateadd("year", -1, index_date))
+        visit_lookback_date = !!CDMConnector::dateadd("index_date", -1, interval = "year")
     ) |>
     select(person_id, is_female, age_group, visit_lookback_date, index_date)
 
@@ -131,7 +155,7 @@ fi_with_robust <- function(fi_query, cohort, denominator, lb, ub){
     tmp = cohort |>
         anti_join(fi_query |> select(person_id), by = "person_id") |>
         select(person_id, age_group, is_female) |>
-        mutate(frail = 0, prefrail = 0)
+        mutate(fi = 0, frail = 0, prefrail = 0)
 
     # add them back to the FI query while calculating the person-level FI
     fi_query |>
@@ -147,10 +171,12 @@ fi_with_robust <- function(fi_query, cohort, denominator, lb, ub){
 summarize_fi <- function(fi_query){
 
     fi_query |>
-        summarize(prefrail = sum(prefrail)/n(),
+        summarize(N = n(),
+                  prefrail = sum(prefrail)/n(),
                   frail = sum(frail)/n(), .by = c(age_group, is_female))
 
 }
+
 
 # ============================================================================
 # VAFI
