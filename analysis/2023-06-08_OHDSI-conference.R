@@ -32,7 +32,7 @@ source(here::here("analysis", "connection_setup.R"))
 # ============================================================================
 
 # set this to toggle the intermediate steps as persistent or temporary to the user schema
-temporary_intermediate_steps = FALSE
+# temporary_intermediate_steps = FALSE
 
 # ============================================================================
 # Cohort Generation
@@ -40,34 +40,38 @@ temporary_intermediate_steps = FALSE
 # Note - this only needs to be run once, if the intermediate steps are saved to
 # persistent tables in the user schema
 
-# Join person table to visit occurrence table
-# Pick a random visit. I think this SqlRender::translate() should make this a bit
-# more flexible to the different dbms...
-index_date_query <- tbl(con, inDatabaseSchema(cdm_schema, "person")) |>
-    select(person_id, year_of_birth, gender_concept_id) |>
-    omop_join("visit_occurrence", type = "inner", by = "person_id") |>
-    select(person_id, index_date = visit_start_date, year_of_birth, gender_concept_id) |>
-    mutate(rand_index = sql(SqlRender::translate("RAND()", con@dbms)[[1]])) |>
-    slice_min(n = 1, by = person_id, order_by = rand_index) |>
-    select(-rand_index)
+if (genCohort) {
 
-# From that query, make sure there are 365 days preceeding to the observation_period
-# start date. Filter for age at index date is >= 40
-#!!!!!!!!!!! Changed to: >= 365 below !!!!!!!!!!!!#
-cohort <- index_date_query |>
-    omop_join("observation_period", type = "inner", by = "person_id") |>
-    filter(dateDiff("day", observation_period_start_date, index_date) >= 365) |>
-    select(person_id, year_of_birth, gender_concept_id, index_date, observation_period_start_date, observation_period_end_date) |>
-    mutate(age = year(index_date) - year_of_birth,
-           yob_imputed = ifelse(year_of_birth < 1938, 1, 0)) |>
-    filter(age >= 40)
+    # Join person table to visit occurrence table
+    # Pick a random visit. I think this SqlRender::translate() should make this a bit
+    # more flexible to the different dbms...
+    index_date_query <- tbl(con, inDatabaseSchema(cdm_schema, "person")) |>
+        select(person_id, year_of_birth, gender_concept_id) |>
+        omop_join("visit_occurrence", type = "inner", by = "person_id") |>
+        select(person_id, index_date = visit_start_date, year_of_birth, gender_concept_id) |>
+        mutate(rand_index = sql(SqlRender::translate("RAND()", con@dbms)[[1]])) |>
+        slice_min(n = 1, by = person_id, order_by = rand_index) |>
+        select(-rand_index)
 
-test = cohort |> dbi_collect()
+    # From that query, make sure there are 365 days preceeding to the observation_period
+    # start date. Filter for age at index date is >= 40
+    #!!!!!!!!!!! Changed to: >= 365 below !!!!!!!!!!!!#
+    cohort <- index_date_query |>
+        omop_join("observation_period", type = "inner", by = "person_id") |>
+        filter(dateDiff("day", observation_period_start_date, index_date) >= 365) |>
+        select(person_id, year_of_birth, gender_concept_id, index_date, observation_period_start_date, observation_period_end_date) |>
+        mutate(age = year(index_date) - year_of_birth,
+               yob_imputed = ifelse(year_of_birth < 1938, 1, 0)) |>
+        filter(age >= 40)
 
-# saving as a persistent table in my schema as a midpoint/ intermediate table. This could be a
-# temporary table if needed.
-ohdsilab::set_seed(0.5)
-CDMConnector::computeQuery(cohort, "frailty_cohort", temporary = temporary_intermediate_steps, schema = my_schema, overwrite = TRUE)
+    # saving as a persistent table in my schema as a midpoint/ intermediate table. This could be a
+    # temporary table if needed.
+    # ohdsilab::set_seed(0.5)
+    # CDMConnector::computeQuery(cohort, "frailty_cohort", temporary = temporary_intermediate_steps, schema = my_schema, overwrite = TRUE)
+
+    frailty_cohort = cohort |> dbi_collect()
+    write.csv(frailty_cohort, file.path(res_dir, paste(cdm_schema, "_frailty_cohort.csv")), row.names = F)
+}
 
 # ============================================================================
 # Pull and summarize the cohort from the new table
@@ -75,7 +79,7 @@ CDMConnector::computeQuery(cohort, "frailty_cohort", temporary = temporary_inter
 # note magrittr pipe for dateadd!!
 # age changed to 84 if it was imputed due to age - this will fall in the
 # 80+ bracket which we can later mark as 80+
-cohort <- tbl(con, inDatabaseSchema(my_schema, "frailty_cohort")) %>%
+frailty_cohort <- tbl(con, inDatabaseSchema(my_schema, "frailty_cohort")) %>%
     mutate(age = ifelse(yob_imputed == 1, 84, age)) %>%
     mutate(
         is_female = ifelse(gender_concept_id == 8507, 0, 1),
@@ -87,10 +91,12 @@ cohort <- tbl(con, inDatabaseSchema(my_schema, "frailty_cohort")) %>%
     ) |>
     select(person_id, is_female, age_group, visit_lookback_date, index_date, yob_imputed)
 
+
+
 # get total sample size and female sample size
 # calculate percent female
-sample_size = as.numeric(tally(cohort) |> collect())
-sample_size_female = as.numeric(tally(cohort %>% filter(is_female == 1)) |> collect())
+sample_size = as.numeric(tally(frailty_cohort) |> collect())
+sample_size_female = as.numeric(tally(frailty_cohort %>% filter(is_female == 1)) |> collect())
 percent_female = sample_size_female / sample_size
 
 # 2023-06-14 numbers
@@ -99,13 +105,13 @@ sample_size_female # 2838483
 percent_female # 0.5362859
 
 # Cohort by sex and age group
-cohort_summary <- cohort |>
+cohort_summary <- frailty_cohort |>
     count(age_group, is_female) |>
     group_by(age_group, is_female) |>
     mutate(percent_group = n/!!sample_size) |>
     ohdsilab::dbi_collect()
 
-write.csv(cohort_summary, here::here("analysis", paste(Sys.Date(), "pharmetrics_cohort_summary.csv", sep = "-")), row.names = FALSE)
+write.csv(cohort_summary, here::here("analysis", paste(Sys.Date(), cdm_schema, "cohort_summary.csv", sep = "-")), row.names = FALSE)
 
 # ============================================================================
 
@@ -118,53 +124,43 @@ source(here::here("analysis", "summary_functions.R"))
 vafi <- aouFI::omop2fi(con = con,
                        schema = cdm_schema,
                        index = "vafi",
-                       .data_search = cohort,
+                       .data_search = frailty_cohort,
                        search_person_id = "person_id",
                        search_start_date = "visit_lookback_date",
                        search_end_date = "index_date",
                        keep_columns = c("age_group", "is_female"),
                        collect = FALSE,
                        unique_categories = TRUE,
-                       concept_location = tbl(con, inDatabaseSchema(my_schema, "fi_indices")) |> filter(fi == "vafi")
+                       concept_location = tbl(con, inDatabaseSchema(fi_schema, "fi_indices")) |> filter(fi == "vafi")
 ) |>
     select(person_id, age_group, is_female, score, category)
 
 # save result of query as intermediate step #2
-CDMConnector::computeQuery(vafi, "vafi_fi",
-                           temporary = temporary_intermediate_steps,
-                           schema = my_schema, overwrite = TRUE)
+# CDMConnector::computeQuery(vafi, "vafi_fi",
+#                            temporary = temporary_intermediate_steps,
+#                            schema = my_schema, overwrite = TRUE)
+
+vafi_fi <- vafi
 
 # add robust individuals back
-vafi_all <- fi_with_robust(fi_query = tbl(con, inDatabaseSchema(my_schema, "vafi_fi")),
-                           cohort = cohort,
+vafi_all <- fi_with_robust(fi_query = vafi_fi, # tbl(con, inDatabaseSchema(my_schema, "vafi_fi")),
+                           cohort = frailty_cohort,
                            denominator = 30, lb = 0.11, ub = 0.21)
 
 # get stratified summaries, collected and saved
 vafi_summary <- summarize_fi(vafi_all) |> dbi_collect() |> mutate(fi = "vafi")
 
 # category specifics
-vafi_cat1 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "vafi_fi")),
-                              cohort = cohort,
-                              fi_category = "Osteo",
-                              index = "vafi") |> dbi_collect()
+vafi_cat <- data.frame()
+for (cat in c("Osteo", "Dementia", "CAD", "PVD")) {
+    vafi_cat <- rbind(vafi_cat,
+                      percent_category(fi_query = vafi_fi, # tbl(con, inDatabaseSchema(my_schema, "vafi_fi")),
+                                       cohort = frailty_cohort,
+                                       fi_category = cat,
+                                       index = "vafi") |> dbi_collect())
+}
 
-vafi_cat2 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "vafi_fi")),
-                              cohort = cohort,
-                              fi_category = "Dementia",
-                              index = "vafi") |> dbi_collect()
-
-vafi_cat3 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "vafi_fi")),
-                              cohort = cohort,
-                              fi_category = "CAD",
-                              index = "vafi") |> dbi_collect()
-
-vafi_cat4 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "vafi_fi")),
-                              cohort = cohort,
-                              fi_category = "PVD",
-                              index = "vafi") |> dbi_collect()
-
-
-vafi_cats = bind_rows(vafi_cat1,vafi_cat2, vafi_cat3, vafi_cat4) |>
+vafi_cats = vafi_cat |>
     mutate(fi = "vafi") |>
     arrange(category, age_group)
 
@@ -174,52 +170,65 @@ vafi_cats = bind_rows(vafi_cat1,vafi_cat2, vafi_cat3, vafi_cat4) |>
 efragicap <- aouFI::omop2fi(con = con,
                             schema = cdm_schema,
                             index = "efragicap",
-                            .data_search = cohort,
+                            .data_search = frailty_cohort,
                             search_person_id = "person_id",
                             search_start_date = "visit_lookback_date",
                             search_end_date = "index_date",
                             keep_columns = c("age_group", "is_female"),
                             collect = FALSE,
                             unique_categories = TRUE,
-                            concept_location = tbl(con, inDatabaseSchema(my_schema, "fi_indices")) |> filter(fi == "efragicap")
+                            concept_location = tbl(con, inDatabaseSchema(fi_schema, "fi_indices")) |> filter(fi == "efragicap")
 )
 
 # save result of query as intermediate step #2
-CDMConnector::computeQuery(efragicap, "egragicap_fi",
-                           temporary = temporary_intermediate_steps,
-                           schema = my_schema, overwrite = TRUE)
+# CDMConnector::computeQuery(efragicap, "egragicap_fi",
+#                            temporary = temporary_intermediate_steps,
+#                            schema = my_schema, overwrite = TRUE)
+
+efragicap_fi <- efragicap
 
 # add robust individuals back
-efragicap_all <- fi_with_robust(fi_query = tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
-                                cohort = cohort,
+efragicap_all <- fi_with_robust(fi_query = efragicap_fi, # tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
+                                cohort = frailty_cohort,
                                 denominator = 35, lb = 0.12, ub = 0.24)
+
 # get stratified summaries, collected and saved
 efragicap_summary <- summarize_fi(efragicap_all) |> dbi_collect() |> mutate(fi = "efragicap")
 
 # category specifics
-efragicap_cat1 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
-                                   cohort = cohort,
-                                   fi_category = "Osteoporosis",
-                                   index = "efragicap") |> dbi_collect()
+efragicap_cat <- data.frame()
+for (cat in c("Osteoporosis", "Memory & cognitive problems", "Ischaemic heart disease", "Peripheral vascular disease")) {
+    efragicap_cat <- rbind(efragicap_cat,
+                      percent_category(fi_query = efragicap_fi, # vafi_fi, # tbl(con, inDatabaseSchema(my_schema, "vafi_fi")),
+                                       cohort = frailty_cohort,
+                                       fi_category = cat,
+                                       index = "efragicap") |> dbi_collect())
+}
 
-efragicap_cat2 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
-                                   cohort = cohort,
-                                   fi_category = "Memory & cognitive problems",
-                                   index = "efragicap") |> dbi_collect()
-
-efragicap_cat3 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
-                                   cohort = cohort,
-                                   fi_category = "Ischaemic heart disease",
-                                   index = "efragicap") |> dbi_collect()
-
-efragicap_cat4 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
-                                   cohort = cohort,
-                                   fi_category = "Peripheral vascular disease",
-                                   index = "efragicap") |> dbi_collect()
-
-efragicap_cats = bind_rows(efragicap_cat1,efragicap_cat2, efragicap_cat3, efragicap_cat4) |>
+efragicap_cats = efragicap_cat |>
     mutate(fi = "efragicap") |>
     arrange(category, age_group)
+
+#
+#
+# efragicap_cat1 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
+#                                    cohort = frailty_cohort,
+#                                    fi_category = "Osteoporosis",
+#                                    index = "efragicap") |> dbi_collect()
+#
+# efragicap_cat2 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
+#                                    cohort = frailty_cohort,
+#                                    fi_category = "Memory & cognitive problems",
+#                                    index = "efragicap") |> dbi_collect()
+#
+# efragicap_cat3 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
+#                                    cohort = frailty_cohort,
+#                                    fi_category = "Ischaemic heart disease",
+#                                    index = "efragicap") |> dbi_collect()
+#
+# efragicap_cats = bind_rows(efragicap_cat1,efragicap_cat2, efragicap_cat3) |>
+#     mutate(fi = "efragicap") |>
+#     arrange(category, age_group)
 
 # ============================================================================
 # EFI - not run for now.
@@ -270,8 +279,8 @@ summaries = bind_rows(vafi_summary, efragicap_summary) # , efi_summary
 cats = bind_rows(vafi_cats, efragicap_cats) # , efi_cats
 
 
-write.csv(summaries, here("analysis", paste(Sys.Date(), "pharmetrics_fi_summaries.csv", sep = "-")))
-write.csv(cats, here("analysis", paste(Sys.Date(), "pharmetrics_fi_cats.csv", sep = "-")))
+write.csv(summaries, here("analysis", paste(Sys.Date(), cdm_schema, "fi_summaries.csv", sep = "-")))
+write.csv(cats, here("analysis", paste(Sys.Date(), cdm_schema, "fi_cats.csv", sep = "-")))
 
 
 
