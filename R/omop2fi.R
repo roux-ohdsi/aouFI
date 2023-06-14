@@ -100,7 +100,7 @@ omop2fi <- function(con,
 
     index_ = tolower(index)
 
-    if(!(index_ %in% c("efi", "efragicap", "hfrs", "vafi"))){
+    if(!(index_ %in% c("efi", "efragicap", "hfrs", "vafi", "efi2", "efi_sno_expanded"))){
         stop("oops! frailty index not found; index must be one of: efi, efragicap, hfrs, or vafi.")
     }
 
