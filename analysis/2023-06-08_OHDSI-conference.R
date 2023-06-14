@@ -270,8 +270,8 @@ summaries = bind_rows(vafi_summary, efragicap_summary) # , efi_summary
 cats = bind_rows(vafi_cats, efragicap_cats) # , efi_cats
 
 
-write.csv(summaries, here("analysis", paste(Sys.Date(), "fi_summaries.csv", sep = "-")))
-write.csv(cats, here("analysis", paste(Sys.Date(), "fi_cats.csv", sep = "-")))
+write.csv(summaries, here("analysis", paste(Sys.Date(), "pharmetrics_fi_summaries.csv", sep = "-")))
+write.csv(cats, here("analysis", paste(Sys.Date(), "pharmetrics_fi_cats.csv", sep = "-")))
 
 
 
