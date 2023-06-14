@@ -158,8 +158,13 @@ vafi_cat3 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "v
                               fi_category = "CAD",
                               index = "vafi") |> dbi_collect()
 
+vafi_cat4 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "vafi_fi")),
+                              cohort = cohort,
+                              fi_category = "PVD",
+                              index = "vafi") |> dbi_collect()
 
-vafi_cats = bind_rows(vafi_cat1,vafi_cat2, vafi_cat3) |>
+
+vafi_cats = bind_rows(vafi_cat1,vafi_cat2, vafi_cat3, vafi_cat4) |>
     mutate(fi = "vafi") |>
     arrange(category, age_group)
 
@@ -207,7 +212,12 @@ efragicap_cat3 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schem
                                    fi_category = "Ischaemic heart disease",
                                    index = "efragicap") |> dbi_collect()
 
-efragicap_cats = bind_rows(efragicap_cat1,efragicap_cat2, efragicap_cat3) |>
+efragicap_cat4 <- percent_category(fi_query = tbl(con, inDatabaseSchema(my_schema, "egragicap_fi")),
+                                   cohort = cohort,
+                                   fi_category = "Peripheral vascular disease",
+                                   index = "efragicap") |> dbi_collect()
+
+efragicap_cats = bind_rows(efragicap_cat1,efragicap_cat2, efragicap_cat3, efragicap_cat4) |>
     mutate(fi = "efragicap") |>
     arrange(category, age_group)
 
