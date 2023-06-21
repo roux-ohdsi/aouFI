@@ -252,7 +252,7 @@ omop2fi <- function(con,
                            !!!keep_columns,
                            person_start_date,
                            person_end_date,
-                           concept_id, concept_name) |>
+                           concept_id) |>
                     distinct()  |>
                     collect() |>
                     left_join(categories_concepts, by = c("concept_id"))
@@ -264,7 +264,7 @@ omop2fi <- function(con,
                        !!!keep_columns,
                        person_start_date,
                        person_end_date,
-                       concept_id, concept_name)  |>
+                       concept_id)  |>
                 collect() |>
                 left_join(categories_concepts, by = c("concept_id"))
         }
