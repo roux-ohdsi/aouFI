@@ -17,7 +17,7 @@ fi_with_robust <- function(fi_query, cohort, denominator, lb, ub){
 
     # add them back to the FI query while calculating the person-level FI
     fi_query |>
-        select(person_id, is_female, age_group, score) |>
+        distinct(person_id, is_female, age_group, score, category) |>
         summarize(fi = sum(score)/denominator, .by = c(person_id, age_group, is_female)) |>
         mutate(prefrail = ifelse(fi>= lb & fi < ub, 1, 0),
                frail = ifelse(fi>= ub, 1, 0)) |> ungroup() |>
@@ -56,6 +56,7 @@ percent_category <- function(fi_query, cohort, fi_category, index){
 
     # add them back to the FI query while calculating the person-level FI
     fi_query |>
+        distinct(person_id, is_female, age_group, score, category) |>
         select(person_id, is_female, age_group, score, category) |>
         filter(category == fi_category) |> #print(head()) |>
         union_all(tmp) |>

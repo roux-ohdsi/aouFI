@@ -62,7 +62,7 @@ cohort <- index_date_query |>
            yob_imputed = ifelse(year_of_birth < 1938, 1, 0)) |>
     filter(age >= 40)
 
-test = cohort |> dbi_collect()
+# test = cohort |> dbi_collect()
 
 # saving as a persistent table in my schema as a midpoint/ intermediate table. This could be a
 # temporary table if needed.

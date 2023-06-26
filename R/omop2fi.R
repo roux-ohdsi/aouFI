@@ -116,11 +116,12 @@ omop2fi <- function(con,
 
     if(isTRUE(collect)){
         concept_table = aouFI::fi_indices |> filter(fi == index)
+        categories_concepts <- aouFI::fi_indices |> filter(fi == index)
     } else {
        # if(!DBI::isdb)
         concept_table = concept_location
+        categories_concepts = concept_location
     }
-
 
     message(glue::glue("retrieving {index} concepts..."))
 
@@ -131,7 +132,7 @@ omop2fi <- function(con,
     # holds the point value for the hfrs concept.
     # This function is documented in the package and pulls from data sources we generated
     # using the AoU tables. Code for generating these tables can be made available.
-    categories_concepts <- aouFI::fi_indices |> filter(fi == index)
+
 
     message("joining full concept id list...")
 
@@ -144,10 +145,9 @@ omop2fi <- function(con,
     condition_concept_ids <- tbl(con, concept) |>
         filter(standard_concept == "S") |>
         distinct(concept_id, name = concept_name) |>
-        # inner_join(concept_table |>
-        #                distinct(concept_id = vafi_concept_id),
-        #            by = c("concept_id"), x_as = "first", y_as = "second" ) #|> # vocabulary_id
-        filter(concept_id %in% !!unique(categories_concepts$concept_id))
+        inner_join(concept_table |> distinct(concept_id),
+                   by = c("concept_id"), x_as = "c1", y_as = "c2" ) #|> # vocabulary_id
+        #filter(concept_id %in% !!unique(categories_concepts$concept_id))
 
     message("searching for condition occurrences...")
 
