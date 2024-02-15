@@ -1,8 +1,8 @@
 
 #' @title OMOP to FI
 #'
-#' @description Generates table of condition occurances from an OMOP database for
-#' the EFI, EGRAGICAP, VAFI, and HFRS frailty indices.
+#' @description Generates table of condition occurances using ICD codes from an OMOP database for
+#' the EGRAGICAP, VAFIfrailty indices.
 #' This requires a database connection using dbConnect() or similar R package
 #' The connection should be able to access the following OMOP CDM tables
 #'
@@ -59,7 +59,7 @@
 #'         concept_location = tbl(con, inDatabaseSchema(my_schema, "efi")
 #' )
 #'
-omop2fi <- function(con,
+icd2fi <- function(con,
                      index,
                      schema = NULL,
                      collect = FALSE,
@@ -100,8 +100,8 @@ omop2fi <- function(con,
 
     index_ = tolower(index)
 
-    if(!(index_ %in% c("efi", "efragicap", "hfrs", "vafi", "efi2", "efi_sno_expanded"))){
-        stop("oops! frailty index not found; index must be one of: efi, efragicap, hfrs, or vafi.")
+    if(!(index_ %in% c( "efragicap","vafi"))){
+        stop("oops! frailty index not found; index must be one of: efragicap or vafi.")
     }
 
 
@@ -284,10 +284,9 @@ omop2fi <- function(con,
                    person_start_date,
                    person_end_date,
                    category,
-                   concept_id,
                    score)
 
-        if(isTRUE(unique_categories)){dat <- dat |> select(-concept_id) |>  distinct()}
+        if(isTRUE(unique_categories)){dat <- dat |>  distinct()}
 
         message(glue::glue("success! SQL query from dbplyr returned"))
     }
@@ -296,4 +295,3 @@ omop2fi <- function(con,
     return(dat)
 
 }
-

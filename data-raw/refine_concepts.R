@@ -50,11 +50,7 @@ options(con.default.value = con)
 options(schema.default.value = cdm_schema)
 options(write_schema.default.value = my_schema)
 
-efi_sno |>
-    mutate(source_code = as.character(Code)) |>
-    left_join(test, by = c("source_code")) |>
-    select(category = Codeset, concept_id) |>
-    mutate(fi = "efi2", score = 1) -> efi_sno2
+
 
 
 options(scipen=999)
@@ -63,6 +59,13 @@ efi_sno <- read.csv("~/Downloads/efi_snomed.csv", colClasses = "character") |>
     mutate(Code = readr::parse_number(Code))
 
 ohdsilab::map2omop(db_con = con, codes = efi_sno$Code, cdm_schema = cdm_schema, collect = TRUE, translate_from = "SNOMED") -> test
+
+efi_sno |>
+    mutate(source_code = as.character(Code)) |>
+    left_join(test, by = c("source_code")) |>
+    select(category = Codeset, concept_id) |>
+    mutate(fi = "efi_sno", score = 1) -> efi_sno2
+
 
 efi_scoring <- tbl(con, inDatabaseSchema(cdm_schema, "concept_ancestor")) %>%
     filter(ancestor_concept_id %in% !!efi_sno2$concept_id) %>%

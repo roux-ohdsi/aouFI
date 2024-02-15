@@ -36,3 +36,4 @@ class(con)
 options(con.default.value = con)
 options(schema.default.value = cdm_schema)
 options(write_schema.default.value = my_schema)
+

@@ -1,0 +1,92 @@
+"orig_concept_id","concept_id","source_concept_name","source_code","vafi_code","deficit","target_concept_name","n_omop_matches"
+35207326,378420,"Paraneoplastic neuromyopathy and neuropathy","G13.0","G13.0","PerNeuro","Paraneoplastic neuropathy",1
+35207327,4031170,"Other systemic atrophy primarily affecting central nervous system in neoplastic disease","G13.1","G13.1","PerNeuro","Severe systemic illness tissue wasting",1
+35207449,380394,"Idiopathic progressive neuropathy","G60.3","G60.3","PerNeuro","Idiopathic progressive polyneuropathy",1
+35207450,375806,"Other hereditary and idiopathic neuropathies","G60.8","G60.8","PerNeuro","Idiopathic peripheral neuropathy",1
+35207453,4105020,"Serum neuropathy","G61.1","G61.1","PerNeuro","Serum neuropathy",1
+35207455,381551,"Drug-induced polyneuropathy","G62.0","G62.0","PerNeuro","Polyneuropathy due to drug",1
+35207456,378421,"Alcoholic polyneuropathy","G62.1","G62.1","PerNeuro","Alcoholic polyneuropathy",1
+35207457,373470,"Polyneuropathy due to other toxic agents","G62.2","G62.2","PerNeuro","Toxic polyneuropathy",1
+35207459,376686,"Polyneuropathy in diseases classified elsewhere","G63","G63","PerNeuro","Polyneuropathy associated with another disorder",1
+35207522,4080146,"Autonomic neuropathy in diseases classified elsewhere","G99.0","G99.0","PerNeuro","Autonomic neuropathy",1
+45533021,443729,"Type 2 diabetes mellitus with diabetic peripheral angiopathy without gangrene","E11.51","E11.51","PerNeuro","Peripheral circulatory disorder due to type 2 diabetes mellitus",1
+45533022,4222876,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","E11.52","PerNeuro","Gangrene due to type 2 diabetes mellitus",3
+45533022,4131908,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","E11.52","PerNeuro","Peripheral angiopathy due to diabetes mellitus",3
+45533022,201826,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","E11.52","PerNeuro","Type 2 diabetes mellitus",3
+45533695,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left elbow","M05.522","M05.522","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45533695,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of left elbow","M05.522","M05.522","PerNeuro","Rheumatoid arthritis of elbow",2
+45537963,321822,"Other specified diabetes mellitus with other circulatory complications","E13.59","E13.59","PerNeuro","Peripheral vascular disorder due to diabetes mellitus",1
+45538134,4180770,"Sequelae of toxic polyneuropathy","G65.2","G65.2","PerNeuro","Sequelae of neurological disorders",1
+45538629,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right shoulder","M05.511","M05.511","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45538629,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of right shoulder","M05.511","M05.511","PerNeuro","Rheumatoid arthritis of shoulder",2
+45538630,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified wrist","M05.539","M05.539","PerNeuro","Rheumatoid arthritis of wrist",2
+45538630,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified wrist","M05.539","M05.539","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45538631,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hand","M05.542","M05.542","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45538631,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hand","M05.542","M05.542","PerNeuro","Rheumatoid arthritis - hand joint",2
+45538632,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right ankle and foot","M05.571","M05.571","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45538632,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of right ankle and foot","M05.571","M05.571","PerNeuro","Rheumatoid arthritis - ankle and/or foot",2
+45542733,4202383,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic polyneuropathy","E09.42","E09.42","PerNeuro","Drug-induced diabetes mellitus",2
+45542733,4234742,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic polyneuropathy","E09.42","E09.42","PerNeuro","Diabetic neuropathy with neurologic complication",2
+45542737,201254,"Type 1 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E10.52","E10.52","PerNeuro","Type 1 diabetes mellitus",3
+45542737,4223303,"Type 1 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E10.52","E10.52","PerNeuro","Gangrene due to type 1 diabetes mellitus",3
+45542737,4131908,"Type 1 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E10.52","E10.52","PerNeuro","Peripheral angiopathy due to diabetes mellitus",3
+45543433,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hand","M05.549","M05.549","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45543433,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hand","M05.549","M05.549","PerNeuro","Rheumatoid arthritis - hand joint",2
+45547617,376112,"Diabetes mellitus due to underlying condition with diabetic polyneuropathy","E08.42","E08.42","PerNeuro","Polyneuropathy due to diabetes mellitus",2
+45547617,195771,"Diabetes mellitus due to underlying condition with diabetic polyneuropathy","E08.42","E08.42","PerNeuro","Secondary diabetes mellitus",2
+45547620,4202383,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic neuropathy, unspecified","E09.40","E09.40","PerNeuro","Drug-induced diabetes mellitus",2
+45547620,4234742,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic neuropathy, unspecified","E09.40","E09.40","PerNeuro","Diabetic neuropathy with neurologic complication",2
+45547622,318712,"Type 1 diabetes mellitus with diabetic peripheral angiopathy without gangrene","E10.51","E10.51","PerNeuro","Peripheral circulatory disorder due to type 1 diabetes mellitus",1
+45547755,40483299,"Radiation-induced polyneuropathy","G62.82","G62.82","PerNeuro","Neuropathy due to ionizing radiation",2
+45547755,4174262,"Radiation-induced polyneuropathy","G62.82","G62.82","PerNeuro","Polyneuropathy",2
+45548257,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of right wrist","M05.531","M05.531","PerNeuro","Rheumatoid arthritis of wrist",2
+45548257,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right wrist","M05.531","M05.531","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45548258,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right knee","M05.561","M05.561","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45548258,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of right knee","M05.561","M05.561","PerNeuro","Rheumatoid arthritis of knee",2
+45553041,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified ankle and foot","M05.579","M05.579","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45553041,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified ankle and foot","M05.579","M05.579","PerNeuro","Rheumatoid arthritis - ankle and/or foot",2
+45557113,37017432,"Type 2 diabetes mellitus with diabetic polyneuropathy","E11.42","E11.42","PerNeuro","Polyneuropathy due to type 2 diabetes mellitus",1
+45561956,4044391,"Other specified diabetes mellitus with diabetic neuropathy, unspecified","E13.40","E13.40","PerNeuro","Neuropathy due to diabetes mellitus",1
+45562590,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified knee","M05.569","M05.569","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45562590,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified knee","M05.569","M05.569","PerNeuro","Rheumatoid arthritis of knee",2
+45566735,376112,"Other specified diabetes mellitus with diabetic polyneuropathy","E13.42","E13.42","PerNeuro","Polyneuropathy due to diabetes mellitus",1
+45566908,194913,"Other idiopathic peripheral autonomic neuropathy","G90.09","G90.09","PerNeuro","Idiopathic peripheral autonomic neuropathy",1
+45567413,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified site","M05.50","M05.50","PerNeuro","Polyneuropathy in rheumatoid arthritis",1
+45567414,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right elbow","M05.521","M05.521","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45567414,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of right elbow","M05.521","M05.521","PerNeuro","Rheumatoid arthritis of elbow",2
+45567415,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of multiple sites","M05.59","M05.59","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45567415,4117686,"Rheumatoid polyneuropathy with rheumatoid arthritis of multiple sites","M05.59","M05.59","PerNeuro","Rheumatoid arthritis of multiple joints",2
+45571661,321822,"Other specified diabetes mellitus with diabetic peripheral angiopathy without gangrene","E13.51","E13.51","PerNeuro","Peripheral vascular disorder due to diabetes mellitus",1
+45576443,443729,"Type 2 diabetes mellitus with other circulatory complications","E11.59","E11.59","PerNeuro","Peripheral circulatory disorder due to type 2 diabetes mellitus",1
+45576604,4180770,"Sequelae of Guillain-Barre syndrome","G65.0","G65.0","PerNeuro","Sequelae of neurological disorders",1
+45576605,4180770,"Sequelae of other inflammatory polyneuropathy","G65.1","G65.1","PerNeuro","Sequelae of neurological disorders",1
+45581349,318712,"Type 1 diabetes mellitus with other circulatory complications","E10.59","E10.59","PerNeuro","Peripheral circulatory disorder due to type 1 diabetes mellitus",1
+45582010,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hip","M05.552","M05.552","PerNeuro","Rheumatoid arthritis of hip",2
+45582010,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hip","M05.552","M05.552","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45582011,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hip","M05.559","M05.559","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45582011,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hip","M05.559","M05.559","PerNeuro","Rheumatoid arthritis of hip",2
+45582012,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left knee","M05.562","M05.562","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45582012,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of left knee","M05.562","M05.562","PerNeuro","Rheumatoid arthritis of knee",2
+45582013,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of left ankle and foot","M05.572","M05.572","PerNeuro","Rheumatoid arthritis - ankle and/or foot",2
+45582013,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left ankle and foot","M05.572","M05.572","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45582130,46270482,"Systemic sclerosis with polyneuropathy","M34.83","M34.83","PerNeuro","Polyneuropathy due to systemic sclerosis",1
+45586143,4131908,"Other specified diabetes mellitus with diabetic peripheral angiopathy with gangrene","E13.52","E13.52","PerNeuro","Peripheral angiopathy due to diabetes mellitus",2
+45586143,4226354,"Other specified diabetes mellitus with diabetic peripheral angiopathy with gangrene","E13.52","E13.52","PerNeuro","Gangrene due to diabetes mellitus",2
+45591693,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of left wrist","M05.532","M05.532","PerNeuro","Rheumatoid arthritis of wrist",2
+45591693,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left wrist","M05.532","M05.532","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45591694,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hand","M05.541","M05.541","PerNeuro","Rheumatoid arthritis - hand joint",2
+45591694,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hand","M05.541","M05.541","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45591695,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hip","M05.551","M05.551","PerNeuro","Rheumatoid arthritis of hip",2
+45591695,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hip","M05.551","M05.551","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45595795,37017431,"Type 1 diabetes mellitus with diabetic polyneuropathy","E10.42","E10.42","PerNeuro","Polyneuropathy due to type 1 diabetes mellitus",1
+45596433,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified shoulder","M05.519","M05.519","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45596433,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified shoulder","M05.519","M05.519","PerNeuro","Rheumatoid arthritis of shoulder",2
+45596434,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified elbow","M05.529","M05.529","PerNeuro","Rheumatoid arthritis of elbow",2
+45596434,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified elbow","M05.529","M05.529","PerNeuro","Polyneuropathy in rheumatoid arthritis",2
+45600419,372243,"Late syphilitic neuropathy","A52.15","A52.15","PerNeuro","Late congenital neurosyphilis",1
+45600638,377821,"Type 1 diabetes mellitus with diabetic neuropathy, unspecified","E10.40","E10.40","PerNeuro","Disorder of nervous system due to type 1 diabetes mellitus",1
+45605392,4044391,"Diabetes mellitus due to underlying condition with diabetic neuropathy, unspecified","E08.40","E08.40","PerNeuro","Neuropathy due to diabetes mellitus",2
+45605392,195771,"Diabetes mellitus due to underlying condition with diabetic neuropathy, unspecified","E08.40","E08.40","PerNeuro","Secondary diabetes mellitus",2
+45605403,376065,"Type 2 diabetes mellitus with diabetic neuropathy, unspecified","E11.40","E11.40","PerNeuro","Disorder of nervous system due to type 2 diabetes mellitus",1
+45606046,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of left shoulder","M05.512","M05.512","PerNeuro","Rheumatoid arthritis of shoulder",2
+45606046,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left shoulder","M05.512","M05.512","PerNeuro","Polyneuropathy in rheumatoid arthritis",2

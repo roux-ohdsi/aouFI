@@ -1,0 +1,352 @@
+"orig_concept_id","concept_id","icd_name","icd_code","deficit","omop_concept_name","vafi_deficits_per_icd_code","omop_concepts_per_icd_code","bad_match"
+35207669,444101,"Hypertensive heart disease with heart failure","I11.0","HF","Hypertensive heart failure",2,1,NA
+35207669,444101,"Hypertensive heart disease with heart failure","I11.0","HTN","Hypertensive heart failure",2,1,NA
+35207673,439696,"Hypertensive heart and chronic kidney disease with heart failure and stage 1 through stage 4 chronic kidney disease, or unspecified chronic kidney disease","I13.0","HF","Hypertensive heart and renal disease with (congestive) heart failure",2,1,NA
+35207673,439696,"Hypertensive heart and chronic kidney disease with heart failure and stage 1 through stage 4 chronic kidney disease, or unspecified chronic kidney disease","I13.0","HTN","Hypertensive heart and renal disease with (congestive) heart failure",2,1,NA
+35207674,44784621,"Hypertensive heart and chronic kidney disease with heart failure and with stage 5 chronic kidney disease, or end stage renal disease","I13.2","HF","Hypertensive heart and chronic kidney disease",2,1,NA
+35207674,44784621,"Hypertensive heart and chronic kidney disease with heart failure and with stage 5 chronic kidney disease, or end stage renal disease","I13.2","HTN","Hypertensive heart and chronic kidney disease",2,1,NA
+35207842,195834,"Atherosclerosis of renal artery","I70.1","Kidney","Atherosclerosis of renal artery",2,1,NA
+35207842,195834,"Atherosclerosis of renal artery","I70.1","PVD","Atherosclerosis of renal artery",2,1,NA
+37200514,40482301,"Attention and concentration deficit following nontraumatic subarachnoid hemorrhage","I69.010","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200514,40482301,"Attention and concentration deficit following nontraumatic subarachnoid hemorrhage","I69.010","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200515,40482301,"Memory deficit following nontraumatic subarachnoid hemorrhage","I69.011","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200515,40482301,"Memory deficit following nontraumatic subarachnoid hemorrhage","I69.011","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200516,40482301,"Visuospatial deficit and spatial neglect following nontraumatic subarachnoid hemorrhage","I69.012","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200516,40482301,"Visuospatial deficit and spatial neglect following nontraumatic subarachnoid hemorrhage","I69.012","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200517,40482301,"Psychomotor deficit following nontraumatic subarachnoid hemorrhage","I69.013","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200517,40482301,"Psychomotor deficit following nontraumatic subarachnoid hemorrhage","I69.013","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200518,40482301,"Frontal lobe and executive function deficit following nontraumatic subarachnoid hemorrhage","I69.014","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200518,40482301,"Frontal lobe and executive function deficit following nontraumatic subarachnoid hemorrhage","I69.014","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200519,40482301,"Cognitive social or emotional deficit following nontraumatic subarachnoid hemorrhage","I69.015","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200519,40482301,"Cognitive social or emotional deficit following nontraumatic subarachnoid hemorrhage","I69.015","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200520,40482301,"Other symptoms and signs involving cognitive functions following nontraumatic subarachnoid hemorrhage","I69.018","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200520,40482301,"Other symptoms and signs involving cognitive functions following nontraumatic subarachnoid hemorrhage","I69.018","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200521,40482301,"Unspecified symptoms and signs involving cognitive functions following nontraumatic subarachnoid hemorrhage","I69.019","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200521,40482301,"Unspecified symptoms and signs involving cognitive functions following nontraumatic subarachnoid hemorrhage","I69.019","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200522,40482301,"Attention and concentration deficit following nontraumatic intracerebral hemorrhage","I69.110","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200522,40482301,"Attention and concentration deficit following nontraumatic intracerebral hemorrhage","I69.110","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200523,40482301,"Memory deficit following nontraumatic intracerebral hemorrhage","I69.111","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200523,40482301,"Memory deficit following nontraumatic intracerebral hemorrhage","I69.111","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200524,40482301,"Visuospatial deficit and spatial neglect following nontraumatic intracerebral hemorrhage","I69.112","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200524,40482301,"Visuospatial deficit and spatial neglect following nontraumatic intracerebral hemorrhage","I69.112","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200525,40482301,"Psychomotor deficit following nontraumatic intracerebral hemorrhage","I69.113","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200525,40482301,"Psychomotor deficit following nontraumatic intracerebral hemorrhage","I69.113","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200526,40482301,"Frontal lobe and executive function deficit following nontraumatic intracerebral hemorrhage","I69.114","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200526,40482301,"Frontal lobe and executive function deficit following nontraumatic intracerebral hemorrhage","I69.114","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200527,40482301,"Cognitive social or emotional deficit following nontraumatic intracerebral hemorrhage","I69.115","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200527,40482301,"Cognitive social or emotional deficit following nontraumatic intracerebral hemorrhage","I69.115","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200528,40482301,"Other symptoms and signs involving cognitive functions following nontraumatic intracerebral hemorrhage","I69.118","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200528,40482301,"Other symptoms and signs involving cognitive functions following nontraumatic intracerebral hemorrhage","I69.118","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200529,40482301,"Unspecified symptoms and signs involving cognitive functions following nontraumatic intracerebral hemorrhage","I69.119","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200529,40482301,"Unspecified symptoms and signs involving cognitive functions following nontraumatic intracerebral hemorrhage","I69.119","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200530,40482301,"Attention and concentration deficit following other nontraumatic intracranial hemorrhage","I69.210","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200530,40482301,"Attention and concentration deficit following other nontraumatic intracranial hemorrhage","I69.210","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200531,40482301,"Memory deficit following other nontraumatic intracranial hemorrhage","I69.211","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200531,40482301,"Memory deficit following other nontraumatic intracranial hemorrhage","I69.211","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200532,40482301,"Visuospatial deficit and spatial neglect following other nontraumatic intracranial hemorrhage","I69.212","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200532,40482301,"Visuospatial deficit and spatial neglect following other nontraumatic intracranial hemorrhage","I69.212","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200533,40482301,"Psychomotor deficit following other nontraumatic intracranial hemorrhage","I69.213","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200533,40482301,"Psychomotor deficit following other nontraumatic intracranial hemorrhage","I69.213","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200534,40482301,"Frontal lobe and executive function deficit following other nontraumatic intracranial hemorrhage","I69.214","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200534,40482301,"Frontal lobe and executive function deficit following other nontraumatic intracranial hemorrhage","I69.214","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200535,40482301,"Cognitive social or emotional deficit following other nontraumatic intracranial hemorrhage","I69.215","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200535,40482301,"Cognitive social or emotional deficit following other nontraumatic intracranial hemorrhage","I69.215","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200536,40482301,"Other symptoms and signs involving cognitive functions following other nontraumatic intracranial hemorrhage","I69.218","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200536,40482301,"Other symptoms and signs involving cognitive functions following other nontraumatic intracranial hemorrhage","I69.218","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200537,40482301,"Unspecified symptoms and signs involving cognitive functions following other nontraumatic intracranial hemorrhage","I69.219","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200537,40482301,"Unspecified symptoms and signs involving cognitive functions following other nontraumatic intracranial hemorrhage","I69.219","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200538,40482301,"Attention and concentration deficit following cerebral infarction","I69.310","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200538,40482301,"Attention and concentration deficit following cerebral infarction","I69.310","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200539,40482301,"Memory deficit following cerebral infarction","I69.311","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200539,40482301,"Memory deficit following cerebral infarction","I69.311","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200540,40482301,"Visuospatial deficit and spatial neglect following cerebral infarction","I69.312","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200540,40482301,"Visuospatial deficit and spatial neglect following cerebral infarction","I69.312","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200541,40482301,"Psychomotor deficit following cerebral infarction","I69.313","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200541,40482301,"Psychomotor deficit following cerebral infarction","I69.313","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200542,40482301,"Frontal lobe and executive function deficit following cerebral infarction","I69.314","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200542,40482301,"Frontal lobe and executive function deficit following cerebral infarction","I69.314","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200543,40482301,"Cognitive social or emotional deficit following cerebral infarction","I69.315","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200543,40482301,"Cognitive social or emotional deficit following cerebral infarction","I69.315","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200544,40482301,"Other symptoms and signs involving cognitive functions following cerebral infarction","I69.318","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200544,40482301,"Other symptoms and signs involving cognitive functions following cerebral infarction","I69.318","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200545,40482301,"Unspecified symptoms and signs involving cognitive functions following cerebral infarction","I69.319","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200545,40482301,"Unspecified symptoms and signs involving cognitive functions following cerebral infarction","I69.319","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200546,40482301,"Attention and concentration deficit following other cerebrovascular disease","I69.810","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200546,40482301,"Attention and concentration deficit following other cerebrovascular disease","I69.810","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200547,40482301,"Memory deficit following other cerebrovascular disease","I69.811","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200547,40482301,"Memory deficit following other cerebrovascular disease","I69.811","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200548,40482301,"Visuospatial deficit and spatial neglect following other cerebrovascular disease","I69.812","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200548,40482301,"Visuospatial deficit and spatial neglect following other cerebrovascular disease","I69.812","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200549,40482301,"Psychomotor deficit following other cerebrovascular disease","I69.813","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200549,40482301,"Psychomotor deficit following other cerebrovascular disease","I69.813","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200550,40482301,"Frontal lobe and executive function deficit following other cerebrovascular disease","I69.814","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200550,40482301,"Frontal lobe and executive function deficit following other cerebrovascular disease","I69.814","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200551,40482301,"Cognitive social or emotional deficit following other cerebrovascular disease","I69.815","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200551,40482301,"Cognitive social or emotional deficit following other cerebrovascular disease","I69.815","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200552,40482301,"Other symptoms and signs involving cognitive functions following other cerebrovascular disease","I69.818","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200552,40482301,"Other symptoms and signs involving cognitive functions following other cerebrovascular disease","I69.818","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200553,40482301,"Unspecified symptoms and signs involving cognitive functions following other cerebrovascular disease","I69.819","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200553,40482301,"Unspecified symptoms and signs involving cognitive functions following other cerebrovascular disease","I69.819","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200554,40482301,"Attention and concentration deficit following unspecified cerebrovascular disease","I69.910","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200554,40482301,"Attention and concentration deficit following unspecified cerebrovascular disease","I69.910","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200555,40482301,"Memory deficit following unspecified cerebrovascular disease","I69.911","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200555,40482301,"Memory deficit following unspecified cerebrovascular disease","I69.911","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200556,40482301,"Visuospatial deficit and spatial neglect following unspecified cerebrovascular disease","I69.912","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200556,40482301,"Visuospatial deficit and spatial neglect following unspecified cerebrovascular disease","I69.912","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200557,40482301,"Psychomotor deficit following unspecified cerebrovascular disease","I69.913","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200557,40482301,"Psychomotor deficit following unspecified cerebrovascular disease","I69.913","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200558,40482301,"Frontal lobe and executive function deficit following unspecified cerebrovascular disease","I69.914","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200558,40482301,"Frontal lobe and executive function deficit following unspecified cerebrovascular disease","I69.914","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200559,40482301,"Cognitive social or emotional deficit following unspecified cerebrovascular disease","I69.915","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200559,40482301,"Cognitive social or emotional deficit following unspecified cerebrovascular disease","I69.915","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200560,40482301,"Other symptoms and signs involving cognitive functions following unspecified cerebrovascular disease","I69.918","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200560,40482301,"Other symptoms and signs involving cognitive functions following unspecified cerebrovascular disease","I69.918","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200561,40482301,"Unspecified symptoms and signs involving cognitive functions following unspecified cerebrovascular disease","I69.919","CVA","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+37200561,40482301,"Unspecified symptoms and signs involving cognitive functions following unspecified cerebrovascular disease","I69.919","Dementia","Residual cognitive deficit as late effect of cerebrovascular accident",2,1,NA
+45533021,443729,"Type 2 diabetes mellitus with diabetic peripheral angiopathy without gangrene","E11.51","Diabetes","Peripheral circulatory disorder due to type 2 diabetes mellitus",3,1,NA
+45533021,443729,"Type 2 diabetes mellitus with diabetic peripheral angiopathy without gangrene","E11.51","PerNeuro","Peripheral circulatory disorder due to type 2 diabetes mellitus",3,1,NA
+45533021,443729,"Type 2 diabetes mellitus with diabetic peripheral angiopathy without gangrene","E11.51","PVD","Peripheral circulatory disorder due to type 2 diabetes mellitus",3,1,NA
+45533022,4222876,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","Diabetes","Gangrene due to type 2 diabetes mellitus",3,3,NA
+45533022,4222876,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","PerNeuro","Gangrene due to type 2 diabetes mellitus",3,3,NA
+45533022,4222876,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","PVD","Gangrene due to type 2 diabetes mellitus",3,3,NA
+45533022,4131908,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","Diabetes","Peripheral angiopathy due to diabetes mellitus",3,3,NA
+45533022,4131908,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","PerNeuro","Peripheral angiopathy due to diabetes mellitus",3,3,NA
+45533022,4131908,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","PVD","Peripheral angiopathy due to diabetes mellitus",3,3,NA
+45533022,201826,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","Diabetes","Type 2 diabetes mellitus",3,3,NA
+45533022,201826,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","PerNeuro","Type 2 diabetes mellitus",3,3,NA
+45533022,201826,"Type 2 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E11.52","PVD","Type 2 diabetes mellitus",3,3,NA
+45533695,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left elbow","M05.522","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45533695,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left elbow","M05.522","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45533695,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left elbow","M05.522","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45533695,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of left elbow","M05.522","Arthritis","Rheumatoid arthritis of elbow",2,2,NA
+45533695,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of left elbow","M05.522","Arthritis","Rheumatoid arthritis of elbow",2,2,NA
+45533695,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of left elbow","M05.522","PerNeuro","Rheumatoid arthritis of elbow",2,2,NA
+45537963,321822,"Other specified diabetes mellitus with other circulatory complications","E13.59","Diabetes","Peripheral vascular disorder due to diabetes mellitus",2,1,NA
+45537963,321822,"Other specified diabetes mellitus with other circulatory complications","E13.59","PerNeuro","Peripheral vascular disorder due to diabetes mellitus",2,1,NA
+45538069,36684319,"Adjustment disorder with mixed anxiety and depressed mood","F43.23","Anxiety","Adjustment disorder with mixed anxiety and depressed mood",2,1,NA
+45538069,36684319,"Adjustment disorder with mixed anxiety and depressed mood","F43.23","Depress","Adjustment disorder with mixed anxiety and depressed mood",2,1,NA
+45538629,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right shoulder","M05.511","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538629,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right shoulder","M05.511","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538629,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right shoulder","M05.511","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538629,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of right shoulder","M05.511","Arthritis","Rheumatoid arthritis of shoulder",2,2,NA
+45538629,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of right shoulder","M05.511","Arthritis","Rheumatoid arthritis of shoulder",2,2,NA
+45538629,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of right shoulder","M05.511","PerNeuro","Rheumatoid arthritis of shoulder",2,2,NA
+45538630,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified wrist","M05.539","Arthritis","Rheumatoid arthritis of wrist",2,2,NA
+45538630,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified wrist","M05.539","Arthritis","Rheumatoid arthritis of wrist",2,2,NA
+45538630,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified wrist","M05.539","PerNeuro","Rheumatoid arthritis of wrist",2,2,NA
+45538630,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified wrist","M05.539","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538630,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified wrist","M05.539","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538630,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified wrist","M05.539","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538631,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hand","M05.542","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538631,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hand","M05.542","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538631,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hand","M05.542","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538631,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hand","M05.542","Arthritis","Rheumatoid arthritis - hand joint",2,2,NA
+45538631,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hand","M05.542","Arthritis","Rheumatoid arthritis - hand joint",2,2,NA
+45538631,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hand","M05.542","PerNeuro","Rheumatoid arthritis - hand joint",2,2,NA
+45538632,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right ankle and foot","M05.571","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538632,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right ankle and foot","M05.571","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538632,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right ankle and foot","M05.571","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45538632,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of right ankle and foot","M05.571","Arthritis","Rheumatoid arthritis - ankle and/or foot",2,2,NA
+45538632,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of right ankle and foot","M05.571","Arthritis","Rheumatoid arthritis - ankle and/or foot",2,2,NA
+45538632,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of right ankle and foot","M05.571","PerNeuro","Rheumatoid arthritis - ankle and/or foot",2,2,NA
+45542733,4202383,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic polyneuropathy","E09.42","Diabetes","Drug-induced diabetes mellitus",2,2,NA
+45542733,4202383,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic polyneuropathy","E09.42","PerNeuro","Drug-induced diabetes mellitus",2,2,NA
+45542733,4234742,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic polyneuropathy","E09.42","Diabetes","Diabetic neuropathy with neurologic complication",2,2,NA
+45542733,4234742,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic polyneuropathy","E09.42","PerNeuro","Diabetic neuropathy with neurologic complication",2,2,NA
+45542737,201254,"Type 1 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E10.52","PerNeuro","Type 1 diabetes mellitus",2,3,NA
+45542737,201254,"Type 1 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E10.52","PVD","Type 1 diabetes mellitus",2,3,NA
+45542737,4223303,"Type 1 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E10.52","PerNeuro","Gangrene due to type 1 diabetes mellitus",2,3,NA
+45542737,4223303,"Type 1 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E10.52","PVD","Gangrene due to type 1 diabetes mellitus",2,3,NA
+45542737,4131908,"Type 1 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E10.52","PerNeuro","Peripheral angiopathy due to diabetes mellitus",2,3,NA
+45542737,4131908,"Type 1 diabetes mellitus with diabetic peripheral angiopathy with gangrene","E10.52","PVD","Peripheral angiopathy due to diabetes mellitus",2,3,NA
+45542741,192279,"Other specified diabetes mellitus with diabetic nephropathy","E13.21","Diabetes","Disorder of kidney due to diabetes mellitus",2,1,NA
+45542741,192279,"Other specified diabetes mellitus with diabetic nephropathy","E13.21","Kidney","Disorder of kidney due to diabetes mellitus",2,1,NA
+45543433,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hand","M05.549","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45543433,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hand","M05.549","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45543433,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hand","M05.549","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45543433,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hand","M05.549","Arthritis","Rheumatoid arthritis - hand joint",2,2,NA
+45543433,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hand","M05.549","Arthritis","Rheumatoid arthritis - hand joint",2,2,NA
+45543433,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hand","M05.549","PerNeuro","Rheumatoid arthritis - hand joint",2,2,NA
+45547617,376112,"Diabetes mellitus due to underlying condition with diabetic polyneuropathy","E08.42","Diabetes","Polyneuropathy due to diabetes mellitus",2,2,NA
+45547617,376112,"Diabetes mellitus due to underlying condition with diabetic polyneuropathy","E08.42","PerNeuro","Polyneuropathy due to diabetes mellitus",2,2,NA
+45547617,195771,"Diabetes mellitus due to underlying condition with diabetic polyneuropathy","E08.42","Diabetes","Secondary diabetes mellitus",2,2,NA
+45547617,195771,"Diabetes mellitus due to underlying condition with diabetic polyneuropathy","E08.42","PerNeuro","Secondary diabetes mellitus",2,2,NA
+45547620,4202383,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic neuropathy, unspecified","E09.40","Diabetes","Drug-induced diabetes mellitus",2,2,NA
+45547620,4202383,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic neuropathy, unspecified","E09.40","PerNeuro","Drug-induced diabetes mellitus",2,2,NA
+45547620,4234742,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic neuropathy, unspecified","E09.40","Diabetes","Diabetic neuropathy with neurologic complication",2,2,NA
+45547620,4234742,"Drug or chemical induced diabetes mellitus with neurological complications with diabetic neuropathy, unspecified","E09.40","PerNeuro","Diabetic neuropathy with neurologic complication",2,2,NA
+45547622,318712,"Type 1 diabetes mellitus with diabetic peripheral angiopathy without gangrene","E10.51","PerNeuro","Peripheral circulatory disorder due to type 1 diabetes mellitus",2,1,NA
+45547622,318712,"Type 1 diabetes mellitus with diabetic peripheral angiopathy without gangrene","E10.51","PVD","Peripheral circulatory disorder due to type 1 diabetes mellitus",2,1,NA
+45548257,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of right wrist","M05.531","Arthritis","Rheumatoid arthritis of wrist",2,2,NA
+45548257,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of right wrist","M05.531","Arthritis","Rheumatoid arthritis of wrist",2,2,NA
+45548257,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of right wrist","M05.531","PerNeuro","Rheumatoid arthritis of wrist",2,2,NA
+45548257,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right wrist","M05.531","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45548257,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right wrist","M05.531","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45548257,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right wrist","M05.531","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45548258,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right knee","M05.561","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45548258,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right knee","M05.561","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45548258,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right knee","M05.561","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45548258,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of right knee","M05.561","Arthritis","Rheumatoid arthritis of knee",2,2,NA
+45548258,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of right knee","M05.561","Arthritis","Rheumatoid arthritis of knee",2,2,NA
+45548258,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of right knee","M05.561","PerNeuro","Rheumatoid arthritis of knee",2,2,NA
+45552388,192279,"Other specified diabetes mellitus with other diabetic kidney complication","E13.29","Diabetes","Disorder of kidney due to diabetes mellitus",2,1,NA
+45552388,192279,"Other specified diabetes mellitus with other diabetic kidney complication","E13.29","Kidney","Disorder of kidney due to diabetes mellitus",2,1,NA
+45553041,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified ankle and foot","M05.579","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45553041,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified ankle and foot","M05.579","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45553041,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified ankle and foot","M05.579","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45553041,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified ankle and foot","M05.579","Arthritis","Rheumatoid arthritis - ankle and/or foot",2,2,NA
+45553041,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified ankle and foot","M05.579","Arthritis","Rheumatoid arthritis - ankle and/or foot",2,2,NA
+45553041,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified ankle and foot","M05.579","PerNeuro","Rheumatoid arthritis - ankle and/or foot",2,2,NA
+45557113,37017432,"Type 2 diabetes mellitus with diabetic polyneuropathy","E11.42","Diabetes","Polyneuropathy due to type 2 diabetes mellitus",2,1,NA
+45557113,37017432,"Type 2 diabetes mellitus with diabetic polyneuropathy","E11.42","PerNeuro","Polyneuropathy due to type 2 diabetes mellitus",2,1,NA
+45561942,4226354,"Diabetes mellitus due to underlying condition with diabetic peripheral angiopathy with gangrene","E08.52","Diabetes","Gangrene due to diabetes mellitus",2,3,NA
+45561942,4226354,"Diabetes mellitus due to underlying condition with diabetic peripheral angiopathy with gangrene","E08.52","PVD","Gangrene due to diabetes mellitus",2,3,NA
+45561942,195771,"Diabetes mellitus due to underlying condition with diabetic peripheral angiopathy with gangrene","E08.52","Diabetes","Secondary diabetes mellitus",2,3,NA
+45561942,195771,"Diabetes mellitus due to underlying condition with diabetic peripheral angiopathy with gangrene","E08.52","PVD","Secondary diabetes mellitus",2,3,NA
+45561942,4131908,"Diabetes mellitus due to underlying condition with diabetic peripheral angiopathy with gangrene","E08.52","Diabetes","Peripheral angiopathy due to diabetes mellitus",2,3,NA
+45561942,4131908,"Diabetes mellitus due to underlying condition with diabetic peripheral angiopathy with gangrene","E08.52","PVD","Peripheral angiopathy due to diabetes mellitus",2,3,NA
+45561955,192279,"Other specified diabetes mellitus with diabetic chronic kidney disease","E13.22","Diabetes","Disorder of kidney due to diabetes mellitus",2,1,NA
+45561955,192279,"Other specified diabetes mellitus with diabetic chronic kidney disease","E13.22","Kidney","Disorder of kidney due to diabetes mellitus",2,1,NA
+45561956,4044391,"Other specified diabetes mellitus with diabetic neuropathy, unspecified","E13.40","Diabetes","Neuropathy due to diabetes mellitus",2,1,NA
+45561956,4044391,"Other specified diabetes mellitus with diabetic neuropathy, unspecified","E13.40","PerNeuro","Neuropathy due to diabetes mellitus",2,1,NA
+45562590,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified knee","M05.569","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45562590,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified knee","M05.569","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45562590,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified knee","M05.569","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45562590,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified knee","M05.569","Arthritis","Rheumatoid arthritis of knee",2,2,NA
+45562590,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified knee","M05.569","Arthritis","Rheumatoid arthritis of knee",2,2,NA
+45562590,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified knee","M05.569","PerNeuro","Rheumatoid arthritis of knee",2,2,NA
+45566735,376112,"Other specified diabetes mellitus with diabetic polyneuropathy","E13.42","Diabetes","Polyneuropathy due to diabetes mellitus",2,1,NA
+45566735,376112,"Other specified diabetes mellitus with diabetic polyneuropathy","E13.42","PerNeuro","Polyneuropathy due to diabetes mellitus",2,1,NA
+45567413,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified site","M05.50","Arthritis","Polyneuropathy in rheumatoid arthritis",2,1,NA
+45567413,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified site","M05.50","Arthritis","Polyneuropathy in rheumatoid arthritis",2,1,NA
+45567413,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified site","M05.50","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,1,NA
+45567414,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right elbow","M05.521","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45567414,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right elbow","M05.521","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45567414,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right elbow","M05.521","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45567414,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of right elbow","M05.521","Arthritis","Rheumatoid arthritis of elbow",2,2,NA
+45567414,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of right elbow","M05.521","Arthritis","Rheumatoid arthritis of elbow",2,2,NA
+45567414,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of right elbow","M05.521","PerNeuro","Rheumatoid arthritis of elbow",2,2,NA
+45567415,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of multiple sites","M05.59","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45567415,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of multiple sites","M05.59","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45567415,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of multiple sites","M05.59","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45567415,4117686,"Rheumatoid polyneuropathy with rheumatoid arthritis of multiple sites","M05.59","Arthritis","Rheumatoid arthritis of multiple joints",2,2,NA
+45567415,4117686,"Rheumatoid polyneuropathy with rheumatoid arthritis of multiple sites","M05.59","Arthritis","Rheumatoid arthritis of multiple joints",2,2,NA
+45567415,4117686,"Rheumatoid polyneuropathy with rheumatoid arthritis of multiple sites","M05.59","PerNeuro","Rheumatoid arthritis of multiple joints",2,2,NA
+45571661,321822,"Other specified diabetes mellitus with diabetic peripheral angiopathy without gangrene","E13.51","Diabetes","Peripheral vascular disorder due to diabetes mellitus",3,1,NA
+45571661,321822,"Other specified diabetes mellitus with diabetic peripheral angiopathy without gangrene","E13.51","PerNeuro","Peripheral vascular disorder due to diabetes mellitus",3,1,NA
+45571661,321822,"Other specified diabetes mellitus with diabetic peripheral angiopathy without gangrene","E13.51","PVD","Peripheral vascular disorder due to diabetes mellitus",3,1,NA
+45576443,443729,"Type 2 diabetes mellitus with other circulatory complications","E11.59","Diabetes","Peripheral circulatory disorder due to type 2 diabetes mellitus",2,1,NA
+45576443,443729,"Type 2 diabetes mellitus with other circulatory complications","E11.59","PerNeuro","Peripheral circulatory disorder due to type 2 diabetes mellitus",2,1,NA
+45581347,4131908,"Drug or chemical induced diabetes mellitus with diabetic peripheral angiopathy without gangrene","E09.51","Diabetes","Peripheral angiopathy due to diabetes mellitus",2,2,NA
+45581347,4131908,"Drug or chemical induced diabetes mellitus with diabetic peripheral angiopathy without gangrene","E09.51","PVD","Peripheral angiopathy due to diabetes mellitus",2,2,NA
+45581347,4202383,"Drug or chemical induced diabetes mellitus with diabetic peripheral angiopathy without gangrene","E09.51","Diabetes","Drug-induced diabetes mellitus",2,2,NA
+45581347,4202383,"Drug or chemical induced diabetes mellitus with diabetic peripheral angiopathy without gangrene","E09.51","PVD","Drug-induced diabetes mellitus",2,2,NA
+45581358,201820,"Other specified diabetes mellitus with other diabetic arthropathy","E13.618","Arthritis","Diabetes mellitus",2,3,NA
+45581358,201820,"Other specified diabetes mellitus with other diabetic arthropathy","E13.618","Diabetes","Diabetes mellitus",2,3,NA
+45581358,46270483,"Other specified diabetes mellitus with other diabetic arthropathy","E13.618","Arthritis","Arthropathy due to metabolic disorder",2,3,NA
+45581358,46270483,"Other specified diabetes mellitus with other diabetic arthropathy","E13.618","Diabetes","Arthropathy due to metabolic disorder",2,3,NA
+45581358,442793,"Other specified diabetes mellitus with other diabetic arthropathy","E13.618","Arthritis","Complication due to diabetes mellitus",2,3,NA
+45581358,442793,"Other specified diabetes mellitus with other diabetic arthropathy","E13.618","Diabetes","Complication due to diabetes mellitus",2,3,NA
+45582010,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hip","M05.552","Arthritis","Rheumatoid arthritis of hip",2,2,NA
+45582010,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hip","M05.552","Arthritis","Rheumatoid arthritis of hip",2,2,NA
+45582010,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hip","M05.552","PerNeuro","Rheumatoid arthritis of hip",2,2,NA
+45582010,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hip","M05.552","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582010,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hip","M05.552","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582010,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left hip","M05.552","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582011,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hip","M05.559","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582011,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hip","M05.559","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582011,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hip","M05.559","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582011,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hip","M05.559","Arthritis","Rheumatoid arthritis of hip",2,2,NA
+45582011,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hip","M05.559","Arthritis","Rheumatoid arthritis of hip",2,2,NA
+45582011,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified hip","M05.559","PerNeuro","Rheumatoid arthritis of hip",2,2,NA
+45582012,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left knee","M05.562","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582012,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left knee","M05.562","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582012,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left knee","M05.562","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582012,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of left knee","M05.562","Arthritis","Rheumatoid arthritis of knee",2,2,NA
+45582012,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of left knee","M05.562","Arthritis","Rheumatoid arthritis of knee",2,2,NA
+45582012,4116151,"Rheumatoid polyneuropathy with rheumatoid arthritis of left knee","M05.562","PerNeuro","Rheumatoid arthritis of knee",2,2,NA
+45582013,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of left ankle and foot","M05.572","Arthritis","Rheumatoid arthritis - ankle and/or foot",2,2,NA
+45582013,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of left ankle and foot","M05.572","Arthritis","Rheumatoid arthritis - ankle and/or foot",2,2,NA
+45582013,4117687,"Rheumatoid polyneuropathy with rheumatoid arthritis of left ankle and foot","M05.572","PerNeuro","Rheumatoid arthritis - ankle and/or foot",2,2,NA
+45582013,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left ankle and foot","M05.572","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582013,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left ankle and foot","M05.572","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582013,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left ankle and foot","M05.572","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45582718,4272240,"Other malaise","R53.81","Fatigue","Malaise",2,1,NA
+45582718,4272240,"Other malaise","R53.81","Fatigue","Malaise",2,1,NA
+45582718,4272240,"Other malaise","R53.81","Muscular","Malaise",2,1,NA
+45586140,4196141,"Type 2 diabetes mellitus with other diabetic arthropathy","E11.618","Arthritis","Arthropathy due to type 2 diabetes mellitus",2,1,NA
+45586140,4196141,"Type 2 diabetes mellitus with other diabetic arthropathy","E11.618","Diabetes","Arthropathy due to type 2 diabetes mellitus",2,1,NA
+45586143,4131908,"Other specified diabetes mellitus with diabetic peripheral angiopathy with gangrene","E13.52","Diabetes","Peripheral angiopathy due to diabetes mellitus",3,2,NA
+45586143,4131908,"Other specified diabetes mellitus with diabetic peripheral angiopathy with gangrene","E13.52","PerNeuro","Peripheral angiopathy due to diabetes mellitus",3,2,NA
+45586143,4131908,"Other specified diabetes mellitus with diabetic peripheral angiopathy with gangrene","E13.52","PVD","Peripheral angiopathy due to diabetes mellitus",3,2,NA
+45586143,4226354,"Other specified diabetes mellitus with diabetic peripheral angiopathy with gangrene","E13.52","Diabetes","Gangrene due to diabetes mellitus",3,2,NA
+45586143,4226354,"Other specified diabetes mellitus with diabetic peripheral angiopathy with gangrene","E13.52","PerNeuro","Gangrene due to diabetes mellitus",3,2,NA
+45586143,4226354,"Other specified diabetes mellitus with diabetic peripheral angiopathy with gangrene","E13.52","PVD","Gangrene due to diabetes mellitus",3,2,NA
+45591025,4202383,"Drug or chemical induced diabetes mellitus with other diabetic arthropathy","E09.618","Arthritis","Drug-induced diabetes mellitus",2,2,NA
+45591025,4202383,"Drug or chemical induced diabetes mellitus with other diabetic arthropathy","E09.618","Diabetes","Drug-induced diabetes mellitus",2,2,NA
+45591025,4114427,"Drug or chemical induced diabetes mellitus with other diabetic arthropathy","E09.618","Arthritis","Neuropathic arthropathy due to diabetes mellitus",2,2,NA
+45591025,4114427,"Drug or chemical induced diabetes mellitus with other diabetic arthropathy","E09.618","Diabetes","Neuropathic arthropathy due to diabetes mellitus",2,2,NA
+45591027,443731,"Type 2 diabetes mellitus with diabetic nephropathy","E11.21","Diabetes","Renal disorder due to type 2 diabetes mellitus",2,1,NA
+45591027,443731,"Type 2 diabetes mellitus with diabetic nephropathy","E11.21","Kidney","Renal disorder due to type 2 diabetes mellitus",2,1,NA
+45591693,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of left wrist","M05.532","Arthritis","Rheumatoid arthritis of wrist",2,2,NA
+45591693,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of left wrist","M05.532","Arthritis","Rheumatoid arthritis of wrist",2,2,NA
+45591693,4116441,"Rheumatoid polyneuropathy with rheumatoid arthritis of left wrist","M05.532","PerNeuro","Rheumatoid arthritis of wrist",2,2,NA
+45591693,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left wrist","M05.532","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45591693,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left wrist","M05.532","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45591693,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left wrist","M05.532","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45591694,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hand","M05.541","Arthritis","Rheumatoid arthritis - hand joint",2,2,NA
+45591694,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hand","M05.541","Arthritis","Rheumatoid arthritis - hand joint",2,2,NA
+45591694,4115161,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hand","M05.541","PerNeuro","Rheumatoid arthritis - hand joint",2,2,NA
+45591694,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hand","M05.541","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45591694,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hand","M05.541","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45591694,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hand","M05.541","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45591695,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hip","M05.551","Arthritis","Rheumatoid arthritis of hip",2,2,NA
+45591695,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hip","M05.551","Arthritis","Rheumatoid arthritis of hip",2,2,NA
+45591695,4116150,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hip","M05.551","PerNeuro","Rheumatoid arthritis of hip",2,2,NA
+45591695,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hip","M05.551","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45591695,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hip","M05.551","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45591695,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of right hip","M05.551","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45595791,195771,"Diabetes mellitus due to underlying condition with diabetic peripheral angiopathy without gangrene","E08.51","Diabetes","Secondary diabetes mellitus",2,2,NA
+45595791,195771,"Diabetes mellitus due to underlying condition with diabetic peripheral angiopathy without gangrene","E08.51","PVD","Secondary diabetes mellitus",2,2,NA
+45595791,4131908,"Diabetes mellitus due to underlying condition with diabetic peripheral angiopathy without gangrene","E08.51","Diabetes","Peripheral angiopathy due to diabetes mellitus",2,2,NA
+45595791,4131908,"Diabetes mellitus due to underlying condition with diabetic peripheral angiopathy without gangrene","E08.51","PVD","Peripheral angiopathy due to diabetes mellitus",2,2,NA
+45595797,201826,"Type 2 diabetes mellitus with diabetic chronic kidney disease","E11.22","Diabetes","Type 2 diabetes mellitus",2,2,NA
+45595797,201826,"Type 2 diabetes mellitus with diabetic chronic kidney disease","E11.22","Kidney","Type 2 diabetes mellitus",2,2,NA
+45595797,43531578,"Type 2 diabetes mellitus with diabetic chronic kidney disease","E11.22","Diabetes","Chronic kidney disease due to type 2 diabetes mellitus",2,2,NA
+45595797,43531578,"Type 2 diabetes mellitus with diabetic chronic kidney disease","E11.22","Kidney","Chronic kidney disease due to type 2 diabetes mellitus",2,2,NA
+45596433,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified shoulder","M05.519","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45596433,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified shoulder","M05.519","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45596433,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified shoulder","M05.519","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45596433,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified shoulder","M05.519","Arthritis","Rheumatoid arthritis of shoulder",2,2,NA
+45596433,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified shoulder","M05.519","Arthritis","Rheumatoid arthritis of shoulder",2,2,NA
+45596433,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified shoulder","M05.519","PerNeuro","Rheumatoid arthritis of shoulder",2,2,NA
+45596434,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified elbow","M05.529","Arthritis","Rheumatoid arthritis of elbow",2,2,NA
+45596434,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified elbow","M05.529","Arthritis","Rheumatoid arthritis of elbow",2,2,NA
+45596434,4116440,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified elbow","M05.529","PerNeuro","Rheumatoid arthritis of elbow",2,2,NA
+45596434,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified elbow","M05.529","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45596434,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified elbow","M05.529","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45596434,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of unspecified elbow","M05.529","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45600635,4226354,"Drug or chemical induced diabetes mellitus with diabetic peripheral angiopathy with gangrene","E09.52","Diabetes","Gangrene due to diabetes mellitus",2,2,NA
+45600635,4226354,"Drug or chemical induced diabetes mellitus with diabetic peripheral angiopathy with gangrene","E09.52","PVD","Gangrene due to diabetes mellitus",2,2,NA
+45600635,4202383,"Drug or chemical induced diabetes mellitus with diabetic peripheral angiopathy with gangrene","E09.52","Diabetes","Drug-induced diabetes mellitus",2,2,NA
+45600635,4202383,"Drug or chemical induced diabetes mellitus with diabetic peripheral angiopathy with gangrene","E09.52","PVD","Drug-induced diabetes mellitus",2,2,NA
+45605392,4044391,"Diabetes mellitus due to underlying condition with diabetic neuropathy, unspecified","E08.40","Diabetes","Neuropathy due to diabetes mellitus",2,2,NA
+45605392,4044391,"Diabetes mellitus due to underlying condition with diabetic neuropathy, unspecified","E08.40","PerNeuro","Neuropathy due to diabetes mellitus",2,2,NA
+45605392,195771,"Diabetes mellitus due to underlying condition with diabetic neuropathy, unspecified","E08.40","Diabetes","Secondary diabetes mellitus",2,2,NA
+45605392,195771,"Diabetes mellitus due to underlying condition with diabetic neuropathy, unspecified","E08.40","PerNeuro","Secondary diabetes mellitus",2,2,NA
+45605394,195771,"Diabetes mellitus due to underlying condition with other diabetic arthropathy","E08.618","Arthritis","Secondary diabetes mellitus",2,3,NA
+45605394,195771,"Diabetes mellitus due to underlying condition with other diabetic arthropathy","E08.618","Diabetes","Secondary diabetes mellitus",2,3,NA
+45605394,442793,"Diabetes mellitus due to underlying condition with other diabetic arthropathy","E08.618","Arthritis","Complication due to diabetes mellitus",2,3,NA
+45605394,442793,"Diabetes mellitus due to underlying condition with other diabetic arthropathy","E08.618","Diabetes","Complication due to diabetes mellitus",2,3,NA
+45605394,46270483,"Diabetes mellitus due to underlying condition with other diabetic arthropathy","E08.618","Arthritis","Arthropathy due to metabolic disorder",2,3,NA
+45605394,46270483,"Diabetes mellitus due to underlying condition with other diabetic arthropathy","E08.618","Diabetes","Arthropathy due to metabolic disorder",2,3,NA
+45605401,443731,"Type 2 diabetes mellitus with other diabetic kidney complication","E11.29","Diabetes","Renal disorder due to type 2 diabetes mellitus",2,1,NA
+45605401,443731,"Type 2 diabetes mellitus with other diabetic kidney complication","E11.29","Kidney","Renal disorder due to type 2 diabetes mellitus",2,1,NA
+45605403,376065,"Type 2 diabetes mellitus with diabetic neuropathy, unspecified","E11.40","Diabetes","Disorder of nervous system due to type 2 diabetes mellitus",2,1,NA
+45605403,376065,"Type 2 diabetes mellitus with diabetic neuropathy, unspecified","E11.40","PerNeuro","Disorder of nervous system due to type 2 diabetes mellitus",2,1,NA
+45606046,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of left shoulder","M05.512","Arthritis","Rheumatoid arthritis of shoulder",2,2,NA
+45606046,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of left shoulder","M05.512","Arthritis","Rheumatoid arthritis of shoulder",2,2,NA
+45606046,4114439,"Rheumatoid polyneuropathy with rheumatoid arthritis of left shoulder","M05.512","PerNeuro","Rheumatoid arthritis of shoulder",2,2,NA
+45606046,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left shoulder","M05.512","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45606046,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left shoulder","M05.512","Arthritis","Polyneuropathy in rheumatoid arthritis",2,2,NA
+45606046,4102493,"Rheumatoid polyneuropathy with rheumatoid arthritis of left shoulder","M05.512","PerNeuro","Polyneuropathy in rheumatoid arthritis",2,2,NA
