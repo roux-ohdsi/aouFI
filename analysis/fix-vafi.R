@@ -44,7 +44,7 @@ testtbl = tbl(con, inDatabaseSchema(write_schema, "vafi"))
 
 # get icd concept id
 source_codes <- dplyr::tbl(con, inDatabaseSchema(cdm_schema, "concept")) %>%
-    dplyr::filter(vocabulary_id == "ICD10CM" | vocabulary_id == "ICD10PCS" | vocabulary_id == "CPT4" ) %>%
+    dplyr::filter(vocabulary_id == "ICD10CM" | vocabulary_id == "ICD10PCS" | vocabulary_id == "CPT4" | vocabulary_id == "HCPCS" ) %>%
     dplyr::left_join(testtbl,
                      sql_on = "concepts.concept_code LIKE my.code",
                      x_as = "concepts", y_as = "my") %>%
@@ -56,7 +56,7 @@ source_codes |> head()
 
 # just the snomed codes
 target_codes <- dplyr::tbl(con, inDatabaseSchema(cdm_schema, "concept")) %>%
-    dplyr::filter(vocabulary_id == "SNOMED") %>%
+    dplyr::filter(vocabulary_id == "SNOMED" | vocabulary_id == "CPT4"| vocabulary_id == "HCPCS") %>%
     dplyr::select(concept_id, target_concept_name = concept_name, target_vocabulary_id = vocabulary_id)
 
 target_codes |> head()
@@ -112,11 +112,10 @@ vafi_final = vafi_fixed |>
 
 ohdsilab::insertTable_chunk(vafi_final, "vafi_rev")
 
-
-tbl(con, inDatabaseSchema(write_schema, "vafi_rev")) %>% filter(concept_id == 4222876)
+tbl(con, inDatabaseSchema(write_schema, "vafi_rev")) %>% filter(concept_id == 2313754)
 
 tbl(con, inDatabaseSchema(write_schema, "vafi_rev")) %>% dbi_collect() -> vafi
-write.csv(vafi, "results/vafi_rev_03-12-24b.csv", row.names = FALSE)
+write.csv(vafi_final, "results/vafi_rev_03-12-24.csv", row.names = FALSE)
 
 
 
