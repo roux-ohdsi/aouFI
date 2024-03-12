@@ -149,6 +149,28 @@ vafi_all <- aouFI::omop2fi(con = con,
 #                            temporary = TRUE,
 #                            schema = my_schema, overwrite = TRUE)
 
+counts = cohort_all %>% ungroup() %>% count(is_female, age_group)
+
+vafi_all %>%
+    group_by(category, is_female, age_group) %>%
+    summarize(total = sum(score)) %>%
+    left_join(counts, by = c("is_female", "age_group")) %>%
+    collect() -> test
+
+categories = test %>% filter(category %in% cats) %>%
+    mutate(is_female = as.factor(is_female),
+           prop = total/n)
+
+categories %>%
+    ggplot(aes(x = age_group, y = prop, fill = is_female, color = is_female, group = is_female)) +
+    geom_point() + geom_line() + facet_wrap(~category) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    scale_y_continuous(labels = scales::label_percent())
+
+write.csv(categories, "KI/2024-02-28_pharmetrics_fi_categories.csv", row.names = FALSE)
+
+# stopped here...
+
 # add robust individuals back
 vafi_all_summary <- fi_with_robust(
                             fi_query = vafi_all,

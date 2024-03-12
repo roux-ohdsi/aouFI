@@ -1,0 +1,25 @@
+
+> exclude.df <- read.csv("KI/excludedIngrds.csv")
+> excluded_ingrd <- paste(exclude.df$concept_id, collapse = ", ")
+
+> sql <- readSql("KI/ingrdCount.sql")
+> sql <- render(sql, cdm_schema = cdm_schema,
+              my_schema = my_schema,
+              lookback_days = 365,
+              excluded_ingrd = excluded_ingrd)
+
+> connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = "redshift",
+                                                                user = key_get("db_username"),
+                                                                password = key_get("db_password"))
+
+> res <- querySql(connection = con, sql = sql)
+
+Error in `.createErrorReport()`:
+! Error executing SQL:
+com.amazon.redshift.util.RedshiftException: ERROR: syntax error at or near "day"
+  Position: 236
+An error report has been created at  /Users/robcavanaugh/Documents/Github/aouRoux/errorReportSql.txt
+Run `rlang::last_trace()` to see where the error occurred.
+
+> sql
+[1] "select r.person_id, count(distinct r.drug_concept_id) cnt \r\nFROM omop_cdm_53_pmtx_202203.drug_era r\r\njoin work_usr12.frailty_cohort f\r\non r.person_id = f.person_id\r\nwhere ((r.drug_era_start_DATE >  date_add(f.index_date, interval -365 day) AND r.drug_era_start_DATE <= f.index_date)\r\n\tOR (r.drug_era_start_DATE <= date_add(f.index_date, interval -365 day) AND r.drug_era_end_DATE   > date_add(f.index_date, interval -365 day)))\r\nand date_diff(r.drug_era_end_DATE, r.drug_era_start_DATE, day) >= 90\r\nand drug_concept_id not in (19009540, 37498695, 19010970, 19009405, 1308738, 19001579, 19008339, 964298, 1353228, 36863292, 42709324, 36878782, 19097556, 1525385, 44818497, 36858903, 19044727, 19106287, 35884370, 19010128)\r\nGROUP BY r.person_id\r\n"

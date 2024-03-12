@@ -6,7 +6,7 @@ com.amazon.redshift.util.RedshiftException: ERROR: current transaction is aborte
 
 SQL:
 SELECT *
-FROM omop_cdm_53_pmtx_202203.concept q04
+FROM work_usr12.vafi_rev q02
 WHERE (0 = 1);
 
 R version:

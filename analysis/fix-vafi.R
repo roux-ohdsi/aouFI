@@ -28,6 +28,9 @@ con <- ohdsilab::ohdsilab_connect(username = key_get("db_username"), password = 
 cdm_schema <- getOption("schema.default.value")
 write_schema <- getOption("write_schema.default.value")
 
+# tbl(con, inDatabaseSchema(write_schema, "vafi_rev")) %>% dbi_collect() -> vafi
+# write.csv(vafi, "results/vafi_rev_03-12-24.csv", row.names = FALSE)
+
 
 vafi = read.csv("https://raw.githubusercontent.com/bostoninformatics/va_frailty_index/main/icd_code_vafi_mapping.csv", stringsAsFactors = TRUE) |>
     mutate(Code = str_remove(Code, "[.]$")) |> filter(CodeType == "ICD10")
