@@ -28,9 +28,6 @@ con <- ohdsilab::ohdsilab_connect(username = key_get("db_username"), password = 
 cdm_schema <- getOption("schema.default.value")
 write_schema <- getOption("write_schema.default.value")
 
-# tbl(con, inDatabaseSchema(write_schema, "vafi_rev")) %>% dbi_collect() -> vafi
-# write.csv(vafi, "results/vafi_rev_03-12-24.csv", row.names = FALSE)
-
 
 vafi = read.csv("https://raw.githubusercontent.com/bostoninformatics/va_frailty_index/main/icd_code_vafi_mapping.csv", stringsAsFactors = TRUE) |>
     mutate(Code = str_remove(Code, "[.]$")) |> filter(CodeType == "ICD10")
@@ -41,13 +38,13 @@ vafi_proc = read.csv("https://raw.githubusercontent.com/bostoninformatics/va_fra
 all_deficit_codes <- bind_rows(vafi, vafi_proc) %>%
     distinct()
 
-# ohdsilab::insertTable_chunk(all_deficit_codes, "vafi")
+ohdsilab::insertTable_chunk(all_deficit_codes, "vafi")
 
 testtbl = tbl(con, inDatabaseSchema(write_schema, "vafi"))
 
 # get icd concept id
 source_codes <- dplyr::tbl(con, inDatabaseSchema(cdm_schema, "concept")) %>%
-    dplyr::filter(vocabulary_id == "ICD10CM" | vocabulary_id == "ICD10PCS" ) %>%
+    dplyr::filter(vocabulary_id == "ICD10CM" | vocabulary_id == "ICD10PCS" | vocabulary_id == "CPT4" ) %>%
     dplyr::left_join(testtbl,
                      sql_on = "concepts.concept_code LIKE my.code",
                      x_as = "concepts", y_as = "my") %>%
@@ -84,7 +81,7 @@ fix_dm <- relationships %>%
     distinct(concept_id, deficit, bad_match)
 
 # fix for codes reviewed by Lily
-bad_matches = readxl::read_excel(here::here("vafi_multi_reviewed.xlsx")) %>%
+bad_matches = readxl::read_excel(here::here("output/vafi_multi_reviewed.xlsx")) %>%
     filter(bad_match == 1) %>%
     distinct(concept_id, deficit, bad_match) %>%
     bind_rows(fix_dm)%>%
@@ -116,6 +113,10 @@ vafi_final = vafi_fixed |>
 ohdsilab::insertTable_chunk(vafi_final, "vafi_rev")
 
 
+tbl(con, inDatabaseSchema(write_schema, "vafi_rev")) %>% filter(concept_id == 4222876)
+
+tbl(con, inDatabaseSchema(write_schema, "vafi_rev")) %>% dbi_collect() -> vafi
+write.csv(vafi, "results/vafi_rev_03-12-24b.csv", row.names = FALSE)
 
 
 
