@@ -46,6 +46,8 @@ dat2 = dat |>
     distinct(person_id, age_group, is_female, category = deficit) |>
     mutate(score = 1)
 
+dat %>% distinct(deficit) %>% collect() -> u
+
 #icd_c = dbi_collect(dat2)
 # add robust individuals back
 icd_all <- fi_with_robust(fi_query = dat2,
@@ -101,8 +103,8 @@ plotly::ggplotly(df_plot |>
 
 df_plot_noHTN = left_join(omop_cats, icd_cats, by = c("category")) %>% filter(category != "HTN")
 
-cor(df_plot$sum_score.x, df_plot$sum_score.y)
-cor(df_plot_noHTN$sum_score.x, df_plot_noHTN$sum_score.y)
+cor(df_plot$sum_score.x, df_plot$sum_score.y, use = "complete.obs")
+cor(df_plot_noHTN$sum_score.x, df_plot_noHTN$sum_score.y, use = "complete.obs")
 
 irr::icc(df_plot %>% select(-category), model = "oneway", type = "agreement")
 irr::icc(df_plot_noHTN %>% select(-category), model = "oneway", type = "agreement")
@@ -157,7 +159,7 @@ vafi_all %>%
     left_join(counts, by = c("is_female", "age_group")) %>%
     collect() -> test
 
-categories = test %>% filter(category %in% cats) %>%
+categories = test %>% #filter(category %in% cats) %>%
     mutate(is_female = as.factor(is_female),
            prop = total/n)
 
@@ -167,7 +169,7 @@ categories %>%
     theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
     scale_y_continuous(labels = scales::label_percent())
 
-write.csv(categories, "KI/2024-02-28_pharmetrics_fi_categories.csv", row.names = FALSE)
+write.csv(categories, "KI/2024-03-13_pharmetrics_fi_categories.csv", row.names = FALSE)
 
 # stopped here...
 
@@ -175,13 +177,35 @@ write.csv(categories, "KI/2024-02-28_pharmetrics_fi_categories.csv", row.names =
 vafi_all_summary <- fi_with_robust(
                             fi_query = vafi_all,
                            cohort = cohort,
-                           denominator = 30, lb = 0.11, ub = 0.21)
+                           denominator = 31, lb = 0.11, ub = 0.21)
 
 # summarize
 t = summarize_fi(vafi_all_summary) %>% collect()
 
-write.csv(t, "results/2024-02-15_vafi_pharmetrics.csv", row.names = FALSE)
+write.csv(t, "results/2024-03-13_vafi_pharmetrics.csv", row.names = FALSE)
 # ============================================================================
+
+t2 = read.csv("results/2024-02-15_vafi_pharmetrics.csv")
+
+t3 = left_join(t, t2, by = c("age_group", "is_female")) %>%
+    pivot_longer(names_from = c())
+
+
+left_join(
+    t %>% pivot_longer(cols = n:frail),
+    t2 %>% pivot_longer(cols = n:frail),
+    by = c("age_group", "is_female", "name")) %>%
+    rename("new" = value.x, "old" = value.y) %>%
+    filter(name != "n") %>%
+    pivot_longer(cols = new:old, names_to = "type", values_to = "value") %>%
+    mutate(name = factor(name, levels = c("prefrail", "frail")),
+           is_female = as.factor(is_female)) %>%
+    ggplot(aes(x = age_group, y = value, color = type)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(name ~ is_female)
+
+
 # OTHJER STIUFF...trying to track down specific codes that are issues...har dto do
 # because of the many to many relationships.
 

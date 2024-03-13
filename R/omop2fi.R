@@ -221,7 +221,7 @@ omop2fi <- function(con,
         distinct()
 
 
-    message("putting it all together...")
+    message("putting it all together union...")
 
     # we will need to join the concept IDs and labels back to the events
     # after the four tables above are combined.
@@ -239,7 +239,7 @@ omop2fi <- function(con,
 
     # put them all together, add the fi labels back
     dat <-
-        union_all(cond_occurrences, obs, dev, proc)
+        union_all(cond_occurrences, obs) %>% union_all(dev) %>% union_all(proc)
 
     # Logic to determine whether a collected df or just a query should be returned.
     # note that copying if false can still take some time...

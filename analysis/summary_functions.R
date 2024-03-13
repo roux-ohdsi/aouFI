@@ -91,8 +91,10 @@ icd_fi <- function(){
     person                  = inDatabaseSchema(schema, "person")
 
 
-    concept_table = tbl(con, inDatabaseSchema(my_schema, "vafi_10")) |> select(icd_code = code, deficit)
+    concept_table = tbl(con, inDatabaseSchema(my_schema, "vafi_10")) |> select(icd_code = code, deficit, codetype)
     concept_table_proc = tbl(con, inDatabaseSchema(my_schema, "vafi_proc")) |> select(icd_code = code, deficit, codetype)
+
+    ct = union_all(concept_table, concept_table_proc)
 
     # The following four calls go find the presence of the concept IDs in the
     # condition occurrence, procedure, observation, and device tabes, limiting
@@ -103,7 +105,7 @@ icd_fi <- function(){
     # go find instances of our concepts in the condition occurrence table
     cond_occurrences <- tbl(con, condition_occurrence) |>
         inner_join(pid, by = "person_id", x_as = "x1", y_as = "y1") |>
-        inner_join(concept_table, by = c("condition_source_value" = "icd_code"), x_as = "x2", y_as = "y2") |>
+        inner_join(ct, by = c("condition_source_value" = "icd_code"), x_as = "x2", y_as = "y2") |>
         left_join(tbl(con, concept), by = c("condition_concept_id"="concept_id")) |>
         select(person_id,
                age_group,
@@ -123,7 +125,7 @@ icd_fi <- function(){
     # do the same for the observation table
     obs <- tbl(con, observation)  |>
         inner_join(pid, by = "person_id", x_as = "x3", y_as = "y3") |>
-        inner_join(concept_table, by = c("observation_source_value" = "icd_code"), x_as = "x4", y_as = "y4") |>
+        inner_join(ct, by = c("observation_source_value" = "icd_code"), x_as = "x4", y_as = "y4") |>
         left_join(tbl(con, concept), by = c("observation_concept_id"="concept_id")) |>
         select(person_id,
                age_group,
@@ -140,10 +142,12 @@ icd_fi <- function(){
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
+    print(obs %>% filter(concept_id == 435928) %>% head(2))
+
     # procedure table
     proc <- tbl(con, procedure_occurrence) |>
         inner_join(pid, by = "person_id", x_as = "x5", y_as = "y5") |>
-        inner_join(concept_table_proc, by = c("procedure_source_value" = "icd_code"), x_as = "x4", y_as = "y4") |>
+        inner_join(ct, by = c("procedure_source_value" = "icd_code"), x_as = "x4", y_as = "y4") |>
         left_join(tbl(con, concept), by = c("procedure_concept_id"="concept_id")) |>
         select(person_id,
                age_group,
@@ -163,7 +167,7 @@ icd_fi <- function(){
     # device exposure
     dev <- tbl(con, device_exposure) |>
         inner_join(pid, by = "person_id", x_as = "x7", y_as = "y7") |>
-        inner_join(concept_table_proc, by = c("device_source_value" = "icd_code"), x_as = "x4", y_as = "y4") |>
+        inner_join(ct, by = c("device_source_value" = "icd_code"), x_as = "x4", y_as = "y4") |>
         left_join(tbl(con, concept), by = c("device_concept_id"="concept_id")) |>
         select(person_id,
                age_group,
@@ -180,8 +184,12 @@ icd_fi <- function(){
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
+
     dat <-
-        union_all(cond_occurrences, obs, dev, proc)
+        union_all(dev, obs) |> union_all(proc) |> union_all(cond_occurrences)
+
+    print(dat %>% filter(concept_id == 435928) %>% head(2))
+
 
     return(dat)
 }
