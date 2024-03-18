@@ -70,6 +70,7 @@ omop2fi <- function(con,
                      search_end_date,
                      keep_columns = NULL,
                      unique_categories = FALSE,
+                    join_later = FALSE,
 
                     concept_location
 ){
@@ -274,20 +275,26 @@ omop2fi <- function(con,
 
         #if(!dbExistsTable(con, concept_table)){stop("Please provide a database table with the FI concepts")}
 
-        message("Joining to FI table")
-        dat <- dat |>
-            left_join(concept_table,
-                      by = c("concept_id"),
-                      x_as = "x10", y_as = "y10") |>
-            select(person_id,
-                   !!!keep_columns,
-                   person_start_date,
-                   person_end_date,
-                   category,
-                   concept_id,
-                   score)
+        if(isTRUE(join_later)){
 
-        if(isTRUE(unique_categories)){dat <- dat |> select(-concept_id) |>  distinct()}
+            message("Joining to FI table")
+            dat <- dat |>
+                left_join(concept_table,
+                          by = c("concept_id"),
+                          x_as = "x10", y_as = "y10") |>
+                select(person_id,
+                       !!!keep_columns,
+                       person_start_date,
+                       person_end_date,
+                       category,
+                       concept_id,
+                       score)
+
+            if(isTRUE(unique_categories)){dat <- dat |> select(-concept_id) |>  distinct()}
+
+
+        }
+
 
         message(glue::glue("success! SQL query from dbplyr returned"))
     }
