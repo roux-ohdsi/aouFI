@@ -17,6 +17,9 @@ vafi2 = vafi |>
     distinct() |>
     mutate(fi = "vafi", score = 1)
 
+tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) |> collect() -> vafi_rev
+vafi2 = vafi_rev
+
 efragicap2 = efragicap |>
     select(category, concept_id = efi_concept_id) |>
     distinct() |>
