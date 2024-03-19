@@ -146,9 +146,9 @@ omop2fi <- function(con,
     condition_concept_ids <- tbl(con, concept) |>
         filter(standard_concept == "S") |>
         distinct(concept_id, name = concept_name) |>
-        inner_join(concept_table |> distinct(concept_id),
-                   by = c("concept_id"), x_as = "c1", y_as = "c2" ) #|> # vocabulary_id
-        #filter(concept_id %in% !!unique(categories_concepts$concept_id))
+        #inner_join(concept_table |> distinct(concept_id),
+        #           by = c("concept_id"), x_as = "c1", y_as = "c2" ) #|> # vocabulary_id
+        filter(concept_id %in% !!unique(categories_concepts$concept_id))
 
     message("searching for condition occurrences...")
 
