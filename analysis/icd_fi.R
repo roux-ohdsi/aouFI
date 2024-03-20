@@ -7,8 +7,9 @@ library(CDMConnector)
 
 source(here::here("analysis", "connection_setup.R"))
 
-tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) |> collect() -> vafi_rev
-#usethis::use_data(vafi_rev, overwrite = TRUE)
+# tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) |> collect() -> vafi_rev
+# vafi_rev = vafi_rev %>% mutate(concept_id = as.integer(concept_id))
+# usethis::use_data(vafi_rev, overwrite = TRUE)
 
 # Summary Functions. now in separate script
 source(here::here("analysis", "summary_functions.R"))

@@ -18,6 +18,7 @@ vafi2 = vafi |>
     mutate(fi = "vafi", score = 1)
 
 tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) |> collect() -> vafi_rev
+vafi_rev = vafi_rev %>% mutate(concept_id = as.integer(concept_id))
 vafi2 = vafi_rev
 
 efragicap2 = efragicap |>
@@ -81,7 +82,8 @@ efi_scoring <- tbl(con, inDatabaseSchema(cdm_schema, "concept_ancestor")) %>%
 
 fi_indices = bind_rows(
     vafi2, efragicap2, efi2, hfrs2, efi_sno2, efi_scoring
-)
+) %>%
+    mutate(concept_id = as.integer(concept_id))
 
 usethis::use_data(fi_indices, overwrite = TRUE)
 

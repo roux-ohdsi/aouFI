@@ -3,5 +3,6 @@
 export(getConcepts)
 export(getEligible)
 export(getFI)
+export(icd2fi)
 export(omop2fi)
 export(summarizeFI)
