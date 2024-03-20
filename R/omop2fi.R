@@ -84,12 +84,12 @@ omop2fi <- function(con,
 
         if(!is.character(schema)){stop("schema must be a character vector")}
 
-        concept                 = paste(schema, "concept", sep = ".")
-        condition_occurrence    = paste(schema, "condition_occurrence", sep = ".")
-        observation             = paste(schema, "observation", sep = ".")
-        procedure_occurrence    = paste(schema, "procedure_occurrence", sep = ".")
-        device_exposure         = paste(schema, "device_exposure", sep = ".")
-        person                  = paste(schema, "person")
+        concept                 = inDatabaseSchema(schema, "concept")
+        condition_occurrence    = inDatabaseSchema(schema, "condition_occurrence")
+        observation             = inDatabaseSchema(schema, "observation")
+        procedure_occurrence    = inDatabaseSchema(schema, "procedure_occurrence")
+        device_exposure         = inDatabaseSchema(schema, "device_exposure")
+        person                  = inDatabaseSchema(schema, "person")
 
     } else {
         concept                 = "concept"
