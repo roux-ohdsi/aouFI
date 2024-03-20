@@ -28,6 +28,8 @@
 #' @param concept_location pointer to a table that holds the concepts for the FI. Used when collect = FALSE.
 #' I recommend pre-uploading the aouFI::fi_indices table to your schema in the database. If the database
 #' is small enough, you can instead set collect to TRUE and concept_location to NA to use a local table from aouFI.
+#' @param join_now whether to join back tot he concepts table at the end of the query
+#' @param join_to_concept whether to join to the concept table at the beginning of the query (default) or filter for the concept_id column. Use filter only if a tbl is not accessible.
 #'
 #' @return dataframe with EFI occurences that can be summarized
 #' @export
@@ -70,7 +72,8 @@ omop2fi <- function(con,
                      search_end_date,
                      keep_columns = NULL,
                      unique_categories = FALSE,
-                    join_later = FALSE,
+                     join_now = TRUE,
+                     join_to_concept = TRUE,
 
                     concept_location
 ){
@@ -143,12 +146,24 @@ omop2fi <- function(con,
     # made very little, except for hfrs. There were 51 additional concepts in the
     # concept table that were not in the AoU table. We're still not sure what the
     # difference is, but perhaps related to the is_selectable aspect of AoU...
-    condition_concept_ids <- tbl(con, concept) |>
-        filter(standard_concept == "S") |>
-        distinct(concept_id, name = concept_name) |>
-        #inner_join(concept_table |> distinct(concept_id),
-        #           by = c("concept_id"), x_as = "c1", y_as = "c2" ) #|> # vocabulary_id
-        filter(concept_id %in% !!unique(categories_concepts$concept_id))
+
+    if(isTRUE(join_to_concept)){
+
+
+        condition_concept_ids <- tbl(con, concept) |>
+            filter(standard_concept == "S") |>
+            distinct(concept_id, name = concept_name) |>
+            inner_join(concept_table |> distinct(concept_id),
+                      by = c("concept_id"), x_as = "c1", y_as = "c2" )
+    } else {
+
+        condition_concept_ids <- tbl(con, concept) |>
+            filter(standard_concept == "S") |>
+            distinct(concept_id, name = concept_name) |>
+            filter(concept_id %in% !!unique(categories_concepts$concept_id))
+
+    }
+
 
     message("searching for condition occurrences...")
 
@@ -275,7 +290,7 @@ omop2fi <- function(con,
 
         #if(!dbExistsTable(con, concept_table)){stop("Please provide a database table with the FI concepts")}
 
-        if(isTRUE(join_later)){
+        if(isTRUE(join_now)){
 
             message("Joining to FI table")
             dat <- dat |>
