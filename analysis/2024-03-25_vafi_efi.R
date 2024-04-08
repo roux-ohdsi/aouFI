@@ -7,7 +7,8 @@ library(CDMConnector)
 
 source(here::here("analysis", "connection_setup.R"))
 
-
+# holdig code books here...
+# they are saved in the github and on the pharmetrics schema
 tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) |> collect() -> vafi_rev
 tbl(con, inDatabaseSchema(my_schema, "efi_rev")) |> collect() -> efi_rev
 
