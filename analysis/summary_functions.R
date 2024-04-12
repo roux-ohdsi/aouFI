@@ -35,6 +35,40 @@ summarize_fi <- function(fi_query){
 
 }
 
+summarize_cats <- function(fi_query, cohort, cats){
+
+    #     # find all the people in the cohort query that are not in the fi_query
+    #     tmp = cohort |>
+    #         anti_join(fi_query |> select(person_id), by = "person_id") |>
+    #         select(person_id, age_group, is_female) |>
+    #         expand_grid(tibble(category = cats)) |>
+    #         mutate(score = 0)
+
+    tmp = cohort |>
+        select(person_id, age_group, is_female) |>
+        expand(tibble(category = cats)) |>
+        left_join(fi_query |> select(person_id, category, score),
+                  by = c("person_id", "category")) |>
+        mutate(score = ifelse(is.na(score), 0, score)) |>
+        summarize(N = n(),
+                  count = sum(score),
+                  percent = sum(score)/N,
+                  .by = c(age_group, is_female, category))
+
+    #     # add them back to the FI query while calculating the person-level FI
+    #     fi_query |> ungroup() |>
+    #         distinct(person_id, score, category, is_female, age_group) |>
+    #         bind_rows(tmp) |>
+    #         add_count(is_female, age_group, category) |> print() |>
+    #         summarize(N = n(),
+    #                   n_prev = mean(n),
+    #                   count = sum(score),
+    #                   percent = sum(score)/N,
+    #                   .by = c(age_group, is_female, category))
+
+
+}
+
 
 # disorder area
 percent_category <- function(fi_query, cohort, fi_category, index){

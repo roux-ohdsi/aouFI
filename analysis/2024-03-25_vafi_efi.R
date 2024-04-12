@@ -11,8 +11,8 @@ source(here::here("analysis", "connection_setup.R"))
 tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) |> collect() -> vafi_rev
 tbl(con, inDatabaseSchema(my_schema, "efi_rev")) |> collect() -> efi_rev
 
-write_csv(vafi_rev, here("KI", "2024-03-25_vafid.csv"))
-write_csv(efi_rev, here("KI", "2024-03-25_efi_clegg_snomed.csv"))
+#write_csv(vafi_rev, here("KI", "2024-03-25_vafid.csv"))
+#write_csv(efi_rev, here("KI", "2024-03-25_efi_clegg_snomed.csv"))
 
 # vafi_rev = vafi_rev %>% mutate(concept_id = as.integer(concept_id))
 # usethis::use_data(vafi_rev, overwrite = TRUE)
@@ -60,7 +60,7 @@ cohort <- index_date_query |>
 # saving as a persistent table in my schema as a midpoint/ intermediate table. This could be a
 # temporary table if needed.
 ohdsilab::set_seed(0.5)
-CDMConnector::computeQuery(cohort, "frailty_cohort", temporary = temporary_intermediate_steps, schema = my_schema, overwrite = TRUE)
+#CDMConnector::computeQuery(cohort, "frailty_cohort", temporary = temporary_intermediate_steps, schema = my_schema, overwrite = TRUE)
 
 
 # ============================================================================
@@ -100,8 +100,8 @@ vafi_all <- aouFI::omop2fi(con = con,
                        collect = FALSE,
                        unique_categories = TRUE,
                        concept_location = tbl(con, inDatabaseSchema(my_schema, "vafi_rev"))
-) |>
-    distinct(person_id, age_group, is_female, score, category)
+)# |>
+ #   distinct(person_id, age_group, is_female, score, category)
 
 
 # save result of query as intermediate step #2
@@ -111,25 +111,24 @@ vafi_all <- aouFI::omop2fi(con = con,
 
 counts = cohort_all %>% ungroup() %>% count(is_female, age_group)
 
-vafi_all %>%
-    group_by(category, is_female, age_group) %>%
-    summarize(total = sum(score)) %>%
-    left_join(counts, by = c("is_female", "age_group")) %>%
-    collect() -> test
+# vafi_all %>%
+#     group_by(category, is_female, age_group) %>%
+#     summarize(total = sum(score)) %>%
+#     left_join(counts, by = c("is_female", "age_group")) %>%
+#     collect() -> test
+#
+# categories = test %>% #filter(category %in% cats) %>%
+#     mutate(is_female = as.factor(is_female),
+#            prop = total/n)
+#
+# categories %>%
+#     ggplot(aes(x = age_group, y = prop, fill = is_female, color = is_female, group = is_female)) +
+#     geom_point() + geom_line() + facet_wrap(~category) +
+#     theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+#     scale_y_continuous(labels = scales::label_percent())
 
-categories = test %>% #filter(category %in% cats) %>%
-    mutate(is_female = as.factor(is_female),
-           prop = total/n)
-
-categories %>%
-    ggplot(aes(x = age_group, y = prop, fill = is_female, color = is_female, group = is_female)) +
-    geom_point() + geom_line() + facet_wrap(~category) +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-    scale_y_continuous(labels = scales::label_percent())
-
-write.csv(categories, "KI/2024-03-25_pharmetrics_vafi_categories.csv", row.names = FALSE)
-
-# stopped here...
+# rejoin with the categories for summarizing. this step is done all in one with P+
+vafi_c = collect(vafi_all)
 
 # add robust individuals back
 vafi_all_summary <- fi_with_robust(
@@ -139,10 +138,24 @@ vafi_all_summary <- fi_with_robust(
 
 # summarize
 t = summarize_fi(vafi_all_summary) %>% collect()
+write.csv(t, "KI/2024-04-12_vafi_pharmetrics.csv", row.names = FALSE)
 
-write.csv(t, "KI/2024-03-25_vafi_pharmetrics.csv", row.names = FALSE)
+vafi_cats = aouFI::vafi_rev %>% distinct(category) %>% pull(category)
+vafi_cat_summary = summarize_cats(
+    vafi_c,
+    cohort = collect(cohort_all),
+    cats = vafi_cats) %>% arrange(category, age_group, is_female) %>%
+    drop_na() %>%
+    mutate(count = ifelse(count < 20, 0, count),
+           percent = ifelse(count < 20, 0, percent))
+write.csv(vafi_cat_summary, "KI/2024-04-12_pharmetrics_vafi_categories.csv", row.names = FALSE)
 
 
+rm(t)
+rm(categories)
+rm(vafi_cat_summary)
+rm(vafi_c)
+rm(test)
 # ============================================================================
 # ################################ EFI #######################################
 # ============================================================================
@@ -158,8 +171,7 @@ efi_all <- aouFI::omop2fi(con = con,
                            collect = FALSE,
                            unique_categories = TRUE,
                            concept_location = tbl(con, inDatabaseSchema(my_schema, "efi_rev"))
-) |>
-    distinct(person_id, age_group, is_female, score, category)
+)
 
 
 # save result of query as intermediate step #2
@@ -167,49 +179,27 @@ efi_all <- aouFI::omop2fi(con = con,
 #                            temporary = TRUE,
 #                            schema = my_schema, overwrite = TRUE)
 
-counts = cohort_all %>% ungroup() %>% count(is_female, age_group)
+efi_c = collect(efi_all)
 
-efi_all %>%
-    group_by(category, is_female, age_group) %>%
-    summarize(total = sum(score)) %>%
-    left_join(counts, by = c("is_female", "age_group")) %>%
-    collect() -> test
-
-categories = test %>% #filter(category %in% cats) %>%
-    mutate(is_female = as.factor(is_female),
-           prop = total/n)
-
-categories %>%
-    ggplot(aes(x = age_group, y = prop, fill = is_female, color = is_female, group = is_female)) +
-    geom_point() + geom_line() + facet_wrap(~category) +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-    scale_y_continuous(labels = scales::label_percent())
-
-write.csv(categories, "KI/2024-03-25_pharmetrics_efi_categories.csv", row.names = FALSE)
-
-# stopped here...
 
 # add robust individuals back
 efi_all_summary <- fi_with_robust(
     fi_query = efi_all,
     cohort = cohort_all,
     denominator = 35, lb = 0.12, ub = 0.24)
-
 # summarize
-t = summarize_fi(vafi_all_summary) %>% collect()
+t = summarize_fi(efi_all_summary) %>% collect()
+write.csv(t, "KI/2024-04-12_efi_pharmetrics.csv", row.names = FALSE)
 
-write.csv(t, "KI/2024-03-25_efi_pharmetrics.csv", row.names = FALSE)
-
-
-
-
-
-
-
-
-
-
-
+efi_cats = aouFI::fi_indices %>% filter(fi == "efi_sno") %>% distinct(category) %>% pull(category)
+efi_cat_summary = summarize_cats(
+    efi_c,
+    cohort = collect(cohort_all),
+    cats = efi_cats) %>% arrange(category, age_group, is_female) %>%
+    drop_na() %>%
+    mutate(count = ifelse(count < 20, 0, count),
+           percent = ifelse(count < 20, 0, percent))
+write.csv(efi_cat_summary, "KI/2024-03-25_pharmetrics_efi_categories.csv", row.names = FALSE)
 
 
 
@@ -220,7 +210,16 @@ write.csv(t, "KI/2024-03-25_efi_pharmetrics.csv", row.names = FALSE)
 
 
 
-nly finds people who have FI scores > 0.
+
+
+
+
+
+
+
+
+
+# only finds people who have FI scores > 0.
 # Se we need to find also all the people with FI scores == 0 and add
 # them back to the dataset.
 # fi_query is the result of omop2fi() and
