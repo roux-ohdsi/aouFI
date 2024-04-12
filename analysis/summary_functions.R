@@ -20,7 +20,8 @@ fi_with_robust <- function(fi_query, cohort, denominator, lb, ub){
         distinct(person_id, is_female, age_group, score, category) |>
         summarize(fi = sum(score)/denominator, .by = c(person_id, age_group, is_female)) |>
         mutate(prefrail = ifelse(fi>= lb & fi < ub, 1, 0),
-               frail = ifelse(fi>= ub, 1, 0)) |> ungroup() |>
+               frail = ifelse(fi>= ub, 1, 0),
+               robust = ifelse(fi < lb, 1, 0)) |> ungroup() |>
         union_all(tmp)
 
 }
@@ -30,8 +31,13 @@ summarize_fi <- function(fi_query){
 
     fi_query |>
         summarize(N = n(),
+                  n_prefrail = sum(prefrail),
+                  n_frail = sum(frail),
+                  n_robust = sum(robust),
                   prefrail = sum(prefrail)/n(),
-                  frail = sum(frail)/n(), .by = c(age_group, is_female))
+                  frail = sum(frail)/n(),
+                  robust = sum(robust)/n(),
+                  .by = c(age_group, is_female))
 
 }
 
@@ -46,7 +52,7 @@ summarize_cats <- function(fi_query, cohort, cats){
 
     tmp = cohort |>
         select(person_id, age_group, is_female) |>
-        expand(tibble(category = cats)) |>
+        expand_grid(tibble(category = cats)) |>
         left_join(fi_query |> select(person_id, category, score),
                   by = c("person_id", "category")) |>
         mutate(score = ifelse(is.na(score), 0, score)) |>
