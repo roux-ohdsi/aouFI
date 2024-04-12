@@ -194,7 +194,7 @@ efi_all_summary <- fi_with_robust(
     denominator = 35, lb = 0.12, ub = 0.24)
 # summarize
 t = summarize_fi(efi_all_summary) %>% collect()
-write.csv(t, glue("KI/2024-04-12_efi_{data_source}s.csv"), row.names = FALSE)
+write.csv(t, glue("KI/2024-04-12_efi_{data_source}.csv"), row.names = FALSE)
 
 efi_cats = aouFI::fi_indices %>% filter(fi == "efi_sno") %>% distinct(category) %>% pull(category)
 efi_c = vafi_all %>% select(person_id, category, score) %>% collect()
@@ -207,7 +207,7 @@ efi_cat_summary = summarize_cats(
     drop_na() %>%
     mutate(count = ifelse(count < 20, 0, count),
            percent = ifelse(count < 20, 0, percent))
-write.csv(efi_cat_summary, glue("KI/2024-03-25_{data_source}_efi_categories.csv"), row.names = FALSE)
+write.csv(efi_cat_summary, glue("KI/2024-4-12_{data_source}_efi_categories.csv"), row.names = FALSE)
 
 
 
