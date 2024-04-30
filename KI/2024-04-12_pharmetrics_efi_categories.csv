@@ -1,0 +1,649 @@
+"age_group","is_female","category","N","count","percent"
+"[40,45)",0,"Activity limitation",300490,0,0
+"[40,45)",1,"Activity limitation",327169,0,0
+"[45,50)",0,"Activity limitation",305129,0,0
+"[45,50)",1,"Activity limitation",335558,0,0
+"[50,55)",0,"Activity limitation",328467,0,0
+"[50,55)",1,"Activity limitation",360738,0,0
+"[55,60)",0,"Activity limitation",349624,0,0
+"[55,60)",1,"Activity limitation",384918,0,0
+"[60,65)",0,"Activity limitation",344312,0,0
+"[60,65)",1,"Activity limitation",384813,0,0
+"[65,70)",0,"Activity limitation",281362,0,0
+"[65,70)",1,"Activity limitation",318542,0,0
+"[70,75)",0,"Activity limitation",202067,0,0
+"[70,75)",1,"Activity limitation",244787,0,0
+"[75,80)",0,"Activity limitation",151488,0,0
+"[75,80)",1,"Activity limitation",186752,0,0
+"[80,100]",0,"Activity limitation",191432,0,0
+"[80,100]",1,"Activity limitation",295206,0,0
+"[40,45)",0,"Anaemia and haematinic deficiency",300490,0,0
+"[40,45)",1,"Anaemia and haematinic deficiency",327169,0,0
+"[45,50)",0,"Anaemia and haematinic deficiency",305129,0,0
+"[45,50)",1,"Anaemia and haematinic deficiency",335558,0,0
+"[50,55)",0,"Anaemia and haematinic deficiency",328467,0,0
+"[50,55)",1,"Anaemia and haematinic deficiency",360738,0,0
+"[55,60)",0,"Anaemia and haematinic deficiency",349624,0,0
+"[55,60)",1,"Anaemia and haematinic deficiency",384918,0,0
+"[60,65)",0,"Anaemia and haematinic deficiency",344312,0,0
+"[60,65)",1,"Anaemia and haematinic deficiency",384813,0,0
+"[65,70)",0,"Anaemia and haematinic deficiency",281362,0,0
+"[65,70)",1,"Anaemia and haematinic deficiency",318542,0,0
+"[70,75)",0,"Anaemia and haematinic deficiency",202067,0,0
+"[70,75)",1,"Anaemia and haematinic deficiency",244787,0,0
+"[75,80)",0,"Anaemia and haematinic deficiency",151488,0,0
+"[75,80)",1,"Anaemia and haematinic deficiency",186752,0,0
+"[80,100]",0,"Anaemia and haematinic deficiency",191432,0,0
+"[80,100]",1,"Anaemia and haematinic deficiency",295206,0,0
+"[40,45)",0,"Arthritis",300490,16354,0.0544244400812007
+"[40,45)",1,"Arthritis",327169,16063,0.0490969498943971
+"[45,50)",0,"Arthritis",305129,23613,0.0773869412609093
+"[45,50)",1,"Arthritis",335558,25806,0.0769047377800559
+"[50,55)",0,"Arthritis",328467,34212,0.104156581939738
+"[50,55)",1,"Arthritis",360738,40991,0.113630945450715
+"[55,60)",0,"Arthritis",349624,48703,0.139301077729218
+"[55,60)",1,"Arthritis",384918,59408,0.154339365786999
+"[60,65)",0,"Arthritis",344312,59527,0.172886800343874
+"[60,65)",1,"Arthritis",384813,73384,0.190700418125167
+"[65,70)",0,"Arthritis",281362,63128,0.224365763678109
+"[65,70)",1,"Arthritis",318542,81311,0.255259902932737
+"[70,75)",0,"Arthritis",202067,54051,0.267490485828958
+"[70,75)",1,"Arthritis",244787,77399,0.316189176712816
+"[75,80)",0,"Arthritis",151488,45898,0.302981094212083
+"[75,80)",1,"Arthritis",186752,66393,0.355514264907471
+"[80,100]",0,"Arthritis",191432,62904,0.328597099753437
+"[80,100]",1,"Arthritis",295206,116010,0.392979817483385
+"[40,45)",0,"Atrial fibrillation",300490,0,0
+"[40,45)",1,"Atrial fibrillation",327169,0,0
+"[45,50)",0,"Atrial fibrillation",305129,0,0
+"[45,50)",1,"Atrial fibrillation",335558,0,0
+"[50,55)",0,"Atrial fibrillation",328467,0,0
+"[50,55)",1,"Atrial fibrillation",360738,0,0
+"[55,60)",0,"Atrial fibrillation",349624,0,0
+"[55,60)",1,"Atrial fibrillation",384918,0,0
+"[60,65)",0,"Atrial fibrillation",344312,0,0
+"[60,65)",1,"Atrial fibrillation",384813,0,0
+"[65,70)",0,"Atrial fibrillation",281362,0,0
+"[65,70)",1,"Atrial fibrillation",318542,0,0
+"[70,75)",0,"Atrial fibrillation",202067,0,0
+"[70,75)",1,"Atrial fibrillation",244787,0,0
+"[75,80)",0,"Atrial fibrillation",151488,0,0
+"[75,80)",1,"Atrial fibrillation",186752,0,0
+"[80,100]",0,"Atrial fibrillation",191432,0,0
+"[80,100]",1,"Atrial fibrillation",295206,0,0
+"[40,45)",0,"Cerebrovascular disease",300490,0,0
+"[40,45)",1,"Cerebrovascular disease",327169,0,0
+"[45,50)",0,"Cerebrovascular disease",305129,0,0
+"[45,50)",1,"Cerebrovascular disease",335558,0,0
+"[50,55)",0,"Cerebrovascular disease",328467,0,0
+"[50,55)",1,"Cerebrovascular disease",360738,0,0
+"[55,60)",0,"Cerebrovascular disease",349624,0,0
+"[55,60)",1,"Cerebrovascular disease",384918,0,0
+"[60,65)",0,"Cerebrovascular disease",344312,0,0
+"[60,65)",1,"Cerebrovascular disease",384813,0,0
+"[65,70)",0,"Cerebrovascular disease",281362,0,0
+"[65,70)",1,"Cerebrovascular disease",318542,0,0
+"[70,75)",0,"Cerebrovascular disease",202067,0,0
+"[70,75)",1,"Cerebrovascular disease",244787,0,0
+"[75,80)",0,"Cerebrovascular disease",151488,0,0
+"[75,80)",1,"Cerebrovascular disease",186752,0,0
+"[80,100]",0,"Cerebrovascular disease",191432,0,0
+"[80,100]",1,"Cerebrovascular disease",295206,0,0
+"[40,45)",0,"Chronic kidney disease",300490,0,0
+"[40,45)",1,"Chronic kidney disease",327169,0,0
+"[45,50)",0,"Chronic kidney disease",305129,0,0
+"[45,50)",1,"Chronic kidney disease",335558,0,0
+"[50,55)",0,"Chronic kidney disease",328467,0,0
+"[50,55)",1,"Chronic kidney disease",360738,0,0
+"[55,60)",0,"Chronic kidney disease",349624,0,0
+"[55,60)",1,"Chronic kidney disease",384918,0,0
+"[60,65)",0,"Chronic kidney disease",344312,0,0
+"[60,65)",1,"Chronic kidney disease",384813,0,0
+"[65,70)",0,"Chronic kidney disease",281362,0,0
+"[65,70)",1,"Chronic kidney disease",318542,0,0
+"[70,75)",0,"Chronic kidney disease",202067,0,0
+"[70,75)",1,"Chronic kidney disease",244787,0,0
+"[75,80)",0,"Chronic kidney disease",151488,0,0
+"[75,80)",1,"Chronic kidney disease",186752,0,0
+"[80,100]",0,"Chronic kidney disease",191432,0,0
+"[80,100]",1,"Chronic kidney disease",295206,0,0
+"[40,45)",0,"Diabetes",300490,17099,0.0569037239176012
+"[40,45)",1,"Diabetes",327169,14579,0.0445610678273308
+"[45,50)",0,"Diabetes",305129,27742,0.0909189228162515
+"[45,50)",1,"Diabetes",335558,22324,0.0665279921801894
+"[50,55)",0,"Diabetes",328467,40390,0.122965168494856
+"[50,55)",1,"Diabetes",360738,32608,0.090392473207702
+"[55,60)",0,"Diabetes",349624,53985,0.154408736242363
+"[55,60)",1,"Diabetes",384918,45199,0.11742501000213
+"[60,65)",0,"Diabetes",344312,62504,0.18153302818374
+"[60,65)",1,"Diabetes",384813,54397,0.141359569453215
+"[65,70)",0,"Diabetes",281362,64975,0.230930260660644
+"[65,70)",1,"Diabetes",318542,57378,0.180126953431573
+"[70,75)",0,"Diabetes",202067,55002,0.272196845600717
+"[70,75)",1,"Diabetes",244787,52274,0.213548922124132
+"[75,80)",0,"Diabetes",151488,45714,0.301766476552598
+"[75,80)",1,"Diabetes",186752,43398,0.232383053461275
+"[80,100]",0,"Diabetes",191432,56834,0.296888712440971
+"[80,100]",1,"Diabetes",295206,65528,0.221973808120431
+"[40,45)",0,"Dizziness",300490,0,0
+"[40,45)",1,"Dizziness",327169,0,0
+"[45,50)",0,"Dizziness",305129,0,0
+"[45,50)",1,"Dizziness",335558,0,0
+"[50,55)",0,"Dizziness",328467,0,0
+"[50,55)",1,"Dizziness",360738,0,0
+"[55,60)",0,"Dizziness",349624,0,0
+"[55,60)",1,"Dizziness",384918,0,0
+"[60,65)",0,"Dizziness",344312,0,0
+"[60,65)",1,"Dizziness",384813,0,0
+"[65,70)",0,"Dizziness",281362,0,0
+"[65,70)",1,"Dizziness",318542,0,0
+"[70,75)",0,"Dizziness",202067,0,0
+"[70,75)",1,"Dizziness",244787,0,0
+"[75,80)",0,"Dizziness",151488,0,0
+"[75,80)",1,"Dizziness",186752,0,0
+"[80,100]",0,"Dizziness",191432,0,0
+"[80,100]",1,"Dizziness",295206,0,0
+"[40,45)",0,"Dyspnoea",300490,0,0
+"[40,45)",1,"Dyspnoea",327169,0,0
+"[45,50)",0,"Dyspnoea",305129,0,0
+"[45,50)",1,"Dyspnoea",335558,0,0
+"[50,55)",0,"Dyspnoea",328467,0,0
+"[50,55)",1,"Dyspnoea",360738,0,0
+"[55,60)",0,"Dyspnoea",349624,0,0
+"[55,60)",1,"Dyspnoea",384918,0,0
+"[60,65)",0,"Dyspnoea",344312,0,0
+"[60,65)",1,"Dyspnoea",384813,0,0
+"[65,70)",0,"Dyspnoea",281362,0,0
+"[65,70)",1,"Dyspnoea",318542,0,0
+"[70,75)",0,"Dyspnoea",202067,0,0
+"[70,75)",1,"Dyspnoea",244787,0,0
+"[75,80)",0,"Dyspnoea",151488,0,0
+"[75,80)",1,"Dyspnoea",186752,0,0
+"[80,100]",0,"Dyspnoea",191432,0,0
+"[80,100]",1,"Dyspnoea",295206,0,0
+"[40,45)",0,"Falls",300490,5062,0.0168458184964558
+"[40,45)",1,"Falls",327169,5984,0.0182902414348548
+"[45,50)",0,"Falls",305129,5091,0.0166847464515008
+"[45,50)",1,"Falls",335558,6875,0.0204882613437915
+"[50,55)",0,"Falls",328467,6002,0.0182727640828455
+"[50,55)",1,"Falls",360738,8980,0.0248934129479012
+"[55,60)",0,"Falls",349624,7244,0.0207194014140906
+"[55,60)",1,"Falls",384918,11770,0.0305779412758042
+"[60,65)",0,"Falls",344312,8067,0.0234293315365134
+"[60,65)",1,"Falls",384813,13799,0.0358589756583068
+"[65,70)",0,"Falls",281362,8742,0.0310702937852304
+"[65,70)",1,"Falls",318542,15841,0.0497297059728387
+"[70,75)",0,"Falls",202067,9051,0.0447920739160773
+"[70,75)",1,"Falls",244787,16597,0.0678018032003334
+"[75,80)",0,"Falls",151488,9762,0.0644407477820025
+"[75,80)",1,"Falls",186752,17305,0.0926629969156957
+"[80,100]",0,"Falls",191432,25306,0.132193154749467
+"[80,100]",1,"Falls",295206,53500,0.181229378806664
+"[40,45)",0,"Foot problems",300490,0,0
+"[40,45)",1,"Foot problems",327169,0,0
+"[45,50)",0,"Foot problems",305129,0,0
+"[45,50)",1,"Foot problems",335558,0,0
+"[50,55)",0,"Foot problems",328467,0,0
+"[50,55)",1,"Foot problems",360738,0,0
+"[55,60)",0,"Foot problems",349624,0,0
+"[55,60)",1,"Foot problems",384918,0,0
+"[60,65)",0,"Foot problems",344312,0,0
+"[60,65)",1,"Foot problems",384813,0,0
+"[65,70)",0,"Foot problems",281362,0,0
+"[65,70)",1,"Foot problems",318542,0,0
+"[70,75)",0,"Foot problems",202067,0,0
+"[70,75)",1,"Foot problems",244787,0,0
+"[75,80)",0,"Foot problems",151488,0,0
+"[75,80)",1,"Foot problems",186752,0,0
+"[80,100]",0,"Foot problems",191432,0,0
+"[80,100]",1,"Foot problems",295206,0,0
+"[40,45)",0,"Fragility fracture",300490,0,0
+"[40,45)",1,"Fragility fracture",327169,0,0
+"[45,50)",0,"Fragility fracture",305129,0,0
+"[45,50)",1,"Fragility fracture",335558,0,0
+"[50,55)",0,"Fragility fracture",328467,0,0
+"[50,55)",1,"Fragility fracture",360738,0,0
+"[55,60)",0,"Fragility fracture",349624,0,0
+"[55,60)",1,"Fragility fracture",384918,0,0
+"[60,65)",0,"Fragility fracture",344312,0,0
+"[60,65)",1,"Fragility fracture",384813,0,0
+"[65,70)",0,"Fragility fracture",281362,0,0
+"[65,70)",1,"Fragility fracture",318542,0,0
+"[70,75)",0,"Fragility fracture",202067,0,0
+"[70,75)",1,"Fragility fracture",244787,0,0
+"[75,80)",0,"Fragility fracture",151488,0,0
+"[75,80)",1,"Fragility fracture",186752,0,0
+"[80,100]",0,"Fragility fracture",191432,0,0
+"[80,100]",1,"Fragility fracture",295206,0,0
+"[40,45)",0,"Hearing impairment",300490,0,0
+"[40,45)",1,"Hearing impairment",327169,0,0
+"[45,50)",0,"Hearing impairment",305129,0,0
+"[45,50)",1,"Hearing impairment",335558,0,0
+"[50,55)",0,"Hearing impairment",328467,0,0
+"[50,55)",1,"Hearing impairment",360738,0,0
+"[55,60)",0,"Hearing impairment",349624,0,0
+"[55,60)",1,"Hearing impairment",384918,0,0
+"[60,65)",0,"Hearing impairment",344312,0,0
+"[60,65)",1,"Hearing impairment",384813,0,0
+"[65,70)",0,"Hearing impairment",281362,0,0
+"[65,70)",1,"Hearing impairment",318542,0,0
+"[70,75)",0,"Hearing impairment",202067,0,0
+"[70,75)",1,"Hearing impairment",244787,0,0
+"[75,80)",0,"Hearing impairment",151488,0,0
+"[75,80)",1,"Hearing impairment",186752,0,0
+"[80,100]",0,"Hearing impairment",191432,0,0
+"[80,100]",1,"Hearing impairment",295206,0,0
+"[40,45)",0,"Heart failure",300490,0,0
+"[40,45)",1,"Heart failure",327169,0,0
+"[45,50)",0,"Heart failure",305129,0,0
+"[45,50)",1,"Heart failure",335558,0,0
+"[50,55)",0,"Heart failure",328467,0,0
+"[50,55)",1,"Heart failure",360738,0,0
+"[55,60)",0,"Heart failure",349624,0,0
+"[55,60)",1,"Heart failure",384918,0,0
+"[60,65)",0,"Heart failure",344312,0,0
+"[60,65)",1,"Heart failure",384813,0,0
+"[65,70)",0,"Heart failure",281362,0,0
+"[65,70)",1,"Heart failure",318542,0,0
+"[70,75)",0,"Heart failure",202067,0,0
+"[70,75)",1,"Heart failure",244787,0,0
+"[75,80)",0,"Heart failure",151488,0,0
+"[75,80)",1,"Heart failure",186752,0,0
+"[80,100]",0,"Heart failure",191432,0,0
+"[80,100]",1,"Heart failure",295206,0,0
+"[40,45)",0,"Heart valve disease",300490,0,0
+"[40,45)",1,"Heart valve disease",327169,0,0
+"[45,50)",0,"Heart valve disease",305129,0,0
+"[45,50)",1,"Heart valve disease",335558,0,0
+"[50,55)",0,"Heart valve disease",328467,0,0
+"[50,55)",1,"Heart valve disease",360738,0,0
+"[55,60)",0,"Heart valve disease",349624,0,0
+"[55,60)",1,"Heart valve disease",384918,0,0
+"[60,65)",0,"Heart valve disease",344312,0,0
+"[60,65)",1,"Heart valve disease",384813,0,0
+"[65,70)",0,"Heart valve disease",281362,0,0
+"[65,70)",1,"Heart valve disease",318542,0,0
+"[70,75)",0,"Heart valve disease",202067,0,0
+"[70,75)",1,"Heart valve disease",244787,0,0
+"[75,80)",0,"Heart valve disease",151488,0,0
+"[75,80)",1,"Heart valve disease",186752,0,0
+"[80,100]",0,"Heart valve disease",191432,0,0
+"[80,100]",1,"Heart valve disease",295206,0,0
+"[40,45)",0,"Housebound",300490,0,0
+"[40,45)",1,"Housebound",327169,0,0
+"[45,50)",0,"Housebound",305129,0,0
+"[45,50)",1,"Housebound",335558,0,0
+"[50,55)",0,"Housebound",328467,0,0
+"[50,55)",1,"Housebound",360738,0,0
+"[55,60)",0,"Housebound",349624,0,0
+"[55,60)",1,"Housebound",384918,0,0
+"[60,65)",0,"Housebound",344312,0,0
+"[60,65)",1,"Housebound",384813,0,0
+"[65,70)",0,"Housebound",281362,0,0
+"[65,70)",1,"Housebound",318542,0,0
+"[70,75)",0,"Housebound",202067,0,0
+"[70,75)",1,"Housebound",244787,0,0
+"[75,80)",0,"Housebound",151488,0,0
+"[75,80)",1,"Housebound",186752,0,0
+"[80,100]",0,"Housebound",191432,0,0
+"[80,100]",1,"Housebound",295206,0,0
+"[40,45)",0,"Hypertension",300490,0,0
+"[40,45)",1,"Hypertension",327169,0,0
+"[45,50)",0,"Hypertension",305129,0,0
+"[45,50)",1,"Hypertension",335558,0,0
+"[50,55)",0,"Hypertension",328467,0,0
+"[50,55)",1,"Hypertension",360738,0,0
+"[55,60)",0,"Hypertension",349624,0,0
+"[55,60)",1,"Hypertension",384918,0,0
+"[60,65)",0,"Hypertension",344312,0,0
+"[60,65)",1,"Hypertension",384813,0,0
+"[65,70)",0,"Hypertension",281362,0,0
+"[65,70)",1,"Hypertension",318542,0,0
+"[70,75)",0,"Hypertension",202067,0,0
+"[70,75)",1,"Hypertension",244787,0,0
+"[75,80)",0,"Hypertension",151488,0,0
+"[75,80)",1,"Hypertension",186752,0,0
+"[80,100]",0,"Hypertension",191432,0,0
+"[80,100]",1,"Hypertension",295206,0,0
+"[40,45)",0,"Hypotension / syncope",300490,0,0
+"[40,45)",1,"Hypotension / syncope",327169,0,0
+"[45,50)",0,"Hypotension / syncope",305129,0,0
+"[45,50)",1,"Hypotension / syncope",335558,0,0
+"[50,55)",0,"Hypotension / syncope",328467,0,0
+"[50,55)",1,"Hypotension / syncope",360738,0,0
+"[55,60)",0,"Hypotension / syncope",349624,0,0
+"[55,60)",1,"Hypotension / syncope",384918,0,0
+"[60,65)",0,"Hypotension / syncope",344312,0,0
+"[60,65)",1,"Hypotension / syncope",384813,0,0
+"[65,70)",0,"Hypotension / syncope",281362,0,0
+"[65,70)",1,"Hypotension / syncope",318542,0,0
+"[70,75)",0,"Hypotension / syncope",202067,0,0
+"[70,75)",1,"Hypotension / syncope",244787,0,0
+"[75,80)",0,"Hypotension / syncope",151488,0,0
+"[75,80)",1,"Hypotension / syncope",186752,0,0
+"[80,100]",0,"Hypotension / syncope",191432,0,0
+"[80,100]",1,"Hypotension / syncope",295206,0,0
+"[40,45)",0,"Ischaemic heart disease",300490,0,0
+"[40,45)",1,"Ischaemic heart disease",327169,0,0
+"[45,50)",0,"Ischaemic heart disease",305129,0,0
+"[45,50)",1,"Ischaemic heart disease",335558,0,0
+"[50,55)",0,"Ischaemic heart disease",328467,0,0
+"[50,55)",1,"Ischaemic heart disease",360738,0,0
+"[55,60)",0,"Ischaemic heart disease",349624,0,0
+"[55,60)",1,"Ischaemic heart disease",384918,0,0
+"[60,65)",0,"Ischaemic heart disease",344312,0,0
+"[60,65)",1,"Ischaemic heart disease",384813,0,0
+"[65,70)",0,"Ischaemic heart disease",281362,0,0
+"[65,70)",1,"Ischaemic heart disease",318542,0,0
+"[70,75)",0,"Ischaemic heart disease",202067,0,0
+"[70,75)",1,"Ischaemic heart disease",244787,0,0
+"[75,80)",0,"Ischaemic heart disease",151488,0,0
+"[75,80)",1,"Ischaemic heart disease",186752,0,0
+"[80,100]",0,"Ischaemic heart disease",191432,0,0
+"[80,100]",1,"Ischaemic heart disease",295206,0,0
+"[40,45)",0,"Memory and cognitive problems",300490,0,0
+"[40,45)",1,"Memory and cognitive problems",327169,0,0
+"[45,50)",0,"Memory and cognitive problems",305129,0,0
+"[45,50)",1,"Memory and cognitive problems",335558,0,0
+"[50,55)",0,"Memory and cognitive problems",328467,0,0
+"[50,55)",1,"Memory and cognitive problems",360738,0,0
+"[55,60)",0,"Memory and cognitive problems",349624,0,0
+"[55,60)",1,"Memory and cognitive problems",384918,0,0
+"[60,65)",0,"Memory and cognitive problems",344312,0,0
+"[60,65)",1,"Memory and cognitive problems",384813,0,0
+"[65,70)",0,"Memory and cognitive problems",281362,0,0
+"[65,70)",1,"Memory and cognitive problems",318542,0,0
+"[70,75)",0,"Memory and cognitive problems",202067,0,0
+"[70,75)",1,"Memory and cognitive problems",244787,0,0
+"[75,80)",0,"Memory and cognitive problems",151488,0,0
+"[75,80)",1,"Memory and cognitive problems",186752,0,0
+"[80,100]",0,"Memory and cognitive problems",191432,0,0
+"[80,100]",1,"Memory and cognitive problems",295206,0,0
+"[40,45)",0,"Mobility and transfer problems",300490,0,0
+"[40,45)",1,"Mobility and transfer problems",327169,0,0
+"[45,50)",0,"Mobility and transfer problems",305129,0,0
+"[45,50)",1,"Mobility and transfer problems",335558,0,0
+"[50,55)",0,"Mobility and transfer problems",328467,0,0
+"[50,55)",1,"Mobility and transfer problems",360738,0,0
+"[55,60)",0,"Mobility and transfer problems",349624,0,0
+"[55,60)",1,"Mobility and transfer problems",384918,0,0
+"[60,65)",0,"Mobility and transfer problems",344312,0,0
+"[60,65)",1,"Mobility and transfer problems",384813,0,0
+"[65,70)",0,"Mobility and transfer problems",281362,0,0
+"[65,70)",1,"Mobility and transfer problems",318542,0,0
+"[70,75)",0,"Mobility and transfer problems",202067,0,0
+"[70,75)",1,"Mobility and transfer problems",244787,0,0
+"[75,80)",0,"Mobility and transfer problems",151488,0,0
+"[75,80)",1,"Mobility and transfer problems",186752,0,0
+"[80,100]",0,"Mobility and transfer problems",191432,0,0
+"[80,100]",1,"Mobility and transfer problems",295206,0,0
+"[40,45)",0,"Osteoporosis",300490,0,0
+"[40,45)",1,"Osteoporosis",327169,0,0
+"[45,50)",0,"Osteoporosis",305129,0,0
+"[45,50)",1,"Osteoporosis",335558,0,0
+"[50,55)",0,"Osteoporosis",328467,0,0
+"[50,55)",1,"Osteoporosis",360738,0,0
+"[55,60)",0,"Osteoporosis",349624,0,0
+"[55,60)",1,"Osteoporosis",384918,0,0
+"[60,65)",0,"Osteoporosis",344312,0,0
+"[60,65)",1,"Osteoporosis",384813,0,0
+"[65,70)",0,"Osteoporosis",281362,0,0
+"[65,70)",1,"Osteoporosis",318542,0,0
+"[70,75)",0,"Osteoporosis",202067,0,0
+"[70,75)",1,"Osteoporosis",244787,0,0
+"[75,80)",0,"Osteoporosis",151488,0,0
+"[75,80)",1,"Osteoporosis",186752,0,0
+"[80,100]",0,"Osteoporosis",191432,0,0
+"[80,100]",1,"Osteoporosis",295206,0,0
+"[40,45)",0,"Parkinsonism and tremor",300490,0,0
+"[40,45)",1,"Parkinsonism and tremor",327169,0,0
+"[45,50)",0,"Parkinsonism and tremor",305129,0,0
+"[45,50)",1,"Parkinsonism and tremor",335558,0,0
+"[50,55)",0,"Parkinsonism and tremor",328467,0,0
+"[50,55)",1,"Parkinsonism and tremor",360738,0,0
+"[55,60)",0,"Parkinsonism and tremor",349624,0,0
+"[55,60)",1,"Parkinsonism and tremor",384918,0,0
+"[60,65)",0,"Parkinsonism and tremor",344312,0,0
+"[60,65)",1,"Parkinsonism and tremor",384813,0,0
+"[65,70)",0,"Parkinsonism and tremor",281362,0,0
+"[65,70)",1,"Parkinsonism and tremor",318542,0,0
+"[70,75)",0,"Parkinsonism and tremor",202067,0,0
+"[70,75)",1,"Parkinsonism and tremor",244787,0,0
+"[75,80)",0,"Parkinsonism and tremor",151488,0,0
+"[75,80)",1,"Parkinsonism and tremor",186752,0,0
+"[80,100]",0,"Parkinsonism and tremor",191432,0,0
+"[80,100]",1,"Parkinsonism and tremor",295206,0,0
+"[40,45)",0,"Peptic ulcer",300490,0,0
+"[40,45)",1,"Peptic ulcer",327169,0,0
+"[45,50)",0,"Peptic ulcer",305129,0,0
+"[45,50)",1,"Peptic ulcer",335558,0,0
+"[50,55)",0,"Peptic ulcer",328467,0,0
+"[50,55)",1,"Peptic ulcer",360738,0,0
+"[55,60)",0,"Peptic ulcer",349624,0,0
+"[55,60)",1,"Peptic ulcer",384918,0,0
+"[60,65)",0,"Peptic ulcer",344312,0,0
+"[60,65)",1,"Peptic ulcer",384813,0,0
+"[65,70)",0,"Peptic ulcer",281362,0,0
+"[65,70)",1,"Peptic ulcer",318542,0,0
+"[70,75)",0,"Peptic ulcer",202067,0,0
+"[70,75)",1,"Peptic ulcer",244787,0,0
+"[75,80)",0,"Peptic ulcer",151488,0,0
+"[75,80)",1,"Peptic ulcer",186752,0,0
+"[80,100]",0,"Peptic ulcer",191432,0,0
+"[80,100]",1,"Peptic ulcer",295206,0,0
+"[40,45)",0,"Peripheral vascular disease",300490,0,0
+"[40,45)",1,"Peripheral vascular disease",327169,0,0
+"[45,50)",0,"Peripheral vascular disease",305129,0,0
+"[45,50)",1,"Peripheral vascular disease",335558,0,0
+"[50,55)",0,"Peripheral vascular disease",328467,0,0
+"[50,55)",1,"Peripheral vascular disease",360738,0,0
+"[55,60)",0,"Peripheral vascular disease",349624,0,0
+"[55,60)",1,"Peripheral vascular disease",384918,0,0
+"[60,65)",0,"Peripheral vascular disease",344312,0,0
+"[60,65)",1,"Peripheral vascular disease",384813,0,0
+"[65,70)",0,"Peripheral vascular disease",281362,0,0
+"[65,70)",1,"Peripheral vascular disease",318542,0,0
+"[70,75)",0,"Peripheral vascular disease",202067,0,0
+"[70,75)",1,"Peripheral vascular disease",244787,0,0
+"[75,80)",0,"Peripheral vascular disease",151488,0,0
+"[75,80)",1,"Peripheral vascular disease",186752,0,0
+"[80,100]",0,"Peripheral vascular disease",191432,0,0
+"[80,100]",1,"Peripheral vascular disease",295206,0,0
+"[40,45)",0,"Polypharmacy",300490,0,0
+"[40,45)",1,"Polypharmacy",327169,0,0
+"[45,50)",0,"Polypharmacy",305129,0,0
+"[45,50)",1,"Polypharmacy",335558,0,0
+"[50,55)",0,"Polypharmacy",328467,0,0
+"[50,55)",1,"Polypharmacy",360738,0,0
+"[55,60)",0,"Polypharmacy",349624,0,0
+"[55,60)",1,"Polypharmacy",384918,0,0
+"[60,65)",0,"Polypharmacy",344312,0,0
+"[60,65)",1,"Polypharmacy",384813,0,0
+"[65,70)",0,"Polypharmacy",281362,0,0
+"[65,70)",1,"Polypharmacy",318542,0,0
+"[70,75)",0,"Polypharmacy",202067,0,0
+"[70,75)",1,"Polypharmacy",244787,0,0
+"[75,80)",0,"Polypharmacy",151488,0,0
+"[75,80)",1,"Polypharmacy",186752,0,0
+"[80,100]",0,"Polypharmacy",191432,0,0
+"[80,100]",1,"Polypharmacy",295206,0,0
+"[40,45)",0,"Requirement for care",300490,0,0
+"[40,45)",1,"Requirement for care",327169,0,0
+"[45,50)",0,"Requirement for care",305129,0,0
+"[45,50)",1,"Requirement for care",335558,0,0
+"[50,55)",0,"Requirement for care",328467,0,0
+"[50,55)",1,"Requirement for care",360738,0,0
+"[55,60)",0,"Requirement for care",349624,0,0
+"[55,60)",1,"Requirement for care",384918,0,0
+"[60,65)",0,"Requirement for care",344312,0,0
+"[60,65)",1,"Requirement for care",384813,0,0
+"[65,70)",0,"Requirement for care",281362,0,0
+"[65,70)",1,"Requirement for care",318542,0,0
+"[70,75)",0,"Requirement for care",202067,0,0
+"[70,75)",1,"Requirement for care",244787,0,0
+"[75,80)",0,"Requirement for care",151488,0,0
+"[75,80)",1,"Requirement for care",186752,0,0
+"[80,100]",0,"Requirement for care",191432,0,0
+"[80,100]",1,"Requirement for care",295206,0,0
+"[40,45)",0,"Respiratory disease",300490,0,0
+"[40,45)",1,"Respiratory disease",327169,0,0
+"[45,50)",0,"Respiratory disease",305129,0,0
+"[45,50)",1,"Respiratory disease",335558,0,0
+"[50,55)",0,"Respiratory disease",328467,0,0
+"[50,55)",1,"Respiratory disease",360738,0,0
+"[55,60)",0,"Respiratory disease",349624,0,0
+"[55,60)",1,"Respiratory disease",384918,0,0
+"[60,65)",0,"Respiratory disease",344312,0,0
+"[60,65)",1,"Respiratory disease",384813,0,0
+"[65,70)",0,"Respiratory disease",281362,0,0
+"[65,70)",1,"Respiratory disease",318542,0,0
+"[70,75)",0,"Respiratory disease",202067,0,0
+"[70,75)",1,"Respiratory disease",244787,0,0
+"[75,80)",0,"Respiratory disease",151488,0,0
+"[75,80)",1,"Respiratory disease",186752,0,0
+"[80,100]",0,"Respiratory disease",191432,0,0
+"[80,100]",1,"Respiratory disease",295206,0,0
+"[40,45)",0,"Skin ulcer",300490,0,0
+"[40,45)",1,"Skin ulcer",327169,0,0
+"[45,50)",0,"Skin ulcer",305129,0,0
+"[45,50)",1,"Skin ulcer",335558,0,0
+"[50,55)",0,"Skin ulcer",328467,0,0
+"[50,55)",1,"Skin ulcer",360738,0,0
+"[55,60)",0,"Skin ulcer",349624,0,0
+"[55,60)",1,"Skin ulcer",384918,0,0
+"[60,65)",0,"Skin ulcer",344312,0,0
+"[60,65)",1,"Skin ulcer",384813,0,0
+"[65,70)",0,"Skin ulcer",281362,0,0
+"[65,70)",1,"Skin ulcer",318542,0,0
+"[70,75)",0,"Skin ulcer",202067,0,0
+"[70,75)",1,"Skin ulcer",244787,0,0
+"[75,80)",0,"Skin ulcer",151488,0,0
+"[75,80)",1,"Skin ulcer",186752,0,0
+"[80,100]",0,"Skin ulcer",191432,0,0
+"[80,100]",1,"Skin ulcer",295206,0,0
+"[40,45)",0,"Sleep disturbance",300490,0,0
+"[40,45)",1,"Sleep disturbance",327169,0,0
+"[45,50)",0,"Sleep disturbance",305129,0,0
+"[45,50)",1,"Sleep disturbance",335558,0,0
+"[50,55)",0,"Sleep disturbance",328467,0,0
+"[50,55)",1,"Sleep disturbance",360738,0,0
+"[55,60)",0,"Sleep disturbance",349624,0,0
+"[55,60)",1,"Sleep disturbance",384918,0,0
+"[60,65)",0,"Sleep disturbance",344312,0,0
+"[60,65)",1,"Sleep disturbance",384813,0,0
+"[65,70)",0,"Sleep disturbance",281362,0,0
+"[65,70)",1,"Sleep disturbance",318542,0,0
+"[70,75)",0,"Sleep disturbance",202067,0,0
+"[70,75)",1,"Sleep disturbance",244787,0,0
+"[75,80)",0,"Sleep disturbance",151488,0,0
+"[75,80)",1,"Sleep disturbance",186752,0,0
+"[80,100]",0,"Sleep disturbance",191432,0,0
+"[80,100]",1,"Sleep disturbance",295206,0,0
+"[40,45)",0,"Social vulnerability",300490,0,0
+"[40,45)",1,"Social vulnerability",327169,0,0
+"[45,50)",0,"Social vulnerability",305129,0,0
+"[45,50)",1,"Social vulnerability",335558,0,0
+"[50,55)",0,"Social vulnerability",328467,0,0
+"[50,55)",1,"Social vulnerability",360738,0,0
+"[55,60)",0,"Social vulnerability",349624,0,0
+"[55,60)",1,"Social vulnerability",384918,0,0
+"[60,65)",0,"Social vulnerability",344312,0,0
+"[60,65)",1,"Social vulnerability",384813,0,0
+"[65,70)",0,"Social vulnerability",281362,0,0
+"[65,70)",1,"Social vulnerability",318542,0,0
+"[70,75)",0,"Social vulnerability",202067,0,0
+"[70,75)",1,"Social vulnerability",244787,0,0
+"[75,80)",0,"Social vulnerability",151488,0,0
+"[75,80)",1,"Social vulnerability",186752,0,0
+"[80,100]",0,"Social vulnerability",191432,0,0
+"[80,100]",1,"Social vulnerability",295206,0,0
+"[40,45)",0,"Thyroid disease",300490,0,0
+"[40,45)",1,"Thyroid disease",327169,0,0
+"[45,50)",0,"Thyroid disease",305129,0,0
+"[45,50)",1,"Thyroid disease",335558,0,0
+"[50,55)",0,"Thyroid disease",328467,0,0
+"[50,55)",1,"Thyroid disease",360738,0,0
+"[55,60)",0,"Thyroid disease",349624,0,0
+"[55,60)",1,"Thyroid disease",384918,0,0
+"[60,65)",0,"Thyroid disease",344312,0,0
+"[60,65)",1,"Thyroid disease",384813,0,0
+"[65,70)",0,"Thyroid disease",281362,0,0
+"[65,70)",1,"Thyroid disease",318542,0,0
+"[70,75)",0,"Thyroid disease",202067,0,0
+"[70,75)",1,"Thyroid disease",244787,0,0
+"[75,80)",0,"Thyroid disease",151488,0,0
+"[75,80)",1,"Thyroid disease",186752,0,0
+"[80,100]",0,"Thyroid disease",191432,0,0
+"[80,100]",1,"Thyroid disease",295206,0,0
+"[40,45)",0,"Urinary incontinence",300490,0,0
+"[40,45)",1,"Urinary incontinence",327169,0,0
+"[45,50)",0,"Urinary incontinence",305129,0,0
+"[45,50)",1,"Urinary incontinence",335558,0,0
+"[50,55)",0,"Urinary incontinence",328467,0,0
+"[50,55)",1,"Urinary incontinence",360738,0,0
+"[55,60)",0,"Urinary incontinence",349624,0,0
+"[55,60)",1,"Urinary incontinence",384918,0,0
+"[60,65)",0,"Urinary incontinence",344312,0,0
+"[60,65)",1,"Urinary incontinence",384813,0,0
+"[65,70)",0,"Urinary incontinence",281362,0,0
+"[65,70)",1,"Urinary incontinence",318542,0,0
+"[70,75)",0,"Urinary incontinence",202067,0,0
+"[70,75)",1,"Urinary incontinence",244787,0,0
+"[75,80)",0,"Urinary incontinence",151488,0,0
+"[75,80)",1,"Urinary incontinence",186752,0,0
+"[80,100]",0,"Urinary incontinence",191432,0,0
+"[80,100]",1,"Urinary incontinence",295206,0,0
+"[40,45)",0,"Urinary system disease",300490,0,0
+"[40,45)",1,"Urinary system disease",327169,0,0
+"[45,50)",0,"Urinary system disease",305129,0,0
+"[45,50)",1,"Urinary system disease",335558,0,0
+"[50,55)",0,"Urinary system disease",328467,0,0
+"[50,55)",1,"Urinary system disease",360738,0,0
+"[55,60)",0,"Urinary system disease",349624,0,0
+"[55,60)",1,"Urinary system disease",384918,0,0
+"[60,65)",0,"Urinary system disease",344312,0,0
+"[60,65)",1,"Urinary system disease",384813,0,0
+"[65,70)",0,"Urinary system disease",281362,0,0
+"[65,70)",1,"Urinary system disease",318542,0,0
+"[70,75)",0,"Urinary system disease",202067,0,0
+"[70,75)",1,"Urinary system disease",244787,0,0
+"[75,80)",0,"Urinary system disease",151488,0,0
+"[75,80)",1,"Urinary system disease",186752,0,0
+"[80,100]",0,"Urinary system disease",191432,0,0
+"[80,100]",1,"Urinary system disease",295206,0,0
+"[40,45)",0,"Visual impairment",300490,0,0
+"[40,45)",1,"Visual impairment",327169,0,0
+"[45,50)",0,"Visual impairment",305129,0,0
+"[45,50)",1,"Visual impairment",335558,0,0
+"[50,55)",0,"Visual impairment",328467,0,0
+"[50,55)",1,"Visual impairment",360738,0,0
+"[55,60)",0,"Visual impairment",349624,0,0
+"[55,60)",1,"Visual impairment",384918,0,0
+"[60,65)",0,"Visual impairment",344312,0,0
+"[60,65)",1,"Visual impairment",384813,0,0
+"[65,70)",0,"Visual impairment",281362,0,0
+"[65,70)",1,"Visual impairment",318542,0,0
+"[70,75)",0,"Visual impairment",202067,0,0
+"[70,75)",1,"Visual impairment",244787,0,0
+"[75,80)",0,"Visual impairment",151488,0,0
+"[75,80)",1,"Visual impairment",186752,0,0
+"[80,100]",0,"Visual impairment",191432,0,0
+"[80,100]",1,"Visual impairment",295206,0,0
+"[40,45)",0,"Weight loss and anorexia",300490,0,0
+"[40,45)",1,"Weight loss and anorexia",327169,0,0
+"[45,50)",0,"Weight loss and anorexia",305129,0,0
+"[45,50)",1,"Weight loss and anorexia",335558,0,0
+"[50,55)",0,"Weight loss and anorexia",328467,0,0
+"[50,55)",1,"Weight loss and anorexia",360738,0,0
+"[55,60)",0,"Weight loss and anorexia",349624,0,0
+"[55,60)",1,"Weight loss and anorexia",384918,0,0
+"[60,65)",0,"Weight loss and anorexia",344312,0,0
+"[60,65)",1,"Weight loss and anorexia",384813,0,0
+"[65,70)",0,"Weight loss and anorexia",281362,0,0
+"[65,70)",1,"Weight loss and anorexia",318542,0,0
+"[70,75)",0,"Weight loss and anorexia",202067,0,0
+"[70,75)",1,"Weight loss and anorexia",244787,0,0
+"[75,80)",0,"Weight loss and anorexia",151488,0,0
+"[75,80)",1,"Weight loss and anorexia",186752,0,0
+"[80,100]",0,"Weight loss and anorexia",191432,0,0
+"[80,100]",1,"Weight loss and anorexia",295206,0,0
