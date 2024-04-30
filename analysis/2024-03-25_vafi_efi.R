@@ -221,7 +221,7 @@ write.csv(t, "KI/2024-03-25_efi_pharmetrics.csv", row.names = FALSE)
 
 
 
-nly finds people who have FI scores > 0.
+#nly finds people who have FI scores > 0.
 # Se we need to find also all the people with FI scores == 0 and add
 # them back to the dataset.
 # fi_query is the result of omop2fi() and
