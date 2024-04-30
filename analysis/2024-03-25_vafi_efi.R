@@ -13,6 +13,16 @@ source(here::here("analysis", "connection_setup.R"))
 tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) |> collect() -> vafi_rev
 tbl(con, inDatabaseSchema(my_schema, "efi_rev")) |> collect() -> efi_rev
 
+# need to add lookback information
+# its now in the package
+vafi_lb = tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) %>% collect() %>%
+    left_join(aouFI::lb %>% filter(fi == "vafi") %>% select(-fi), by = "category")
+# add to db
+insertTable_chunk(vafi_lb, "vafi_rev2")
+rm(vafi_lb)
+# test it
+tbl(con, inDatabaseSchema(my_schema, "vafi_rev2"))
+
 # replace for saving files
 data_source = "pharmetrics"
 
@@ -105,11 +115,12 @@ cohort_all <- tbl(con, inDatabaseSchema(my_schema, "frailty_cohort")) %>%
 #     tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) %>% distinct(category) %>% mutate(is_female = 0)
 # ) %>% left_join(c_short, by = "is_female")
 #
+
 # ============================================================================
 # ################################ VAFI #######################################
 # ============================================================================
 
-vafi_all <- aouFI::omop2fi(con = con,
+vafi_all <- omop2fi(con = con,
                        schema = cdm_schema,
                        index = "vafi",
                        .data_search = cohort_all,
@@ -119,7 +130,28 @@ vafi_all <- aouFI::omop2fi(con = con,
                        keep_columns = c("age_group", "is_female"),
                        collect = FALSE,
                        unique_categories = TRUE,
+                       dbms = "redshift",
                        concept_location = tbl(con, inDatabaseSchema(my_schema, "vafi_rev"))
+) |>
+    distinct(person_id, age_group, is_female, score, category)
+
+
+# ============================================================================
+# ################################ VAFI VARIABLE LOOKBACK ####################
+# ============================================================================
+
+vafi_all <- omop2fi_lb(con = con,
+                    schema = cdm_schema,
+                    index = "vafi",
+                    .data_search = cohort_all,
+                    search_person_id = "person_id",
+                    search_start_date = "visit_lookback_date",
+                    search_end_date = "index_date",
+                    keep_columns = c("age_group", "is_female"),
+                    collect = FALSE,
+                    unique_categories = TRUE,
+                    dbms = "redshift",
+                    concept_location = tbl(con, inDatabaseSchema(my_schema, "vafi_rev2"))
 ) |>
     distinct(person_id, age_group, is_female, score, category)
 

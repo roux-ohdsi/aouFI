@@ -30,6 +30,8 @@
 #' is small enough, you can instead set collect to TRUE and concept_location to NA to use a local table from aouFI.
 #' @param join_now whether to join back tot he concepts table at the end of the query
 #' @param join_to_concept whether to join to the concept table at the beginning of the query (default) or filter for the concept_id column. Use filter only if a tbl is not accessible.
+#' @param dbms one of redshift, bigquery etc.
+#' @param chronic_lookback defaults to 3 for 3 years for chronic conditions
 #'
 #' @return dataframe with EFI occurences that can be summarized
 #' @export
@@ -42,6 +44,7 @@
 #'         .data_search = demo2,
 #'         search_person_id = "person_id",
 #'         search_start_date = "survey_date",
+
 #'         search_end_date = "end_date",
 #'         keep_columns = c("dob", "sex_at_birth"),
 #'         unique_categories = TRUE,
@@ -61,22 +64,25 @@
 #'         concept_location = tbl(con, inDatabaseSchema(my_schema, "efi")
 #' )
 #'
-omop2fi <- function(con,
-                     index,
-                     schema = NULL,
-                     collect = FALSE,
+omop2fi_lb <- function(con,
+                       index,
+                       schema = NULL,
+                       collect = FALSE,
 
-                     .data_search,
-                     search_person_id,
-                     search_start_date,
-                     search_end_date,
-                     keep_columns = NULL,
-                     unique_categories = FALSE,
-                     join_now = TRUE,
-                     join_to_concept = TRUE,
-
-                    concept_location
+                       .data_search,
+                       search_person_id,
+                       search_start_date,
+                       search_end_date,
+                       keep_columns = NULL,
+                       unique_categories = FALSE,
+                       join_now = TRUE,
+                       join_to_concept = TRUE,
+                       dbms = "bigquery",
+                       chronic_lookback = 3,
+                       concept_location
 ){
+
+
 
     keep_cols <- {{keep_columns}}
 
@@ -99,6 +105,25 @@ omop2fi <- function(con,
         device_exposure         = "device_exposure"
         person                  = "person"
     }
+
+
+    interval = "YEAR"
+    number = -(chronic_lookback-1)
+    date = "person_start_date"
+    sql <- switch (dbms,
+                   "redshift" = glue::glue("DATEADD({interval}, {number}, {date})"),
+                   "oracle" = glue::glue("({date} + NUMTODSINTERVAL({number}, 'day'))"),
+                   "postgresql" = glue::glue("({date} + {number}*INTERVAL'1 {interval}')"),
+                   "sql server" = glue::glue("DATEADD({interval}, {number}, {date})"),
+                   "spark" = glue::glue("date_add({date}, {number})"),
+                   "duckdb" = glue::glue("({date} + {number}*INTERVAL'1 {interval}')"),
+                   "sqlite" = glue::glue("CAST(STRFTIME('%s', DATETIME({date}, 'unixepoch', ({number})||' {interval}s')) AS REAL)"),
+                   "bigquery" = glue::glue("DATE_ADD({date}, INTERVAL {number} {toupper(interval)})"),
+                   "snowflake" = glue::glue('DATEADD({interval}, {number}, {date})'),
+                   rlang::abort(glue::glue("Connection type {paste(class(dot$src$con), collapse = ', ')} is not supported!"))
+    )
+    date_sql = as.character(sql)
+    print(date_sql)
 
     # if(!("person_id" %in% colnames(eligible))){stop("eligible must contain person_id column")}
 
@@ -123,8 +148,8 @@ omop2fi <- function(con,
         categories_concepts <- aouFI::fi_indices |> filter(fi == index)
 
     } else {
-       # if(!DBI::isdb)
-        concept_table = concept_location
+        # if(!DBI::isdb)
+        concept_table = concept_location |> rename(lb = lookback)
         categories_concepts = concept_location
     }
 
@@ -154,8 +179,9 @@ omop2fi <- function(con,
         condition_concept_ids <- tbl(con, concept) |>
             filter(standard_concept == "S") |>
             distinct(concept_id, name = concept_name) |>
-            inner_join(concept_table |> distinct(concept_id),
-                      by = c("concept_id"), x_as = "c1", y_as = "c2" )
+            inner_join(concept_table |> distinct(concept_id, lb),
+                       by = c("concept_id"), x_as = "c1", y_as = "c2" )
+
     } else {
 
         condition_concept_ids <- tbl(con, concept) |>
@@ -184,10 +210,11 @@ omop2fi <- function(con,
                start_date = condition_start_date,
                person_start_date,
                person_end_date,
-               lookback
+               lb
         ) |>
-        mutate(person_start_date = !!CDMConnector::dateadd("person_start_date", -(lookback-1), interval = "year")) |>
-        print() |>
+        mutate(person_start_date = ifelse(
+            lb == 3, dplyr::sql(!!date_sql),
+            person_start_date)) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
@@ -202,8 +229,12 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = observation_date,
                person_start_date,
-               person_end_date
+               person_end_date,
+               lb
         ) |>
+        mutate(person_start_date = ifelse(
+            lb == 3, dplyr::sql(!!date_sql),
+            person_start_date)) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
@@ -218,8 +249,12 @@ omop2fi <- function(con,
                concept_name = name,
                start_date = procedure_date,
                person_start_date,
-               person_end_date
+               person_end_date,
+               lb
         ) |>
+        mutate(person_start_date = ifelse(
+            lb == 3, dplyr::sql(!!date_sql),
+            person_start_date)) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
@@ -236,7 +271,11 @@ omop2fi <- function(con,
                start_date = device_exposure_start_date,
                person_start_date,
                person_end_date,
+               lb
         ) |>
+        mutate(person_start_date = ifelse(
+            lb == 3, dplyr::sql(!!date_sql),
+            person_start_date)) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
@@ -267,15 +306,15 @@ omop2fi <- function(con,
         message("collecting...")
         if(isTRUE(unique_categories)){
 
-                dat <- dat  |>
-                    select(person_id,
-                           !!!keep_columns,
-                           person_start_date,
-                           person_end_date,
-                           concept_id) |>
-                    distinct()  |>
-                    collect() |>
-                    left_join(categories_concepts, by = c("concept_id"))
+            dat <- dat  |>
+                select(person_id,
+                       !!!keep_columns,
+                       person_start_date,
+                       person_end_date,
+                       concept_id) |>
+                distinct()  |>
+                collect() |>
+                left_join(categories_concepts, by = c("concept_id"))
 
         } else {
 
@@ -322,4 +361,5 @@ omop2fi <- function(con,
     return(dat)
 
 }
+
 
