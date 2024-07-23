@@ -90,6 +90,7 @@ omop2fi <- function(con,
         procedure_occurrence    = inDatabaseSchema(schema, "procedure_occurrence")
         device_exposure         = inDatabaseSchema(schema, "device_exposure")
         person                  = inDatabaseSchema(schema, "person")
+        drug_era                = inDatabaseSchema(schema, "drug_era")
 
     } else {
         concept                 = "concept"
@@ -98,6 +99,7 @@ omop2fi <- function(con,
         procedure_occurrence    = "procedure_occurrence"
         device_exposure         = "device_exposure"
         person                  = "person"
+        drug_era                = "drug_era"
     }
 
     # if(!("person_id" %in% colnames(eligible))){stop("eligible must contain person_id column")}
@@ -236,6 +238,7 @@ omop2fi <- function(con,
         ) |>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
+
 
 
     message("putting it all together union...")

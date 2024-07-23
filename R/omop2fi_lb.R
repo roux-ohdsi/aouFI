@@ -32,6 +32,8 @@
 #' @param join_to_concept whether to join to the concept table at the beginning of the query (default) or filter for the concept_id column. Use filter only if a tbl is not accessible.
 #' @param dbms one of redshift, bigquery etc.
 #' @param chronic_lookback defaults to 3 for 3 years for chronic conditions
+#' @param pp_date_minimum minimum drug era date  for polypharmacy (inclusive; 2 means drug_era >= 2 days)
+#' @param pp_cutoff number of ingredients to designate poly-pharmacy (inclusive; 10 means 10 or more ingredients)
 #'
 #' @return dataframe with EFI occurences that can be summarized
 #' @export
@@ -63,12 +65,10 @@
 #'         unique_categories = TRUE,
 #'         concept_location = tbl(con, inDatabaseSchema(my_schema, "efi")
 #' )
-#'
 omop2fi_lb <- function(con,
                        index,
                        schema = NULL,
                        collect = FALSE,
-
                        .data_search,
                        search_person_id,
                        search_start_date,
@@ -78,9 +78,10 @@ omop2fi_lb <- function(con,
                        join_now = TRUE,
                        join_to_concept = TRUE,
                        dbms = "bigquery",
-                       chronic_lookback = 3,
+                       acute_lookback = 1,
+                       chronic_lookback = 1,
                        concept_location
-){
+                       ){
 
 
 
@@ -108,22 +109,35 @@ omop2fi_lb <- function(con,
 
 
     interval = "YEAR"
-    number = -(chronic_lookback-1)
     date = "person_start_date"
-    sql <- switch (dbms,
-                   "redshift" = glue::glue("DATEADD({interval}, {number}, {date})"),
-                   "oracle" = glue::glue("({date} + NUMTODSINTERVAL({number}, 'day'))"),
-                   "postgresql" = glue::glue("({date} + {number}*INTERVAL'1 {interval}')"),
-                   "sql server" = glue::glue("DATEADD({interval}, {number}, {date})"),
-                   "spark" = glue::glue("date_add({date}, {number})"),
-                   "duckdb" = glue::glue("({date} + {number}*INTERVAL'1 {interval}')"),
-                   "sqlite" = glue::glue("CAST(STRFTIME('%s', DATETIME({date}, 'unixepoch', ({number})||' {interval}s')) AS REAL)"),
-                   "bigquery" = glue::glue("DATE_ADD({date}, INTERVAL {number} {toupper(interval)})"),
-                   "snowflake" = glue::glue('DATEADD({interval}, {number}, {date})'),
+    chronic_adjustment = -(chronic_lookback-1)
+    acute_adjustment = -(acute_lookback-1)
+    sql_chronic <- switch (dbms,
+                   "redshift" = glue::glue("DATEADD({interval}, {chronic_adjustment}, {date})"),
+                   #"oracle" = glue::glue("({date} + NUMTODSINTERVAL({chronic_adjustment}, 'day'))"),
+                   #"postgresql" = glue::glue("({date} + {chronic_adjustment}*INTERVAL'1 {interval}')"),
+                   #"sql server" = glue::glue("DATEADD({interval}, {chronic_adjustment}, {date})"),
+                   #"spark" = glue::glue("date_add({date}, {chronic_adjustment})"),
+                   #"duckdb" = glue::glue("({date} + {chronic_adjustment}*INTERVAL'1 {interval}')"),
+                   #"sqlite" = glue::glue("CAST(STRFTIME('%s', DATETIME({date}, 'unixepoch', ({chronic_adjustment})||' {interval}s')) AS REAL)"),
+                   "bigquery" = glue::glue("DATE_ADD({date}, INTERVAL {chronic_adjustment} {toupper(interval)})"),
+                   #"snowflake" = glue::glue('DATEADD({interval}, {chronic_adjustment}, {date})'),
                    rlang::abort(glue::glue("Connection type {paste(class(dot$src$con), collapse = ', ')} is not supported!"))
     )
-    date_sql = as.character(sql)
-    print(date_sql)
+    sql_acute <- switch (dbms,
+                           "redshift" = glue::glue("DATEADD({interval}, {acute_adjustment}, {date})"),
+                          #"oracle" = glue::glue("({date} + NUMTODSINTERVAL({acute_adjustment}, 'day'))"),
+                          #"postgresql" = glue::glue("({date} + {acute_adjustment}*INTERVAL'1 {interval}')"),
+                          #"sql server" = glue::glue("DATEADD({interval}, {acute_adjustment}, {date})"),
+                          #"spark" = glue::glue("date_add({date}, {acute_adjustment})"),
+                          #"duckdb" = glue::glue("({date} + {acute_adjustment}*INTERVAL'1 {interval}')"),
+                          #"sqlite" = glue::glue("CAST(STRFTIME('%s', DATETIME({date}, 'unixepoch', ({acute_adjustment})||' {interval}s')) AS REAL)"),
+                           "bigquery" = glue::glue("DATE_ADD({date}, INTERVAL {acute_adjustment} {toupper(interval)})"),
+                           #"snowflake" = glue::glue('DATEADD({interval}, {acute_adjustment}, {date})'),
+                           rlang::abort(glue::glue("Connection type {paste(class(dot$src$con), collapse = ', ')} is not supported!"))
+    )
+    acute_date_sql = ifelse(acute_lookback == 1, "person_start_date", as.character(sql_acute))
+    chronic_date_sql = ifelse(chronic_lookback == 1, "person_start_date", as.character(sql_chronic))
 
     # if(!("person_id" %in% colnames(eligible))){stop("eligible must contain person_id column")}
 
@@ -149,7 +163,8 @@ omop2fi_lb <- function(con,
 
     } else {
         # if(!DBI::isdb)
-        concept_table = concept_location |> rename(lb = lookback)
+        # generalizing the lookback so that whatever you put in the function arguments will be implemented.
+        concept_table = concept_location
         categories_concepts = concept_location
     }
 
@@ -179,7 +194,7 @@ omop2fi_lb <- function(con,
         condition_concept_ids <- tbl(con, concept) |>
             filter(standard_concept == "S") |>
             distinct(concept_id, name = concept_name) |>
-            inner_join(concept_table |> distinct(concept_id, lb),
+            inner_join(concept_table |> distinct(concept_id, chronic_category),
                        by = c("concept_id"), x_as = "c1", y_as = "c2" )
 
     } else {
@@ -210,11 +225,11 @@ omop2fi_lb <- function(con,
                start_date = condition_start_date,
                person_start_date,
                person_end_date,
-               lb
+               chronic_category
         ) |>
         mutate(person_start_date = ifelse(
-            lb == 3, dplyr::sql(!!date_sql),
-            person_start_date)) |>
+            chronic_category == 1, dplyr::sql(!!chronic_date_sql), dplyr::sql(!!acute_date_sql))
+            )|>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
@@ -230,11 +245,11 @@ omop2fi_lb <- function(con,
                start_date = observation_date,
                person_start_date,
                person_end_date,
-               lb
+               chronic_category
         ) |>
         mutate(person_start_date = ifelse(
-            lb == 3, dplyr::sql(!!date_sql),
-            person_start_date)) |>
+            chronic_category == 1, dplyr::sql(!!chronic_date_sql), dplyr::sql(!!acute_date_sql))
+        )|>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
@@ -250,11 +265,11 @@ omop2fi_lb <- function(con,
                start_date = procedure_date,
                person_start_date,
                person_end_date,
-               lb
+               chronic_category
         ) |>
         mutate(person_start_date = ifelse(
-            lb == 3, dplyr::sql(!!date_sql),
-            person_start_date)) |>
+            chronic_category == 1, dplyr::sql(!!chronic_date_sql), dplyr::sql(!!acute_date_sql))
+        )|>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
 
@@ -271,34 +286,30 @@ omop2fi_lb <- function(con,
                start_date = device_exposure_start_date,
                person_start_date,
                person_end_date,
-               lb
+               chronic_category
         ) |>
         mutate(person_start_date = ifelse(
-            lb == 3, dplyr::sql(!!date_sql),
-            person_start_date)) |>
+            chronic_category == 1, dplyr::sql(!!chronic_date_sql), dplyr::sql(!!acute_date_sql))
+        )|>
         filter(start_date >= person_start_date, start_date <= person_end_date) |>
         distinct()
+
+    # polypharmacy
+
+
+   # print(head(obs))
 
 
     message("putting it all together union...")
 
-    # we will need to join the concept IDs and labels back to the events
-    # after the four tables above are combined.
 
-    # if the index is hfrs we also need to return the point value "score"
-    # if(index_ == "hfrs"){
-    #     categories_concepts <- categories_concepts |>
-    #         mutate(concept_id = as.integer(concept_id)) |>
-    #         distinct(concept_id, category, hfrs_score)
-    # } else { # but not for the other three indices
-    #     categories_concepts <- categories_concepts |>
-    #         mutate(concept_id = as.integer(concept_id)) |>
-    #         distinct(concept_id, category)
-    # }
 
     # put them all together, add the fi labels back
     dat <-
         union_all(cond_occurrences, obs) %>% union_all(dev) %>% union_all(proc)
+
+  #  print(head(dat))
+
 
     # Logic to determine whether a collected df or just a query should be returned.
     # note that copying if false can still take some time...
@@ -359,7 +370,6 @@ omop2fi_lb <- function(con,
 
 
     return(dat)
-
 }
 
 

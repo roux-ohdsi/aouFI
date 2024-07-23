@@ -6,28 +6,40 @@ library(DatabaseConnector)
 library(CDMConnector)
 library(glue)
 
+# replace for saving files
+data_source = "pharmetrics"
+
 source(here::here("analysis", "connection_setup.R"))
 
 # holdig code books here...
 # they are saved in the github and on the pharmetrics schema
-tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) |> collect() -> vafi_rev
-tbl(con, inDatabaseSchema(my_schema, "efi_rev")) |> collect() -> efi_rev
+# Only need to run these once
+# can also be accessed via saved files here:
+# here("KI", "2024-05-02_vafi_lb.csv")
+# here("KI", "2024-05-02_efi_clegg_snomed_lb.csv")
 
+# tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) |> collect() -> vafi_rev
+# tbl(con, inDatabaseSchema(my_schema, "efi_rev")) |> collect() -> efi_rev
+#
 # need to add lookback information
 # its now in the package
-vafi_lb = tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) %>% collect() %>%
-    left_join(aouFI::lb %>% filter(fi == "vafi") %>% select(-fi), by = "category")
+# vafi_lb = tbl(con, inDatabaseSchema(my_schema, "vafi_rev")) %>% collect() %>%
+#    left_join(aouFI::lb %>% filter(fi == "vafi") %>% select(-fi), by = "category") %>%
+#     mutate(chronic_category = ifelse(lookback == 3, 1, 0)) %>% select(-lookback)
+#
+# efi_lb = tbl(con, inDatabaseSchema(my_schema, "efi_rev")) %>% collect() %>%
+#     left_join(aouFI::lb %>% filter(fi == "efi") %>% select(-fi), by = "category") %>%
+#     mutate(chronic_category = ifelse(lookback == 3, 1, 0)) %>% select(-lookback)
 # add to db
-insertTable_chunk(vafi_lb, "vafi_rev2")
-rm(vafi_lb)
+# insertTable_chunk(vafi_lb, "vafi_rev2")
+# insertTable_chunk(efi_lb, "efi_lb")
+
+# rm(vafi_lb)
 # test it
-tbl(con, inDatabaseSchema(my_schema, "vafi_rev2"))
+# tbl(con, inDatabaseSchema(my_schema, "vafi_rev2"))
 
-# replace for saving files
-data_source = "pharmetrics"
-
-#write_csv(vafi_rev, here("KI", "2024-03-25_vafid.csv"))
-#write_csv(efi_rev, here("KI", "2024-03-25_efi_clegg_snomed.csv"))
+# write_csv(vafi_lb, here("KI", "2024-05-02_vafi_lb.csv"))
+# write_csv(efi_lb, here("KI", "2024-05-02_efi_clegg_snomed_lb.csv"))
 
 # vafi_rev = vafi_rev %>% mutate(concept_id = as.integer(concept_id))
 # usethis::use_data(vafi_rev, overwrite = TRUE)
@@ -51,6 +63,7 @@ source(here::here("analysis", "summary_functions.R"))
 # Join person table to visit occurrence table
 # Pick a random visit. I think this SqlRender::translate() should make this a bit
 # more flexible to the different dbms...
+
 index_date_query <- tbl(con, inDatabaseSchema(cdm_schema, "person")) |>
     select(person_id, year_of_birth, gender_concept_id) |>
     omop_join("visit_occurrence", type = "inner", by = "person_id") |>
@@ -62,6 +75,7 @@ index_date_query <- tbl(con, inDatabaseSchema(cdm_schema, "person")) |>
 # From that query, make sure there are 365 days preceeding to the observation_period
 # start date. Filter for age at index date is >= 40
 #!!!!!!!!!!! Changed to: >= 365 below !!!!!!!!!!!!#
+
 cohort <- index_date_query |>
     omop_join("observation_period", type = "inner", by = "person_id") |>
     filter(dateDiff("day", observation_period_start_date, index_date) >= 365) |>
@@ -120,7 +134,10 @@ cohort_all <- tbl(con, inDatabaseSchema(my_schema, "frailty_cohort")) %>%
 # ################################ VAFI #######################################
 # ============================================================================
 
-vafi_all <- omop2fi(con = con,
+acute_lb = 1
+chronic_lb = 1
+
+vafi_all <- omop2fi_lb(con = con,
                        schema = cdm_schema,
                        index = "vafi",
                        .data_search = cohort_all,
@@ -130,30 +147,11 @@ vafi_all <- omop2fi(con = con,
                        keep_columns = c("age_group", "is_female"),
                        collect = FALSE,
                        unique_categories = TRUE,
-                       concept_location = tbl(con, inDatabaseSchema(my_schema, "vafi_rev"))
+                       acute_lookback = acute_lb, # default
+                       chronic_lookback = chronic_lb, # default
+                       concept_location = tbl(con, inDatabaseSchema(my_schema, "vafi_rev2"))
 ) |>
     distinct(person_id, age_group, is_female, score, category)
-
-
-# ============================================================================
-# ################################ VAFI VARIABLE LOOKBACK ####################
-# ============================================================================
-
-vafi_all <- omop2fi_lb(con = con,
-                    schema = cdm_schema,
-                    index = "vafi",
-                    .data_search = cohort_all,
-                    search_person_id = "person_id",
-                    search_start_date = "visit_lookback_date",
-                    search_end_date = "index_date",
-                    keep_columns = c("age_group", "is_female"),
-                    collect = FALSE,
-                    unique_categories = TRUE,
-                    dbms = "redshift",
-                    concept_location = tbl(con, inDatabaseSchema(my_schema, "vafi_rev2"))
-) |>
-    distinct(person_id, age_group, is_female, score, category)
-
 
 # save result of query as intermediate step #2
 # CDMConnector::computeQuery(vafi_all, "vafi_fi",
@@ -168,8 +166,8 @@ vafi_all_summary <- fi_with_robust(
                            denominator = 31, lb = 0.11, ub = 0.21)
 
 # summarize
-t = summarize_fi(vafi_all_summary) %>% collect()
-write.csv(t, glue("KI/{Sys.Date()}_vafi_{data_source}.csv"), row.names = FALSE)
+t = summarize_fi(vafi_all_summary) %>% collect() %>% mutate(acute_lb = !!acute_lb, chronic_lb = !!chronic_lb)
+write.csv(t, glue("KI/{Sys.Date()}_{data_source}_vafi.csv"), row.names = FALSE)
 
 vafi_cats = aouFI::vafi_rev %>% distinct(category) %>% pull(category)
 vafi_c = vafi_all %>% select(person_id, category, score) %>% collect()
@@ -195,7 +193,7 @@ gc()
 # ################################ EFI #######################################
 # ============================================================================
 
-efi_all <- aouFI::omop2fi(con = con,
+efi_all <- aouFI::omop2fi_lb(con = con,
                            schema = cdm_schema,
                            index = "efi",
                            .data_search = cohort_all,
@@ -205,7 +203,9 @@ efi_all <- aouFI::omop2fi(con = con,
                            keep_columns = c("age_group", "is_female"),
                            collect = FALSE,
                            unique_categories = TRUE,
-                           concept_location = tbl(con, inDatabaseSchema(my_schema, "efi_rev"))
+                          acute_lookback = acute_lb, # default
+                          chronic_lookback = chronic_lb, # default
+                           concept_location = tbl(con, inDatabaseSchema(my_schema, "efi_lb"))
 ) |>
     distinct(person_id, age_group, is_female, score, category)
 
@@ -225,7 +225,7 @@ efi_all_summary <- fi_with_robust(
     denominator = 35, lb = 0.12, ub = 0.24)
 # summarize
 t = summarize_fi(efi_all_summary) %>% collect()
-write.csv(t, glue("KI/{Sys.Date()}_efi_{data_source}.csv"), row.names = FALSE)
+write.csv(t, glue("KI/{Sys.Date()}_{data_source}_efi.csv"), row.names = FALSE)
 
 efi_cats = aouFI::fi_indices %>% filter(fi == "efi_sno") %>% distinct(category) %>% pull(category)
 efi_c = efi_all %>% select(person_id, category, score) %>% collect()

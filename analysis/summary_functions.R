@@ -13,7 +13,7 @@ fi_with_robust <- function(fi_query, cohort, denominator, lb, ub){
     tmp = cohort |>
         anti_join(fi_query |> select(person_id), by = "person_id") |>
         select(person_id, age_group, is_female) |>
-        mutate(fi = 0, frail = 0, prefrail = 0)
+        mutate(fi = 0, frail = 0, prefrail = 0, robust = 1)
 
     # add them back to the FI query while calculating the person-level FI
     fi_query |>
